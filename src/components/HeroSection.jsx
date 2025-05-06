@@ -3,18 +3,48 @@ import { useState, useEffect } from 'react';
 
 export default function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
+  // Handle mouse movement for glow effect
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
+    
     window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
+  
+  // Track scroll position for scroll-based animations
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
-  const words = [ "Smart", "Strategic", "Innovative"];
+  // Rotating words animation
+  const words = ["Smart", "Strategic", "Innovative", "Powerful"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
   useEffect(() => {
@@ -24,12 +54,48 @@ export default function HeroSection() {
     return () => clearInterval(interval);
   }, []);
 
-  const particles = Array.from({ length: 20 }, (_, i) => i);
+  // Generate particles with varied sizes
+  const generateParticles = (count) => {
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      size: Math.random() * 20 + 5,
+      x: Math.random() * 100, // percentage of screen width
+      y: Math.random() * 100, // percentage of screen height
+      opacity: Math.random() * 0.5,
+      duration: Math.random() * 10 + 15,
+    }));
+  };
+
+  const particles = generateParticles(20);
+
+  // Features with more engaging icons
+  const features = [
+    { title: "Digital Marketing", icon: "💼", description: "Grow your reach" },
+    { title: "Software Solutions", icon: "💻", description: "Custom development" },
+    { title: "24/7 Support", icon: "🔧", description: "Always available" },
+    { title: "Data Analytics", icon: "📊", description: "Informed decisions" }
+  ];
+
+  // Stagger animation for children elements
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const childVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 }
+  };
 
   return (
     <section
       id="home"
-      className="relative min-h-screen bg-gray-900 overflow-hidden pt-24 sm:pt-28 md:pt-20 w-full"
+      className="relative min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 overflow-hidden pt-16 sm:pt-20 md:pt-24 w-full"
       style={{ 
         width: '100vw', 
         maxWidth: '100vw',
@@ -38,56 +104,77 @@ export default function HeroSection() {
       }}
     >
       {/* Background particles */}
-      {particles.map((i) => (
+      {particles.map((particle) => (
         <motion.div
-          key={i}
+          key={particle.id}
           className="absolute rounded-full bg-blue-500/10"
-          initial={{
-            width: Math.random() * 20 + 5,
-            height: Math.random() * 20 + 5,
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-            opacity: Math.random() * 0.5,
+          style={{
+            width: particle.size,
+            height: particle.size,
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            opacity: particle.opacity,
           }}
           animate={{
-            y: [null, Math.random() * -500 - 100],
-            opacity: [null, 0],
+            y: [0, -500],
+            opacity: [particle.opacity, 0],
           }}
           transition={{
-            duration: Math.random() * 10 + 15,
+            duration: particle.duration,
             repeat: Infinity,
             ease: "linear",
           }}
         />
       ))}
 
-      {/* Radial glow following mouse */}
-      <motion.div
-        className="absolute w-[600px] h-[600px] rounded-full bg-blue-500/10 blur-3xl pointer-events-none"
+      {/* Animated background gradient */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-radial from-blue-900/20 to-transparent"
         animate={{
-          x: mousePosition.x - 300,
-          y: mousePosition.y - 300,
+          opacity: [0.5, 0.3, 0.5],
         }}
-        transition={{ type: "spring", damping: 30, stiffness: 200 }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
       />
+
+      {/* Radial glow following mouse (disabled on mobile) */}
+      {!isMobile && (
+        <motion.div
+          className="absolute w-96 h-96 rounded-full bg-blue-500/10 blur-3xl pointer-events-none"
+          animate={{
+            x: mousePosition.x - 192,
+            y: mousePosition.y - 192,
+          }}
+          transition={{ type: "spring", damping: 30, stiffness: 200 }}
+        />
+      )}
 
       {/* Hero Content */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col justify-center min-h-[calc(100vh-120px)] sm:h-[calc(100vh-80px)] text-center">
-          {/* Animated Heading */}
+        <div className="flex flex-col justify-center min-h-[calc(100vh-80px)] text-center">
+          {/* Animated Heading with responsive sizing */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="mt-6 sm:mt-0"
           >
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
-              Empowering Businesses Through
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+              >
+                Empowering Businesses Through
+              </motion.span>
               <br />
-              <span className="relative inline-block mt-2">
+              <div className="h-16 sm:h-20 md:h-24 flex justify-center items-center">
                 <motion.span
                   key={currentWordIndex}
-                  className="text-blue-400 absolute left-0 right-0"
+                  className="text-blue-400 absolute"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -20, opacity: 0 }}
@@ -95,16 +182,41 @@ export default function HeroSection() {
                 >
                   {words[currentWordIndex]}
                 </motion.span>
-                <span className="invisible">{words[0]}</span>
-              </span>
-              <br />
-              Digital Solutions
+              </div>
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+              >
+                Digital Solutions
+              </motion.span>
             </h1>
           </motion.div>
 
-          {/* Subheading */}
+          {/* Animated Underline */}
+          <div className="relative flex justify-center mt-4">
+            <motion.div
+              className="h-1 bg-blue-500 rounded-full mx-auto"
+              initial={{ width: 0 }}
+              animate={{ width: "80px" }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+            />
+            <motion.div
+              className="absolute h-1 bg-blue-300 rounded-full mx-auto"
+              initial={{ width: 0 }}
+              animate={{ width: "40px" }}
+              transition={{ 
+                delay: 1.2, 
+                duration: 1.5, 
+                repeat: Infinity, 
+                repeatType: "reverse" 
+              }}
+            />
+          </div>
+
+          {/* Subheading with better responsive text */}
           <motion.p
-            className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto"
+            className="mt-6 text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
@@ -113,24 +225,16 @@ export default function HeroSection() {
             strategic digital marketing and advanced software solutions.
           </motion.p>
 
-          {/* Underline animation */}
+          {/* Call to Action Buttons with improved animations */}
           <motion.div
-            className="h-1 bg-blue-500 mt-8 rounded-full mx-auto"
-            initial={{ width: 0 }}
-            animate={{ width: "100px" }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-          />
-
-          {/* Call to Action Buttons */}
-          <motion.div
-            className="mt-10 flex flex-wrap justify-center gap-4"
+            className="mt-8 sm:mt-10 flex flex-wrap justify-center gap-3 sm:gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.8 }}
           >
             <motion.a
               href="#services"
-              className="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg shadow-blue-500/20"
+              className="px-6 sm:px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all"
               whileHover={{
                 scale: 1.05,
                 backgroundColor: "#2563eb",
@@ -143,7 +247,7 @@ export default function HeroSection() {
 
             <motion.a
               href="#contact"
-              className="px-8 py-3 border-2 border-blue-400 text-blue-400 font-medium rounded-lg"
+              className="px-6 sm:px-8 py-3 border-2 border-blue-400 text-blue-400 font-medium rounded-lg transition-all"
               whileHover={{
                 scale: 1.05,
                 borderColor: "#60a5fa",
@@ -155,29 +259,26 @@ export default function HeroSection() {
             </motion.a>
           </motion.div>
 
-          {/* Features */}
+          {/* Features with staggered animations */}
           <motion.div
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 px-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
+            className="mt-12 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 px-2 sm:px-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
           >
-            {[
-              { title: "Digital Marketing", icon: "💼" },
-              { title: "Software Solutions", icon: "💻" },
-              { title: "24/7 Support", icon: "🔧" },
-              { title: "Data Analytics", icon: "📊" }
-            ].map((feature, index) => (
+            {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
-                className="flex flex-col items-center p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.5 + (index * 0.1), duration: 0.5 }}
-                whileHover={{ y: -5, backgroundColor: "rgba(30, 41, 59, 0.7)" }}
+                className="flex flex-col items-center p-3 sm:p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:border-blue-500/30 transition-all"
+                variants={childVariants}
+                whileHover={{ 
+                  y: -5, 
+                  backgroundColor: "rgba(30, 41, 59, 0.7)",
+                  boxShadow: "0 4px 20px -2px rgba(59, 130, 246, 0.2)"
+                }}
               >
                 <motion.div
-                  className="text-2xl sm:text-3xl mb-2"
+                  className="text-xl sm:text-2xl md:text-3xl mb-2"
                   animate={{
                     rotateY: [0, 360],
                   }}
@@ -190,30 +291,40 @@ export default function HeroSection() {
                 >
                   {feature.icon}
                 </motion.div>
-                <h3 className="font-medium text-blue-400 text-sm sm:text-base">{feature.title}</h3>
+                <h3 className="font-medium text-blue-400 text-xs sm:text-sm md:text-base">{feature.title}</h3>
+                <p className="text-gray-400 text-xs mt-1 hidden sm:block">{feature.description}</p>
               </motion.div>
             ))}
           </motion.div>
 
-          {/* Scroll indicator */}
+          {/* Scroll indicator with enhanced animation */}
           <motion.div
             className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1, y: [0, 10, 0] }}
+            animate={{ 
+              opacity: [0, 1, 1, 0],
+              y: [0, 5, 10, 5]
+            }}
             transition={{
-              delay: 2,
-              duration: 1.5,
+              duration: 2,
               repeat: Infinity,
-              repeatType: "loop"
+              repeatType: "loop",
+              times: [0, 0.2, 0.8, 1]
             }}
           >
             <div className="flex flex-col items-center">
-              <span className="text-gray-400 text-sm mb-2">Scroll Down</span>
-              <svg
-                className="w-6 h-6 text-blue-500"
+              <span className="text-gray-400 text-xs sm:text-sm mb-2">Scroll Down</span>
+              <motion.svg
+                className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                animate={{ y: [0, 5, 0] }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  repeatType: "loop"
+                }}
               >
                 <path
                   strokeLinecap="round"
@@ -221,10 +332,64 @@ export default function HeroSection() {
                   strokeWidth={2}
                   d="M19 14l-7 7m0 0l-7-7m7 7V3"
                 />
-              </svg>
+              </motion.svg>
             </div>
           </motion.div>
+          
+          {/* Floating tech icons in background */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {['⚡', '🚀', '✨', '🔍', '🔥'].map((icon, i) => (
+              <motion.div
+                key={i}
+                className="absolute text-lg opacity-10"
+                initial={{ 
+                  x: Math.random() * 100 + '%', 
+                  y: Math.random() * 100 + '%' 
+                }}
+                animate={{
+                  y: [0, -100],
+                  opacity: [0.2, 0],
+                  rotate: [0, 360]
+                }}
+                transition={{
+                  duration: Math.random() * 10 + 15,
+                  repeat: Infinity,
+                  delay: Math.random() * 20,
+                  ease: "easeInOut"
+                }}
+              >
+                {icon}
+              </motion.div>
+            ))}
+          </div>
         </div>
+      </div>
+      
+      {/* Subtle bottom wave */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 sm:h-24 overflow-hidden z-0">
+        <svg 
+          viewBox="0 0 1200 120" 
+          className="absolute bottom-0 w-full h-full"
+          preserveAspectRatio="none"
+        >
+          <motion.path 
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0Z"
+            fill="rgba(30, 41, 59, 0.8)"
+            animate={{
+              d: [
+                "M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0Z",
+                "M321.39,86.44c58-10.79,114.16-10.13,172-11.86,82.39-16.72,168.19-37.73,250.45-20.39C823.78,61,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0Z",
+                "M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0Z"
+              ]
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              repeatType: "loop",
+              ease: "easeInOut"
+            }}
+          />
+        </svg>
       </div>
     </section>
   );
