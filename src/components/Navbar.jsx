@@ -26,7 +26,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { title: 'Home', url: '/home' },
+    { title: 'Home', url: '/' },
     { title: 'About Us', url: '/about' },
     { title: 'Services', url: '/services' },
     { title: 'Team', url: '/team' },
