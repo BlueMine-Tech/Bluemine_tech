@@ -234,7 +234,7 @@ export default function HeroSection() {
           >
             <motion.a
               href="#services"
-              className="px-6 sm:px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all"
+              className="px-6 sm:px-8 py-3 bg-blue-900 text-amber-50 font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all"
               whileHover={{
                 scale: 1.05,
                 backgroundColor: "#2563eb",

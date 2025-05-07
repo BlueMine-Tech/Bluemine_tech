@@ -26,11 +26,11 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { title: 'Home', url: '#home' },
-    { title: 'About Us', url: '#about' },
-    { title: 'Services', url: '#services' },
-    { title: 'Team', url: '#team' },
-    { title: 'Contact', url: '#contact' }
+    { title: 'Home', url: '/home' },
+    { title: 'About Us', url: '/about' },
+    { title: 'Services', url: '/services' },
+    { title: 'Team', url: '/team' },
+    { title: 'Contact', url: '/contact' }
   ];
 
   const menuVariants = {
