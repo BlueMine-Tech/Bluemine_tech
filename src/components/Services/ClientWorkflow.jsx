@@ -1,0 +1,526 @@
+import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+
+export default function ClientWorkflowSection() {
+  const [isInView, setIsInView] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  const sectionRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
+  // Check if section is in viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.2 }
+    );
+    
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  // Auto-rotate steps (only on desktop)
+  useEffect(() => {
+    if (isMobile) return;
+    
+    const interval = setInterval(() => {
+      if (isInView) {
+        setActiveStep(prev => (prev + 1) % workflowSteps.length);
+      }
+    }, 4000);
+    
+    return () => clearInterval(interval);
+  }, [isInView, isMobile]);
+
+  // Client workflow steps data
+  const workflowSteps = [
+    {
+      id: 'discovery',
+      icon: '🔍',
+      title: 'Discovery & Planning',
+      description: 'We start by understanding your business goals, challenges, and requirements through in-depth consultation and research.',
+      features: [
+        'Business needs assessment',
+        'Requirement gathering',
+        'Technology stack evaluation',
+        'Project timeline planning'
+      ],
+      color: 'from-purple-600 to-indigo-700'
+    },
+    {
+      id: 'design',
+      icon: '🎨',
+      title: 'UI/UX Design',
+      description: 'Our design team creates intuitive and engaging user interfaces that align with your brand and deliver exceptional user experiences.',
+      features: [
+        'User research & personas',
+        'Wireframing & prototyping',
+        'Visual design',
+        'Usability testing'
+      ],
+      color: 'from-indigo-600 to-purple-700'
+    },
+    {
+      id: 'development',
+      icon: '👨‍💻',
+      title: 'Development & Integration',
+      description: 'Our expert developers build your solution using the latest technologies and best practices while ensuring seamless integration.',
+      features: [
+        'Agile development methodology',
+        'Regular sprint reviews',
+        'Quality code standards',
+        'System integration'
+      ],
+      color: 'from-purple-500 to-indigo-600'
+    },
+    {
+      id: 'testing',
+      icon: '🧪',
+      title: 'Quality Assurance',
+      description: 'Rigorous testing ensures your software is robust, secure, and performs optimally across all intended environments.',
+      features: [
+        'Functional testing',
+        'Performance optimization',
+        'Security assessment',
+        'Cross-platform compatibility'
+      ],
+      color: 'from-indigo-500 to-purple-600'
+    },
+    {
+      id: 'deployment',
+      icon: '🚀',
+      title: 'Deployment & Training',
+      description: 'We handle the deployment process and provide comprehensive training to ensure your team can effectively use the new solution.',
+      features: [
+        'Smooth deployment strategy',
+        'User training sessions',
+        'Documentation handover',
+        'Knowledge transfer'
+      ],
+      color: 'from-purple-600 to-indigo-500'
+    },
+    {
+      id: 'support',
+      icon: '🛠️',
+      title: 'Ongoing Support',
+      description: 'Our relationship continues with dedicated support, maintenance, and regular updates to keep your software running flawlessly.',
+      features: [
+        'Technical support',
+        'Performance monitoring',
+        'Regular updates',
+        'Continuous improvement'
+      ],
+      color: 'from-indigo-600 to-purple-600'
+    }
+  ];
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15
+      }
+    }
+  };
+
+  // Generate floating shapes
+  const generateShapes = (count) => {
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      shape: Math.random() > 0.5 ? 'circle' : 'square',
+      size: Math.random() * 10 + 5,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      opacity: Math.random() * 0.15 + 0.05,
+      duration: Math.random() * 20 + 20,
+      delay: Math.random() * 10
+    }));
+  };
+
+  const shapes = generateShapes(10);
+
+  return (
+    <section 
+      id="client-workflow" 
+      ref={sectionRef}
+      className="relative py-16 md:py-24 bg-gradient-to-b from-gray-800 to-gray-900 overflow-hidden"
+      style={{ 
+        width: '100vw', 
+        maxWidth: '100%',
+        marginLeft: '50%',
+        transform: 'translateX(-50%)'
+      }}
+    >
+      {/* Floating background shapes */}
+      {shapes.map((shape) => (
+        <motion.div
+          key={shape.id}
+          className={`absolute ${shape.shape === 'circle' ? 'rounded-full' : 'rounded-md'} bg-purple-500/10`}
+          style={{
+            width: shape.size,
+            height: shape.size,
+            left: `${shape.x}%`,
+            top: `${shape.y}%`,
+            opacity: shape.opacity,
+          }}
+          animate={{
+            x: [0, shape.x > 50 ? 100 : -100],
+            y: [0, shape.y > 50 ? 50 : -50],
+            rotate: [0, 180],
+            opacity: [shape.opacity, 0],
+          }}
+          transition={{
+            duration: shape.duration,
+            delay: shape.delay,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+      ))}
+
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          className="flex flex-col items-center"
+        >
+          {/* Section header with animated elements */}
+          <motion.div
+            variants={itemVariants} 
+            className="flex items-center mb-6"
+          >
+            <motion.div
+              animate={{
+                rotate: [0, 360],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{
+                rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                scale: { duration: 3, repeat: Infinity, repeatType: "reverse" }
+              }}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-purple-900/50 text-2xl mr-3"
+            >
+              🤝
+            </motion.div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Our Client Workflow</h2>
+          </motion.div>
+
+          {/* Animated underline */}
+          <motion.div 
+            variants={itemVariants}
+            className="relative h-1 w-32 bg-purple-600 rounded-full mx-auto mb-8"
+          >
+            <motion.div
+              className="absolute h-1 w-16 bg-purple-400 rounded-full"
+              animate={{
+                x: [0, 16, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+            />
+          </motion.div>
+          
+          <motion.p 
+            variants={itemVariants}
+            className="text-lg text-gray-300 text-center max-w-2xl mb-12"
+          >
+            Our step-by-step approach ensures transparent communication and successful project delivery
+          </motion.p>
+
+          {/* Desktop workflow timeline */}
+          <div className="hidden lg:block w-full max-w-6xl mb-16">
+            <motion.div 
+              variants={itemVariants}
+              className="relative"
+            >
+              {/* Timeline line */}
+              <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-700 transform -translate-y-1/2">
+                <motion.div 
+                  className="absolute h-full bg-gradient-to-r from-purple-500 to-indigo-500"
+                  initial={{ width: '0%' }}
+                  animate={isInView ? { width: '100%' } : { width: '0%' }}
+                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                />
+              </div>
+              
+              {/* Timeline steps */}
+              <div className="flex justify-between">
+                {workflowSteps.map((step, idx) => (
+                  <motion.div
+                    key={step.id}
+                    className="relative flex flex-col items-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? 
+                      { opacity: 1, y: 0, transition: { delay: 0.2 + idx * 0.1 } } : 
+                      { opacity: 0, y: 20 }
+                    }
+                  >
+                    {/* Step bubble */}
+                    <motion.div
+                      className={`w-16 h-16 rounded-full bg-gradient-to-br ${step.color} flex items-center justify-center text-2xl relative z-10 mb-3 cursor-pointer border-2 ${idx === activeStep ? 'border-white' : 'border-transparent'}`}
+                      whileHover={{ scale: 1.1 }}
+                      animate={idx === activeStep ? 
+                        { scale: [1, 1.1, 1], boxShadow: '0 0 20px rgba(147, 51, 234, 0.5)' } : 
+                        { scale: 1, boxShadow: '0 0 0px rgba(147, 51, 234, 0)' }
+                      }
+                      transition={{ duration: 0.5 }}
+                      onClick={() => setActiveStep(idx)}
+                    >
+                      {step.icon}
+                      
+                      {/* Progress indicator */}
+                      {idx < activeStep && (
+                        <motion.div 
+                          className="absolute inset-0 bg-white rounded-full flex items-center justify-center"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <span className="text-purple-600 text-2xl">✓</span>
+                        </motion.div>
+                      )}
+                    </motion.div>
+                    
+                    {/* Step label */}
+                    <motion.div 
+                      className={`text-sm font-medium text-center ${idx === activeStep ? 'text-white' : 'text-gray-400'}`}
+                      animate={idx === activeStep ? 
+                        { scale: 1.05, color: '#ffffff' } : 
+                        { scale: 1, color: '#9ca3af' }
+                      }
+                    >
+                      {idx + 1}. {step.title.split(' ')[0]}
+                    </motion.div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+            
+            {/* Active step detail */}
+            <motion.div
+              key={activeStep}
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+              className={`mt-12 p-6 rounded-2xl bg-gradient-to-br ${workflowSteps[activeStep].color} border border-white/10`}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                <div className="md:col-span-1 flex justify-center">
+                  <motion.div
+                    className="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-5xl relative"
+                    animate={{
+                      y: [0, -10, 0],
+                      boxShadow: [
+                        '0 0 0 rgba(147, 51, 234, 0.3)',
+                        '0 0 20px rgba(147, 51, 234, 0.5)',
+                        '0 0 0 rgba(147, 51, 234, 0.3)'
+                      ]
+                    }}
+                    transition={{
+                      y: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+                      boxShadow: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+                    }}
+                  >
+                    {workflowSteps[activeStep].icon}
+                  </motion.div>
+                </div>
+                
+                <div className="md:col-span-3 text-white">
+                  <h3 className="text-2xl font-bold mb-2">{workflowSteps[activeStep].title}</h3>
+                  <p className="text-lg text-white/90 mb-4">{workflowSteps[activeStep].description}</p>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {workflowSteps[activeStep].features.map((feature, idx) => (
+                      <motion.div
+                        key={feature}
+                        className="flex items-center"
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: 0.3 + idx * 0.1 }}
+                      >
+                        <motion.div 
+                          className="w-2 h-2 bg-white rounded-full mr-2"
+                          animate={{
+                            scale: [1, 1.5, 1],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: idx * 0.5
+                          }}
+                        />
+                        <span>{feature}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+          
+          {/* Mobile workflow - vertical timeline */}
+          <div className="lg:hidden w-full max-w-md">
+            {workflowSteps.map((step, idx) => (
+              <motion.div
+                key={step.id}
+                className="relative"
+                initial={{ opacity: 0, x: -20 }}
+                animate={isInView ? 
+                  { opacity: 1, x: 0, transition: { delay: 0.2 + idx * 0.1 } } : 
+                  { opacity: 0, x: -20 }
+                }
+              >
+                <div className="flex mb-6">
+                  {/* Left side: step indicator */}
+                  <div className="mr-4 relative">
+                    {/* Vertical line */}
+                    {idx < workflowSteps.length - 1 && (
+                      <div className="absolute top-16 bottom-0 left-1/2 w-1 bg-gray-700 transform -translate-x-1/2">
+                        <motion.div 
+                          className="absolute top-0 w-full bg-gradient-to-b from-purple-500 to-indigo-500"
+                          initial={{ height: '0%' }}
+                          animate={isInView ? { height: '100%' } : { height: '0%' }}
+                          transition={{ duration: 0.5, delay: 0.3 + idx * 0.2 }}
+                        />
+                      </div>
+                    )}
+                    
+                    {/* Step bubble */}
+                    <motion.div
+                      className={`w-12 h-12 rounded-full bg-gradient-to-br ${step.color} flex items-center justify-center text-xl relative z-10`}
+                      whileHover={{ scale: 1.1 }}
+                      animate={{
+                        scale: [1, 1.05, 1],
+                        boxShadow: [
+                          '0 0 0px rgba(147, 51, 234, 0.3)',
+                          '0 0 15px rgba(147, 51, 234, 0.5)',
+                          '0 0 0px rgba(147, 51, 234, 0.3)'
+                        ]
+                      }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    >
+                      {step.icon}
+                    </motion.div>
+                  </div>
+                  
+                  {/* Right side: step info */}
+                  <div className="flex-1 p-4 bg-gray-800/50 backdrop-blur-sm rounded-lg border border-purple-500/20">
+                    <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
+                    <p className="text-sm text-gray-300 mb-3">{step.description}</p>
+                    
+                    <div className="grid grid-cols-1 gap-1">
+                      {step.features.slice(0, 2).map((feature, i) => (
+                        <motion.div
+                          key={feature}
+                          className="flex items-center text-sm text-gray-200"
+                          initial={{ opacity: 0, x: 5 }}
+                          animate={isInView ? 
+                            { opacity: 1, x: 0, transition: { delay: 0.4 + idx * 0.1 + i * 0.05 } } : 
+                            { opacity: 0, x: 5 }
+                          }
+                        >
+                          <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mr-2 flex-shrink-0" />
+                          <span>{feature}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Call to action */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-16 flex flex-col items-center"
+          >
+            <h3 className="text-xl md:text-2xl font-bold text-white text-center mb-6">Ready to Start Your Project?</h3>
+            
+            <motion.a
+  href="#contact"
+  className="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold rounded-lg shadow-lg shadow-purple-900/20"
+  style={{ textShadow: "0px 2px 4px rgba(0,0,0,0.6)" }}
+  whileHover={{
+    scale: 1.05,
+    boxShadow: "0 10px 25px -5px rgba(147, 51, 234, 0.5)"
+  }}
+  whileTap={{ scale: 0.98 }}
+>
+  Schedule a Consultation
+</motion.a>
+
+
+          </motion.div>
+          
+          {/* Bottom decoration */}
+          <div className="mt-12 flex justify-center gap-6">
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                className="w-2 h-2 rounded-full bg-purple-500"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.5, 1, 0.5]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: i * 0.3
+                }}
+              />
+            ))}
+          </div>
+        </motion.div>
+      </div>
+      
+
+        
+    </section>
+  );
+}

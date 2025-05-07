@@ -1,8 +1,8 @@
 import React from 'react';
-import HeroSection from '../components/HeroSection';
-import AboutUsSection from '../components/AboutUs';
-import ServicesSection from '../components/ServicesSection';
-import CtaSection from '../components/CTAsection';
+import HeroSection from '../components/Home/HeroSection';
+import AboutUsSection from '../components/Home/AboutUs';
+import ServicesSection from '../components/Home/ServicesSection';
+import CtaSection from '../components/Home/CTAsection';
 
 const Home = () => {
   return (
