@@ -1,5 +1,13 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { X } from "lucide-react";
+import shanmu from '../assets/shanmugapriya.png'
+import director from '../assets/director.jpg'
+import jagadesh from '../assets/jagadish.jpg'
+import jafar from '../assets/jafar.jpeg'
+import asiq from '../assets/asiq.png'
+import praveen from '../assets/praveen.png'
+
 
 export default function AboutUsSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -67,27 +75,117 @@ export default function AboutUsSection() {
 
   // Team members data
   const teamMembers = [
-    { id: 1, name: "Valli", position: "Founder & CEO", image: "/api/placeholder/120/120" },
-    { id: 2, name: "Member 1", position: "Lead Developer", image: "/api/placeholder/120/120" },
-    { id: 3, name: "Member 2", position: "Marketing Specialist", image: "/api/placeholder/120/120" },
-    { id: 4, name: "Member 3", position: "UX Designer", image: "/api/placeholder/120/120" }
+    // First row (with descriptions)
+    { 
+      id: 1, 
+      name: "Valli", 
+      position: "Founder & CEO", 
+      image: "/api/placeholder/120/120",
+      description: "As the visionary Founder and CEO, Valli leads the company with innovative strategies and forward-thinking perspectives. With extensive industry experience, they drive the company's mission and ensure alignment across all departments to achieve ambitious goals.",
+      hasDescription: true
+    },
+    { 
+      id: 2, 
+      name: "Mr. Sampath MA", 
+      position: "Director of Business Development", 
+      image: director,
+      description: "Our director leads the charge in finding new business opportunities, building partnerships, and growing the company’s client base. They focus on strategy, networking, and sealing deals that push the company forward.",
+      hasDescription: true
+    },
+    { 
+      id: 3, 
+      name: " JAGADISH B RAO", 
+      position: "Executive President", 
+      image: jagadesh,
+      description: "A results-driven entrepreneur and consultant with expertise in multiple industries: Events, FMCG, Tourism, Paint, Green Logistics, and Media Networks. With a Commerce degree, MBA, and a solid foundation from TVS Lakshmi Matric. School, Madurai,  Name has a long-standing record of impactful business development, cross-sector consulting, and innovative thinking Experienced in the film industry, with expertise in location scouting, budgeting for locations, and providing on-ground guidance for film shoots.",
+      hasDescription: true
+    },
+    { 
+      id: 4, 
+      name: "S.Jaffer sadiq", 
+      position: "Regional Project Director", 
+      image: jafar,
+      description: `Regional Project Director –S. Jaffer Sadiq brings a wealth of marketing and strategic leadership expertise, with extensive international experience spanning Asia Pacific, Europe, and the Middle East.
+He has business expansion initiatives in key regions, including:
+Vietnam & Saudi Arabia – spearheading strategic growth and regional expansion.
+UAE – overseeing operations across Dubai, Abu Dhabi, Sharjah, Ajman, Ras Al Khaimah, and Umm Al Quwain. Global Experience Includes: Southeast Asia: Singapore, Malaysia – Kuala Lumpur, Langkawi, Malacca, Sabah, Thailand – Bangkok, Pattaya, Phuket, Vietnam – Hanoi, Halong Bay, Ho Chi Minh City, Indonesia – Bali, Jakarta, Yogyakarta, nearby islands, Brunei
+South Asia: Sri Lanka – Colombo, Kandy, Nuwara Eliya, Negombo, Jaffna, Trincomalee Nepal – Kathmandu, Pokhara, Chitwan
+Middle East:
+Saudi Arabia – Mecca, Medina, Jeddah, Kuwait, Jordan
+East Asia: China – Beijing, Guangzhou, Shanghai
+Central Asia: Kazakhstan – Almaty
+Australia: Melbourne, Sydney, Adelaide, Perth, Gold Coast
+Europe (Schengen Region): Greece
+Other Regions: Israel, Egypt (Cairo)
+His deep understanding of cross-cultural markets and software-driven business growth makes him a key asset to Bluemine Technologies' global outreach`,
+      hasDescription: true
+    },
+    // Second row (without descriptions)
+    { 
+      id: 5, 
+      name: "Mohamed Asiq" ,
+      position: "Project Manager", 
+      image: asiq,
+      hasDescription: false
+    },
+    { 
+      id: 6, 
+      name: "Shanmuga priya", 
+      position:"Deveoper Lead", 
+      image: shanmu,
+      hasDescription: false
+    },
+    { 
+      id: 7, 
+      name: "Praveen Kumar", 
+      position: "SEO Specialist", 
+      image: praveen,
+      hasDescription: false
+    }
   ];
-
-  // Animation variants
+  const [expandedMemberId, setExpandedMemberId] = useState(null);
+  
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.2
+      }
+    }
+  };
+  
+  const childVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
       }
     }
   };
 
-  const childVariants = {
-    hidden: { y: 10, opacity: 0 },
-    visible: { y: 0, opacity: 1 }
+  const descriptionVariants = {
+    hidden: { height: 0, opacity: 0 },
+    visible: { 
+      height: "auto", 
+      opacity: 1,
+      transition: {
+        duration: 0.3
+      }
+    }
   };
+
+  const toggleDescription = (id) => {
+    if (expandedMemberId === id) {
+      setExpandedMemberId(null);
+    } else {
+      setExpandedMemberId(id);
+    }
+  };
+
+ 
 
   const fadeInUpVariant = {
     hidden: { opacity: 0, y: 15 },
@@ -97,6 +195,9 @@ export default function AboutUsSection() {
       transition: { duration: 0.6 }
     }
   };
+   // Split members into first and second row
+   const firstRowMembers = teamMembers.slice(0, 4);
+   const secondRowMembers = teamMembers.slice(4);
 
   return (
     <section 
@@ -386,96 +487,137 @@ export default function AboutUsSection() {
             </div>
           </motion.div>
 
-          {/* Team Section */}
-         {/* Team Section */}
-<motion.div
-  variants={containerVariants}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.2 }}
->
-  <motion.h3 
-    className="text-2xl md:text-3xl font-bold text-center text-white mb-8"
-    variants={childVariants}
-  >
-    Our Team
-  </motion.h3>
-  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-    {teamMembers.map((member, index) => (
-      <motion.div
-        key={member.id}
-        className={`bg-gray-800/50 backdrop-blur-sm border ${member.id === 1 ? 'border-blue-400/70' : 'border-gray-700/50'} p-4 rounded-lg text-center ${member.id === 1 ? 'relative' : ''}`}
-        variants={childVariants}
-        whileHover={{ 
-          y: -3,
-          boxShadow: "0 4px 12px -2px rgba(59, 130, 246, 0.2)"
-        }}
-      >
-        {member.id === 1 && (
-          <motion.div 
-            className="absolute -inset-1 bg-blue-500/20 rounded-lg blur-md -z-10"
-            animate={{
-              opacity: [0.2, 0.4, 0.2],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              repeatType: "reverse"
-            }}
-          />
-        )}
+          <div className="relative py-12 bg-gray-900">
+      <div className="container mx-auto px-4">
         <motion.div
-          className={`w-24 h-24 rounded-full overflow-hidden ${member.id === 1 ? 'border-3 border-blue-400' : 'border-2 border-blue-500/50'} mx-auto mb-4 ${member.id === 1 ? 'shadow-lg shadow-blue-500/30' : ''}`}
-          whileHover={{ scale: 1.05 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <img 
-            src={member.image} 
-            alt={member.name} 
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-        <h4 className={`${member.id === 1 ? 'text-blue-300' : 'text-blue-400'} font-medium text-lg`}>{member.name}</h4>
-        <p className="text-gray-400 text-sm">{member.position}</p>
-        {member.id === 1 && (
-          <div className="mt-2">
-            <span className="inline-block px-2 py-1 text-xs bg-blue-900/30 text-blue-300 rounded-full">Founder</span>
-          </div>
-        )}
-      </motion.div>
-    ))}
-  </div>
-</motion.div>
-
-          {/* Alliance Section */}
-          <motion.div 
-            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 md:p-8 mt-12"
-            variants={fadeInUpVariant}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
+          <motion.h3
+            className="text-2xl md:text-3xl font-bold text-center text-white mb-8"
+            variants={childVariants}
           >
-            <h3 className="text-2xl font-bold text-white mb-4">Alliances</h3>
-            <p className="text-gray-300">
-              We believe in collaboration and innovation. Our network of industry experts supports us in delivering comprehensive digital and software solutions, ensuring you get everything your business needs to thrive under one roof.
-            </p>
-            <motion.div
-              className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              {[1, 2, 3, 4].map((item) => (
-                <motion.div 
-                  key={item}
-                  className="h-16 bg-gray-700/30 rounded-md flex items-center justify-center"
+            Our Team
+          </motion.h3>
+          
+          {/* First row - 4 cards with descriptions */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
+            {firstRowMembers.map((member) => (
+              <motion.div
+                key={member.id}
+                className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-4 rounded-lg text-center"
+                variants={childVariants}
+                whileHover={{
+                  y: -3,
+                  boxShadow: "0 4px 12px -2px rgba(59, 130, 246, 0.2)"
+                }}
+              >
+                <motion.div
+                  className="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-500/50 mx-auto mb-4"
                   whileHover={{ scale: 1.05 }}
                 >
-                  <span className="text-gray-400">Partner {item}</span>
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-full object-cover"
+                  />
                 </motion.div>
-              ))}
+                <h4 className="text-blue-400 font-medium text-lg">
+                  {member.name}
+                </h4>
+                <p className="text-gray-400 text-sm">{member.position}</p>
+                
+                {/* Description section */}
+                <motion.div
+                  className="overflow-hidden"
+                  initial="hidden"
+                  animate={expandedMemberId === member.id ? "visible" : "hidden"}
+                  variants={descriptionVariants}
+                >
+                  <div className="mt-4 pt-3 border-t border-gray-700/50">
+                    <p className="text-gray-300 text-sm text-left">
+                      {member.description}
+                    </p>
+                  </div>
+                </motion.div>
+                
+                <div className="mt-3">
+                  <button 
+                    onClick={() => toggleDescription(member.id)}
+                    className="text-xs text-blue-300 hover:text-blue-200 transition-colors duration-300 cursor-pointer"
+                  >
+                    {expandedMemberId === member.id ? "Read less" : "Read more"}
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Second row - 3 cards centered, no descriptions */}
+          <section className="py-16 bg-gray-900 text-white">
+      <div className="container mx-auto px-4">
+        {/* Title Section */}
+        <div className="text-center mb-12">
+          <motion.h2 
+            className="text-3xl md:text-4xl font-bold text-blue-400 mb-3"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            At the heart of BlueMine Tech
+          </motion.h2>
+          <motion.p 
+            className="text-xl md:text-2xl text-gray-300 font-light"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            The team that turns ambition into action
+          </motion.p>
+        </div>
+
+        {/* Team Grid */}
+        <motion.div 
+          className="grid grid-cols-3 max-w-3xl mx-auto gap-4 md:gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible" 
+        >
+          {secondRowMembers.map((member) => (
+            <motion.div
+              key={member.id}
+              className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-4 rounded-lg text-center"
+              variants={childVariants}
+              whileHover={{
+                y: -3,
+                boxShadow: "0 4px 12px -2px rgba(59, 130, 246, 0.2)"
+              }}
+            >
+              <motion.div
+                className="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-500/50 mx-auto mb-4"
+                whileHover={{ scale: 1.05 }}
+              >
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+              <h4 className="text-blue-400 font-medium text-lg">
+                {member.name}
+              </h4>
+              <p className="text-gray-400 text-sm">{member.position}</p>
             </motion.div>
-          </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+        </motion.div>
+      </div>
+    </div>
+         
 
           {/* Call to Action */}
           <motion.div 
