@@ -629,7 +629,7 @@ His deep understanding of cross-cultural markets and software-driven business gr
           >
             <h3 className="text-xl md:text-2xl text-white mb-6">Ready to transform your digital presence?</h3>
             <motion.a
-              href="#contact"
+              href="/contact"
               className="px-8 py-3 bg-blue-200 hover:bg-blue-300 text-white font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all inline-block"
               whileHover={{
                 scale: 1.05,
