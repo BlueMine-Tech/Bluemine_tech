@@ -555,65 +555,65 @@ His deep understanding of cross-cultural markets and software-driven business gr
             ))}
           </div>
           
-          {/* Second row - 3 cards centered, no descriptions */}
+          {/* Second row - 3 cards centered, responsive on small devices */}
           <section className="py-16 bg-gray-900 text-white">
-      <div className="container mx-auto px-4">
-        {/* Title Section */}
-        <div className="text-center mb-12">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-bold text-blue-400 mb-3"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            At the heart of BlueMine Tech
-          </motion.h2>
-          <motion.p 
-            className="text-xl md:text-2xl text-gray-300 font-light"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            The team that turns ambition into action
-          </motion.p>
-        </div>
+            <div className="container mx-auto px-4">
+              {/* Title Section */}
+              <div className="text-center mb-12">
+                <motion.h2 
+                  className="text-3xl md:text-4xl font-bold text-blue-400 mb-3"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  At the heart of BlueMine Tech
+                </motion.h2>
+                <motion.p 
+                  className="text-xl md:text-2xl text-gray-300 font-light"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  The team that turns ambition into action
+                </motion.p>
+              </div>
 
-        {/* Team Grid */}
-        <motion.div 
-          className="grid grid-cols-3 max-w-3xl mx-auto gap-4 md:gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible" 
-        >
-          {secondRowMembers.map((member) => (
-            <motion.div
-              key={member.id}
-              className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-4 rounded-lg text-center"
-              variants={childVariants}
-              whileHover={{
-                y: -3,
-                boxShadow: "0 4px 12px -2px rgba(59, 130, 246, 0.2)"
-              }}
-            >
-              <motion.div
-                className="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-500/50 mx-auto mb-4"
-                whileHover={{ scale: 1.05 }}
+              {/* Team Grid - Fixed for responsiveness */}
+              <motion.div 
+                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-3xl mx-auto gap-4 md:gap-6"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible" 
               >
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover"
-                />
+                {secondRowMembers.map((member) => (
+                  <motion.div
+                    key={member.id}
+                    className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 p-4 rounded-lg text-center"
+                    variants={childVariants}
+                    whileHover={{
+                      y: -3,
+                      boxShadow: "0 4px 12px -2px rgba(59, 130, 246, 0.2)"
+                    }}
+                  >
+                    <motion.div
+                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-blue-500/50 mx-auto mb-4"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </motion.div>
+                    <h4 className="text-blue-400 font-medium text-lg">
+                      {member.name}
+                    </h4>
+                    <p className="text-gray-400 text-sm">{member.position}</p>
+                  </motion.div>
+                ))}
               </motion.div>
-              <h4 className="text-blue-400 font-medium text-lg">
-                {member.name}
-              </h4>
-              <p className="text-gray-400 text-sm">{member.position}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
+            </div>
+          </section>
         </motion.div>
       </div>
     </div>
