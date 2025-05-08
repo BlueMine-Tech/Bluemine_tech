@@ -29,7 +29,6 @@ export default function Navbar() {
     { title: 'Home', url: '/' },
     { title: 'About Us', url: '/about' },
     { title: 'Services', url: '/services' },
-    { title: 'Team', url: '/team' },
     { title: 'Contact', url: '/contact' }
   ];
 
