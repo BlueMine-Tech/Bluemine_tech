@@ -246,7 +246,7 @@ export default function HeroSection() {
             </motion.a>
 
             <motion.a
-              href="#contact"
+              href="/contact"
               className="px-6 sm:px-8 py-3 border-2 border-blue-400 text-blue-400 font-medium rounded-lg transition-all"
               whileHover={{
                 scale: 1.05,

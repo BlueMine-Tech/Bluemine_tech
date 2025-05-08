@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ServicesSection() {
   const [hoveredService, setHoveredService] = useState(null);
@@ -517,8 +518,10 @@ export default function ServicesSection() {
               }}
             />
             
-            {/* Button text */}
-            <span className="relative z-10 text-amber-50">Get Started</span>
+            <Link to="/contact" className="relative inline-block">
+  <span className="relative z-10 text-amber-50">Get Started</span>
+</Link>
+      
           </motion.a>
           
           {/* Subtle pulsing shadow under button */}
