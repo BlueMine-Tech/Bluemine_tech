@@ -8,6 +8,9 @@ import jafar from '../assets/jafar.jpeg'
 import asiq from '../assets/asiq.png'
 import praveen from '../assets/praveen.png'
 import founder from '../assets/founder.png'
+import profile from "../assets/profile.jpg"
+import company from '../assets/company.png'
+
 
 export default function AboutUsSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -146,14 +149,14 @@ His deep understanding of cross-cultural markets and software-driven business gr
       id: 7, 
       name: "Ashwin", 
       position: "Visual artist", 
-      image:"",
+      image:profile,
       hasDescription: false
     },
       { 
       id: 7, 
       name: "Abi kumar", 
       position: "SMO ", 
-      image: "",
+      image: profile,
       hasDescription: false
     }
   ];
@@ -371,7 +374,7 @@ His deep understanding of cross-cultural markets and software-driven business gr
                   <span>BlueMine</span>
                 </motion.div>
                 <img 
-                  src="/api/placeholder/600/400" 
+                  src={company}
                   alt="Team at work" 
                   className="w-full h-full object-cover opacity-70"
                 />
