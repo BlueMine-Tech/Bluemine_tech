@@ -90,7 +90,7 @@ export default function AboutUsSection() {
     },
     { 
       id: 2, 
-      name: "Mr. Sampath ", 
+      name: "Mr. Sampath Kumar", 
       position: "Director of Business Development", 
       image: director,
       description: "Our director leads the charge in finding new business opportunities, building partnerships, and growing the company’s client base. They focus on strategy, networking, and sealing deals that push the company forward.",
