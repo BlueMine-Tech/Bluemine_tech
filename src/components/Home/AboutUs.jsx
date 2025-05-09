@@ -244,7 +244,7 @@ export default function AboutUsSection() {
           >
             <motion.div variants={fadeInUpVariants}>
               <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                <span className="text-blue-400 font-medium">Bluemine Technologies</span> is a fresh, innovative digital marketing and software solutions company based in India. We focus on delivering impactful digital campaigns and technology tools that drive real business results.
+                <span className="text-blue-400 font-medium">Bluemine Technologies</span> is a fresh, innovative software solutions and  digital marketing company based in India. We focus on delivering impactful digital campaigns and technology tools that drive real business results.
               </p>
             </motion.div>
 

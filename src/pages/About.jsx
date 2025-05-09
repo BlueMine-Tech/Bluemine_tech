@@ -8,6 +8,7 @@ import jafar from '../assets/jafar.jpeg'
 import asiq from '../assets/asiq.png'
 import praveen from '../assets/praveen.png'
 import founder from '../assets/founder.png'
+import divya from '../assets/divya.jpeg'
 import profile from "../assets/profile.jpg"
 import company from '../assets/company.png'
 
@@ -141,22 +142,29 @@ His deep understanding of cross-cultural markets and software-driven business gr
     { 
       id: 7, 
       name: "Praveen Kumar", 
-      position: "SEO Specialist", 
+      position: "SEO Strategist", 
       image: praveen,
       hasDescription: false
     },
       { 
-      id: 7, 
+      id: 8, 
       name: "Ashwin", 
-      position: "Visual artist", 
+      position: "Visual Art Lead", 
       image:profile,
       hasDescription: false
     },
       { 
-      id: 7, 
+      id: 9, 
       name: "Abi kumar", 
-      position: "SMO ", 
+      position: "SMO  strategist lead", 
       image: profile,
+      hasDescription: false
+    },
+     { 
+      id: 9, 
+      name: "DivyaBharathi", 
+      position: "Dubbing Coordinator", 
+      image: divya,
       hasDescription: false
     }
   ];
@@ -332,7 +340,7 @@ His deep understanding of cross-cultural markets and software-driven business gr
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4, duration: 0.8 }}
                 >
-                  BlueMine Technologies is a dynamic digital marketing and software solutions company based in India. We are committed to delivering impactful digital campaigns and robust technology tools that drive real business results across industries.
+                  BlueMine Technologies is a dynamic  software solutions and digital marketing company based in India. We are committed to delivering impactful digital campaigns and robust technology tools that drive real business results across industries.
                 </motion.p>
                 <motion.div
                   className="flex items-center mt-6"

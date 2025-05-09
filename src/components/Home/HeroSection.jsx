@@ -223,7 +223,7 @@ export default function HeroSection() {
             transition={{ delay: 0.5, duration: 0.8 }}
           >
             At BlueMine Technologies, we specialize in driving business growth through
-            strategic digital marketing and advanced software solutions.
+            advanced software solutions and  strategic digital marketing.
           </motion.p>
 
           {/* Call to Action Buttons with improved animations */}
