@@ -7,7 +7,7 @@ import jagadesh from '../assets/jagadish.jpg'
 import jafar from '../assets/jafar.jpeg'
 import asiq from '../assets/asiq.png'
 import praveen from '../assets/praveen.png'
-
+import founder from '../assets/founder.png'
 
 export default function AboutUsSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -80,7 +80,7 @@ export default function AboutUsSection() {
       id: 1, 
       name: "Valli", 
       position: "Founder & CEO", 
-      image: "/api/placeholder/120/120",
+      image: founder,
       description: "As the visionary Founder and CEO, Valli leads the company with innovative strategies and forward-thinking perspectives. With extensive industry experience, they drive the company's mission and ensure alignment across all departments to achieve ambitious goals.",
       hasDescription: true
     },
@@ -140,6 +140,20 @@ His deep understanding of cross-cultural markets and software-driven business gr
       name: "Praveen Kumar", 
       position: "SEO Specialist", 
       image: praveen,
+      hasDescription: false
+    },
+      { 
+      id: 7, 
+      name: "Ashwin", 
+      position: "Visual artist", 
+      image:"",
+      hasDescription: false
+    },
+      { 
+      id: 7, 
+      name: "Abi kumar", 
+      position: "SMO ", 
+      image: "",
       hasDescription: false
     }
   ];
