@@ -9,8 +9,9 @@ const Services = () => {
   return (
     <div>
       <ServicesBanner/>
+         <SoftwareSolutionsSection/>
       <DigitalMarketingServices/>
-      <SoftwareSolutionsSection/>
+   
       <ClientWorkflowSection/>
       <CallToActionSection/>
     </div>

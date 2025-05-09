@@ -70,8 +70,9 @@ export default function HeroSection() {
 
   // Features with more engaging icons
   const features = [
+      { title: "Software Solutions", icon: "💻", description: "Custom development" },
     { title: "Digital Marketing", icon: "💼", description: "Grow your reach" },
-    { title: "Software Solutions", icon: "💻", description: "Custom development" },
+  
     { title: "24/7 Support", icon: "🔧", description: "Always available" },
     { title: "Data Analytics", icon: "📊", description: "Informed decisions" }
   ];

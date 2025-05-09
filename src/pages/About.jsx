@@ -81,7 +81,7 @@ export default function AboutUsSection() {
     // First row (with descriptions)
     { 
       id: 1, 
-      name: "Valli", 
+      name: "Vallimyle Sevanoo", 
       position: "Founder & CEO", 
       image: founder,
       description: "As the visionary Founder and CEO, Valli leads the company with innovative strategies and forward-thinking perspectives. With extensive industry experience, they drive the company's mission and ensure alignment across all departments to achieve ambitious goals.",
@@ -89,7 +89,7 @@ export default function AboutUsSection() {
     },
     { 
       id: 2, 
-      name: "Mr. Sampath MA", 
+      name: "Mr. Sampath ", 
       position: "Director of Business Development", 
       image: director,
       description: "Our director leads the charge in finding new business opportunities, building partnerships, and growing the company’s client base. They focus on strategy, networking, and sealing deals that push the company forward.",
