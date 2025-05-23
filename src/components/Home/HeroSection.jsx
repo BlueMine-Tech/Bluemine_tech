@@ -61,7 +61,7 @@ export default function HeroSection() {
       size: Math.random() * 20 + 5,
       x: Math.random() * 100, // percentage of screen width
       y: Math.random() * 100, // percentage of screen height
-      opacity: Math.random() * 0.5,
+      opacity: Math.random() * 0.3 + 0.1,
       duration: Math.random() * 10 + 15,
     }));
   };
@@ -70,9 +70,8 @@ export default function HeroSection() {
 
   // Features with more engaging icons
   const features = [
-      { title: "Software Solutions", icon: "💻", description: "Custom development" },
+    { title: "Software Solutions", icon: "💻", description: "Custom development" },
     { title: "Digital Marketing", icon: "💼", description: "Grow your reach" },
-  
     { title: "24/7 Support", icon: "🔧", description: "Always available" },
     { title: "Data Analytics", icon: "📊", description: "Informed decisions" }
   ];
@@ -96,8 +95,9 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 overflow-hidden pt-16 sm:pt-20 md:pt-24 w-full"
+      className="relative min-h-screen overflow-hidden pt-16 sm:pt-20 md:pt-24 w-full"
       style={{ 
+        background: `linear-gradient(135deg, #FCFAEE 0%, #ECDFCC 50%, #FCFAEE 100%)`,
         width: '100vw', 
         maxWidth: '100vw',
         marginLeft: '50%',
@@ -108,13 +108,13 @@ export default function HeroSection() {
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="absolute rounded-full bg-blue-500/10"
+          className="absolute rounded-full"
           style={{
+            background: `rgba(218, 131, 89, ${particle.opacity})`,
             width: particle.size,
             height: particle.size,
             left: `${particle.x}%`,
             top: `${particle.y}%`,
-            opacity: particle.opacity,
           }}
           animate={{
             y: [0, -500],
@@ -128,11 +128,14 @@ export default function HeroSection() {
         />
       ))}
 
-      {/* Animated background gradient */}
+      {/* Animated background gradient overlay */}
       <motion.div 
-        className="absolute inset-0 bg-gradient-radial from-blue-900/20 to-transparent"
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(circle at 50% 50%, rgba(218, 131, 89, 0.15) 0%, transparent 70%)`
+        }}
         animate={{
-          opacity: [0.5, 0.3, 0.5],
+          opacity: [0.3, 0.6, 0.3],
         }}
         transition={{
           duration: 8,
@@ -144,7 +147,11 @@ export default function HeroSection() {
       {/* Radial glow following mouse (disabled on mobile) */}
       {!isMobile && (
         <motion.div
-          className="absolute w-96 h-96 rounded-full bg-blue-500/10 blur-3xl pointer-events-none"
+          className="absolute w-96 h-96 rounded-full pointer-events-none"
+          style={{
+            background: `radial-gradient(circle, rgba(218, 131, 89, 0.2) 0%, transparent 70%)`,
+            filter: 'blur(40px)'
+          }}
           animate={{
             x: mousePosition.x - 192,
             y: mousePosition.y - 192,
@@ -163,7 +170,8 @@ export default function HeroSection() {
             transition={{ duration: 0.8 }}
             className="mt-6 sm:mt-0"
           >
-            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+                style={{ color: '#8B4513' }}>
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -175,7 +183,8 @@ export default function HeroSection() {
               <div className="h-16 sm:h-20 md:h-24 flex justify-center items-center">
                 <motion.span
                   key={currentWordIndex}
-                  className="text-blue-400 absolute"
+                  className="absolute"
+                  style={{ color: '#DA8359' }}
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -20, opacity: 0 }}
@@ -197,13 +206,15 @@ export default function HeroSection() {
           {/* Animated Underline */}
           <div className="relative flex justify-center mt-4">
             <motion.div
-              className="h-1 bg-blue-500 rounded-full mx-auto"
+              className="h-1 rounded-full mx-auto"
+              style={{ backgroundColor: '#DA8359' }}
               initial={{ width: 0 }}
               animate={{ width: "80px" }}
               transition={{ delay: 0.8, duration: 0.8 }}
             />
             <motion.div
-              className="absolute h-1 bg-blue-300 rounded-full mx-auto"
+              className="absolute h-1 rounded-full mx-auto"
+              style={{ backgroundColor: '#B8956A' }}
               initial={{ width: 0 }}
               animate={{ width: "40px" }}
               transition={{ 
@@ -217,13 +228,14 @@ export default function HeroSection() {
 
           {/* Subheading with better responsive text */}
           <motion.p
-            className="mt-6 text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto px-4"
+            className="mt-6 text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4"
+            style={{ color: '#6B4423' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
             At BlueMine Technologies, we specialize in driving business growth through
-            advanced software solutions and  strategic digital marketing.
+            advanced software solutions and strategic digital marketing.
           </motion.p>
 
           {/* Call to Action Buttons with improved animations */}
@@ -235,11 +247,16 @@ export default function HeroSection() {
           >
             <motion.a
               href="#services"
-              className="px-6 sm:px-8 py-3 bg-blue-900 text-amber-50 font-bold rounded-lg shadow-lg shadow-blue-500/20 transition-all"
+              className="px-6 sm:px-8 py-3 font-bold rounded-lg shadow-lg transition-all"
+              style={{ 
+                backgroundColor: '#DA8359',
+                color: '#FCFAEE',
+                boxShadow: '0 4px 15px rgba(218, 131, 89, 0.3)'
+              }}
               whileHover={{
                 scale: 1.05,
-                backgroundColor: "#2563eb",
-                boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)"
+                backgroundColor: '#C66A44',
+                boxShadow: '0 10px 25px rgba(218, 131, 89, 0.4)'
               }}
               whileTap={{ scale: 0.98 }}
             >
@@ -248,11 +265,17 @@ export default function HeroSection() {
 
             <motion.a
               href="/contact"
-              className="px-6 sm:px-8 py-3 border-2 border-blue-400 text-blue-400 font-medium rounded-lg transition-all"
+              className="px-6 sm:px-8 py-3 border-2 font-medium rounded-lg transition-all"
+              style={{ 
+                borderColor: '#DA8359',
+                color: '#DA8359',
+                backgroundColor: 'rgba(252, 250, 238, 0.8)'
+              }}
               whileHover={{
                 scale: 1.05,
-                borderColor: "#60a5fa",
-                color: "#60a5fa"
+                borderColor: '#C66A44',
+                color: '#C66A44',
+                backgroundColor: '#FCFAEE'
               }}
               whileTap={{ scale: 0.98 }}
             >
@@ -270,12 +293,17 @@ export default function HeroSection() {
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
-                className="flex flex-col items-center p-3 sm:p-4 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:border-blue-500/30 transition-all"
+                className="flex flex-col items-center p-3 sm:p-4 rounded-lg backdrop-blur-sm border transition-all"
+                style={{
+                  backgroundColor: 'rgba(252, 250, 238, 0.7)',
+                  borderColor: 'rgba(236, 223, 204, 0.8)'
+                }}
                 variants={childVariants}
                 whileHover={{ 
-                  y: -5, 
-                  backgroundColor: "rgba(30, 41, 59, 0.7)",
-                  boxShadow: "0 4px 20px -2px rgba(59, 130, 246, 0.2)"
+                  y: -5,
+                  backgroundColor: 'rgba(252, 250, 238, 0.9)',
+                  borderColor: 'rgba(218, 131, 89, 0.5)',
+                  boxShadow: '0 4px 20px rgba(218, 131, 89, 0.2)'
                 }}
               >
                 <motion.div
@@ -292,8 +320,14 @@ export default function HeroSection() {
                 >
                   {feature.icon}
                 </motion.div>
-                <h3 className="font-medium text-blue-400 text-xs sm:text-sm md:text-base">{feature.title}</h3>
-                <p className="text-gray-400 text-xs mt-1 hidden sm:block">{feature.description}</p>
+                <h3 className="font-medium text-xs sm:text-sm md:text-base"
+                    style={{ color: '#DA8359' }}>
+                  {feature.title}
+                </h3>
+                <p className="text-xs mt-1 hidden sm:block"
+                   style={{ color: '#8B6F47' }}>
+                  {feature.description}
+                </p>
               </motion.div>
             ))}
           </motion.div>
@@ -314,9 +348,13 @@ export default function HeroSection() {
             }}
           >
             <div className="flex flex-col items-center">
-              <span className="text-gray-400 text-xs sm:text-sm mb-2">Scroll Down</span>
+              <span className="text-xs sm:text-sm mb-2"
+                    style={{ color: '#8B6F47' }}>
+                Scroll Down
+              </span>
               <motion.svg
-                className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500"
+                className="w-5 h-5 sm:w-6 sm:h-6"
+                style={{ color: '#DA8359' }}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -342,14 +380,18 @@ export default function HeroSection() {
             {['⚡', '🚀', '✨', '🔍', '🔥'].map((icon, i) => (
               <motion.div
                 key={i}
-                className="absolute text-lg opacity-10"
+                className="absolute text-lg"
+                style={{ 
+                  opacity: 0.15,
+                  color: '#DA8359'
+                }}
                 initial={{ 
                   x: Math.random() * 100 + '%', 
                   y: Math.random() * 100 + '%' 
                 }}
                 animate={{
                   y: [0, -100],
-                  opacity: [0.2, 0],
+                  opacity: [0.15, 0],
                   rotate: [0, 360]
                 }}
                 transition={{
@@ -375,7 +417,7 @@ export default function HeroSection() {
         >
           <motion.path 
             d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0Z"
-            fill="rgba(30, 41, 59, 0.8)"
+            fill="rgba(236, 223, 204, 0.6)"
             animate={{
               d: [
                 "M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0Z",

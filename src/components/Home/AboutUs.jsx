@@ -80,11 +80,11 @@ export default function AboutUsSection() {
   const cardVariants = {
     initial: { 
       scale: 1,
-      boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
+      boxShadow: "0 10px 15px -3px rgba(218, 131, 89, 0.1), 0 4px 6px -2px rgba(218, 131, 89, 0.05)"
     },
     hover: { 
       scale: 1.03, 
-      boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      boxShadow: "0 20px 25px -5px rgba(218, 131, 89, 0.2), 0 10px 10px -5px rgba(218, 131, 89, 0.1)",
       transition: { 
         type: "spring", 
         stiffness: 400, 
@@ -107,13 +107,19 @@ export default function AboutUsSection() {
     <section 
       id="about" 
       ref={sectionRef}
-      className="relative py-20 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 overflow-hidden"
+      className="relative py-20 overflow-hidden"
+      style={{ 
+        background: `linear-gradient(135deg, #FCFAEE 0%, #ECDFCC 30%, #FCFAEE 70%, #ECDFCC 100%)`
+      }}
     >
       {/* Animated background particles */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Dynamic background blobs based on scroll */}
         <motion.div 
-          className="absolute right-0 top-40 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
+          className="absolute right-0 top-40 w-96 h-96 rounded-full blur-3xl"
+          style={{ 
+            background: 'rgba(218, 131, 89, 0.15)'
+          }}
           animate={{
             y: [0, 20, 0],
             opacity: [0.6, 0.8, 0.6],
@@ -123,12 +129,15 @@ export default function AboutUsSection() {
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          style={{ 
+          style1={{ 
             x: xMouse
           }}
         />
         <motion.div 
-          className="absolute -left-20 top-20 w-80 h-80 bg-purple-600/5 rounded-full blur-3xl"
+          className="absolute -left-20 top-20 w-80 h-80 rounded-full blur-3xl"
+          style={{ 
+            background: 'rgba(236, 223, 204, 0.4)'
+          }}
           animate={{
             y: [0, -15, 0],
             opacity: [0.3, 0.5, 0.3],
@@ -139,12 +148,15 @@ export default function AboutUsSection() {
             ease: "easeInOut",
             delay: 1
           }}
-          style={{ 
+          style2={{ 
             x: -xMouse * 0.5
           }}
         />
         <motion.div 
-          className="absolute left-1/3 bottom-20 w-72 h-72 bg-cyan-500/8 rounded-full blur-3xl"
+          className="absolute left-1/3 bottom-20 w-72 h-72 rounded-full blur-3xl"
+          style={{ 
+            background: 'rgba(218, 131, 89, 0.1)'
+          }}
           animate={{
             y: [0, 10, 0],
             opacity: [0.4, 0.6, 0.4],
@@ -155,19 +167,27 @@ export default function AboutUsSection() {
             ease: "easeInOut",
             delay: 2
           }}
-          style={{ 
+          style3={{ 
             x: xMouse * 0.3
           }}
         />
         
-        {/* Subtle grid pattern overlay for texture */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        {/* Subtle pattern overlay for texture */}
+        <div 
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23DA8359' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E")`
+          }}
+        />
       </div>
 
       {/* Animated connector from previous section */}
       <div className="relative z-10">
         <motion.div 
-          className="w-1 h-24 bg-gradient-to-b from-blue-600 to-blue-400/0 mx-auto -mt-20"
+          className="w-1 h-24 mx-auto -mt-20"
+          style={{
+            background: `linear-gradient(to bottom, #DA8359, rgba(218, 131, 89, 0))`
+          }}
           initial={{ height: 0, opacity: 0 }}
           whileInView={{ height: 96, opacity: 1 }}
           viewport={{ once: true }}
@@ -175,7 +195,8 @@ export default function AboutUsSection() {
         />
         
         <motion.div
-          className="w-6 h-6 rounded-full bg-blue-500 mx-auto -mt-3 relative z-10"
+          className="w-6 h-6 rounded-full mx-auto -mt-3 relative z-10"
+          style={{ backgroundColor: '#DA8359' }}
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           viewport={{ once: true }}
@@ -187,7 +208,8 @@ export default function AboutUsSection() {
           }}
         >
           <motion.div
-            className="absolute inset-0 rounded-full bg-blue-400"
+            className="absolute inset-0 rounded-full"
+            style={{ backgroundColor: 'rgba(218, 131, 89, 0.7)' }}
             animate={{ 
               scale: [1, 1.5, 1],
               opacity: [0.8, 0, 0.8]
@@ -211,22 +233,42 @@ export default function AboutUsSection() {
         >
           <motion.h2 
             className="text-5xl md:text-6xl font-bold mb-4"
+            style={{ color: '#8B4513' }}
             variants={itemVariants}
           >
-            About <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">Us</span>
+            About <span 
+              className="bg-clip-text text-transparent"
+              style={{
+                background: `linear-gradient(135deg, #DA8359, #B8956A)`,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}
+            >
+              Us
+            </span>
           </motion.h2>
           
           <motion.div 
             className="flex justify-center items-center gap-2 mb-6"
             variants={itemVariants}
           >
-            <span className="h-1 w-12 bg-blue-500 rounded-full"></span>
-            <div className="h-2 w-2 bg-blue-400 rounded-full"></div>
-            <span className="h-1 w-12 bg-blue-500 rounded-full"></span>
+            <span 
+              className="h-1 w-12 rounded-full"
+              style={{ backgroundColor: '#DA8359' }}
+            />
+            <div 
+              className="h-2 w-2 rounded-full"
+              style={{ backgroundColor: '#B8956A' }}
+            />
+            <span 
+              className="h-1 w-12 rounded-full"
+              style={{ backgroundColor: '#DA8359' }}
+            />
           </motion.div>
           
           <motion.p
-            className="text-gray-300 max-w-2xl mx-auto text-lg"
+            className="max-w-2xl mx-auto text-lg"
+            style={{ color: '#6B4423' }}
             variants={itemVariants}
           >
             We're passionate about creating digital experiences that leave a lasting impression.
@@ -243,8 +285,16 @@ export default function AboutUsSection() {
             className="space-y-8"
           >
             <motion.div variants={fadeInUpVariants}>
-              <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                <span className="text-blue-400 font-medium">Bluemine Technologies</span> is a fresh, innovative software solutions and  digital marketing company based in India. We focus on delivering impactful digital campaigns and technology tools that drive real business results.
+              <p 
+                className="text-lg leading-relaxed mb-6"
+                style={{ color: '#6B4423' }}
+              >
+                <span 
+                  className="font-medium"
+                  style={{ color: '#DA8359' }}
+                >
+                  Bluemine Technologies
+                </span> is a fresh, innovative software solutions and digital marketing company based in India. We focus on delivering impactful digital campaigns and technology tools that drive real business results.
               </p>
             </motion.div>
 
@@ -258,11 +308,19 @@ export default function AboutUsSection() {
             >
               <motion.div
                 variants={cardVariants}
-                className="bg-gradient-to-r from-gray-800/80 to-gray-800/50 backdrop-blur-sm rounded-xl p-6 border-l-4 border-blue-500 shadow-lg"
+                className="backdrop-blur-sm rounded-xl p-6 border-l-4 shadow-lg"
+                style={{
+                  background: 'rgba(252, 250, 238, 0.8)',
+                  borderLeftColor: '#DA8359'
+                }}
               >
                 <div className="flex items-start gap-3">
                   <motion.div 
-                    className="p-2 bg-blue-500/20 rounded-lg text-blue-400"
+                    className="p-2 rounded-lg"
+                    style={{ 
+                      backgroundColor: 'rgba(218, 131, 89, 0.2)',
+                      color: '#DA8359'
+                    }}
                     whileHover={{ rotate: [0, -10, 10, -10, 0] }}
                     transition={{ duration: 0.5 }}
                   >
@@ -271,13 +329,21 @@ export default function AboutUsSection() {
                     </svg>
                   </motion.div>
                   <div>
-                    <h3 className="text-2xl font-bold text-blue-400 mb-3">Our Vision</h3>
-                    <p className="text-gray-300">
+                    <h3 
+                      className="text-2xl font-bold mb-3"
+                      style={{ color: '#DA8359' }}
+                    >
+                      Our Vision
+                    </h3>
+                    <p style={{ color: '#6B4423' }}>
                       To be the go-to partner for businesses aiming for digital excellence through intelligent marketing strategies and tailor-made software solutions.
                     </p>
                     
                     <motion.div 
-                      className="w-0 h-0.5 bg-gradient-to-r from-blue-500 to-blue-300 mt-3 group-hover:w-full"
+                      className="w-0 h-0.5 mt-3 group-hover:w-full"
+                      style={{
+                        background: `linear-gradient(to right, #DA8359, #B8956A)`
+                      }}
                       transition={{ duration: 0.3, delay: 0.1 }}
                     />
                   </div>
@@ -294,11 +360,19 @@ export default function AboutUsSection() {
             >
               <motion.div
                 variants={cardVariants}
-                className="bg-gradient-to-r from-gray-800/80 to-gray-800/50 backdrop-blur-sm rounded-xl p-6 border-l-4 border-blue-400 shadow-lg"
+                className="backdrop-blur-sm rounded-xl p-6 border-l-4 shadow-lg"
+                style={{
+                  background: 'rgba(252, 250, 238, 0.8)',
+                  borderLeftColor: '#B8956A'
+                }}
               >
                 <div className="flex items-start gap-3">
                   <motion.div 
-                    className="p-2 bg-blue-400/20 rounded-lg text-blue-300"
+                    className="p-2 rounded-lg"
+                    style={{ 
+                      backgroundColor: 'rgba(184, 149, 106, 0.2)',
+                      color: '#B8956A'
+                    }}
                     whileHover={{ rotate: [0, -10, 10, -10, 0] }}
                     transition={{ duration: 0.5 }}
                   >
@@ -307,13 +381,21 @@ export default function AboutUsSection() {
                     </svg>
                   </motion.div>
                   <div>
-                    <h3 className="text-2xl font-bold text-blue-400 mb-3">Our Mission</h3>
-                    <p className="text-gray-300">
+                    <h3 
+                      className="text-2xl font-bold mb-3"
+                      style={{ color: '#DA8359' }}
+                    >
+                      Our Mission
+                    </h3>
+                    <p style={{ color: '#6B4423' }}>
                       To empower brands with result-driven marketing and efficient technology that enhances growth and operational success.
                     </p>
                     
                     <motion.div 
-                      className="w-0 h-0.5 bg-gradient-to-r from-blue-400 to-blue-200 mt-3 group-hover:w-full"
+                      className="w-0 h-0.5 mt-3 group-hover:w-full"
+                      style={{
+                        background: `linear-gradient(to right, #B8956A, #DA8359)`
+                      }}
                       transition={{ duration: 0.3, delay: 0.1 }}
                     />
                   </div>
@@ -337,8 +419,9 @@ export default function AboutUsSection() {
             >
               {/* Main glow effect that responds to mouse movement */}
               <motion.div 
-                className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-600/20 to-cyan-400/20 blur-xl"
+                className="absolute inset-0 rounded-full blur-xl"
                 style={{
+                  background: `linear-gradient(135deg, rgba(218, 131, 89, 0.2), rgba(184, 149, 106, 0.2))`,
                   x: xMouse * 0.5,
                   y: yMouse * 0.5
                 }}
@@ -357,12 +440,23 @@ export default function AboutUsSection() {
                   ease: "easeInOut"
                 }}
               >
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/40 to-cyan-400/40 blur-md"></div>
-                <div className="absolute inset-2 rounded-full bg-gradient-to-br from-blue-400/30 to-blue-600/30"></div>
+                <div 
+                  className="absolute inset-0 rounded-full blur-md"
+                  style={{
+                    background: `linear-gradient(135deg, rgba(218, 131, 89, 0.4), rgba(184, 149, 106, 0.4))`
+                  }}
+                />
+                <div 
+                  className="absolute inset-2 rounded-full"
+                  style={{
+                    background: `linear-gradient(135deg, rgba(218, 131, 89, 0.3), rgba(184, 149, 106, 0.3))`
+                  }}
+                />
                 
                 {/* Center logo or icon */}
                 <motion.div
-                  className="absolute inset-0 flex items-center justify-center text-blue-300"
+                  className="absolute inset-0 flex items-center justify-center"
+                  style={{ color: '#DA8359' }}
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 >
@@ -387,29 +481,20 @@ export default function AboutUsSection() {
                   }}
                 >
                   <motion.div
-                    className={`absolute inset-0 rounded-full border border-blue-${400 - index*100}/30`}
+                    className="absolute inset-0 rounded-full border"
                     style={{
                       borderWidth: 1 + index * 0.5,
-                      borderRadius: "9999px"
+                      borderRadius: "9999px",
+                      borderColor: `rgba(218, 131, 89, ${0.3 - index * 0.05})`
                     }}
                     animate={{ 
                       rotate: 360,
-                      borderColor: [
-                        `rgba(96, 165, 250, 0.3)`, // blue-400/30
-                        `rgba(37, 99, 235, 0.3)`,  // blue-600/30
-                        `rgba(96, 165, 250, 0.3)`  // back to blue-400/30
-                      ]
                     }}
                     transition={{ 
                       rotate: {
                         duration: 15 + index*5, 
                         repeat: Infinity, 
                         ease: "linear"
-                      },
-                      borderColor: {
-                        duration: 8,
-                        repeat: Infinity,
-                        ease: "easeInOut"
                       }
                     }}
                   />
@@ -418,13 +503,16 @@ export default function AboutUsSection() {
               
               {/* Dynamic floating elements that follow mouse subtly */}
               {techIcons.map((item, index) => {
-                // Calculate base positions and dynamic offsets based on mouse
                 const baseDelay = item.delay;
                 
                 return (
                   <motion.div
                     key={`icon-${index}`}
-                    className={`absolute ${item.position} bg-gray-800/90 p-3 rounded-full shadow-lg z-10`}
+                    className={`absolute ${item.position} p-3 rounded-full shadow-lg z-10`}
+                    style={{
+                      backgroundColor: 'rgba(252, 250, 238, 0.9)',
+                      border: '1px solid rgba(236, 223, 204, 0.8)'
+                    }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ 
@@ -462,7 +550,8 @@ export default function AboutUsSection() {
                 {[...Array(6)].map((_, i) => (
                   <motion.div
                     key={`particle-${i}`}
-                    className="absolute w-2 h-2 rounded-full bg-blue-400/50"
+                    className="absolute w-2 h-2 rounded-full"
+                    style={{ backgroundColor: 'rgba(218, 131, 89, 0.5)' }}
                     initial={{ 
                       x: "50%", 
                       y: "50%", 
@@ -497,8 +586,12 @@ export default function AboutUsSection() {
         >
           <motion.a
             href="#services"
-            className="flex flex-col items-center text-blue-400 hover:text-blue-300 transition-colors duration-300 group"
-            whileHover={{ y: 3 }}
+            className="flex flex-col items-center transition-colors duration-300 group"
+            style={{ color: '#DA8359' }}
+            whileHover={{ 
+              y: 3,
+              color: '#B8956A'
+            }}
           >
             <span className="text-sm font-medium mb-2 tracking-wide">
               Discover Our Services

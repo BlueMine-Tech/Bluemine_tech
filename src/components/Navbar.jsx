@@ -5,6 +5,28 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
+  // Explicitly override default browser link styling
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      nav a {
+        color: #6B5A45;
+        text-decoration: none;
+      }
+      nav a:hover {
+        color: #DA8359;
+      }
+      nav a.active {
+        color: #DA8359;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
+  // Scroll effect for navbar
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -60,13 +82,24 @@ export default function Navbar() {
     open: { opacity: 1, y: 0 }
   };
 
+  // Updated harmonized color theme using ECDFCC, FCFAEE, DA8359
+  const colors = {
+    primary: '#ECDFCC',    // Light beige - primary background
+    secondary: '#FCFAEE',  // Off-white - secondary background
+    accent: '#DA8359',     // Terracotta - accent color
+    accentDark: '#B5684A', // Darker terracotta for accents
+    accentLight: '#E5A287', // Lighter terracotta for hover states
+    neutral: '#9A8778',    // Neutral brown that complements the palette
+    text: '#6B5A45'        // Brown text that works with the earth tones
+  };
+
   return (
     <>
       <motion.nav
         className={`fixed top-0 left-0 right-0 w-full z-50 ${
           scrolled 
-            ? 'bg-gray-900 shadow-lg' 
-            : 'bg-gradient-to-r from-gray-900 to-blue-900/90 backdrop-blur-md'
+            ? 'bg-[#ECDFCC] shadow-lg' 
+            : 'bg-gradient-to-r from-[#ECDFCC] to-[#FCFAEE] backdrop-blur-md'
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -82,15 +115,18 @@ export default function Navbar() {
             >
               <a href="#home" className="flex items-center">
                 <motion.span 
-                  className="text-white font-bold text-xl sm:text-2xl"
+                  className="font-bold text-xl sm:text-2xl"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
-                  Blue<motion.span 
-                    className="text-blue-400"
+                  <motion.span 
+                    className="text-[#DA8359]" // Changed to terracotta shade for "Blue"
+                  >Blue</motion.span>
+                  <motion.span 
+                    className="text-[#B5684A]" // Darker terracotta color for "Mine"
                     animate={{ 
-                      color: ["#60a5fa", "#3b82f6", "#2563eb", "#60a5fa"],
+                      color: ["#B5684A", "#DA8359", "#E5A287", "#B5684A"],
                     }}
                     transition={{ 
                       duration: 4,
@@ -98,7 +134,7 @@ export default function Navbar() {
                       repeatType: "reverse"
                     }}
                   >Mine</motion.span>
-                  <motion.span className="text-white">Tech</motion.span>
+                  <motion.span className="text-[#6B5A45]">Tech</motion.span>
                 </motion.span>
               </a>
             </motion.div>
@@ -110,8 +146,8 @@ export default function Navbar() {
                   <motion.a
                     key={link.title}
                     href={link.url}
-                    className="text-gray-300 hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors relative group"
-                    whileHover={{ scale: 1.1, color: "#60a5fa" }}
+                    className="text-[#6B5A45] hover:text-[#DA8359] px-3 py-2 rounded-md text-sm font-medium transition-colors relative group no-underline"
+                    whileHover={{ scale: 1.1, color: "#DA8359" }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -119,7 +155,7 @@ export default function Navbar() {
                   >
                     {link.title}
                     <motion.span 
-                      className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full"
+                      className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#DA8359] group-hover:w-full"
                       transition={{ duration: 0.3 }}
                       whileHover={{ width: "100%" }}
                     />
@@ -137,8 +173,8 @@ export default function Navbar() {
             >
               <motion.a
                 href="#contact"
-                className="bg-blue-300 hover:bg-blue-400 text-white px-4 py-2 rounded-md text-sm font-medium"
-                whileHover={{ scale: 1.05, backgroundColor: "#2563eb" }}
+                className="bg-[#DA8359] hover:bg-[#B5684A] text-[#FCFAEE] px-4 py-2 rounded-md text-sm font-medium no-underline"
+                whileHover={{ scale: 1.05, backgroundColor: "#B5684A" }}
                 whileTap={{ scale: 0.95 }}
               >
                 Get in Touch
@@ -153,7 +189,7 @@ export default function Navbar() {
               transition={{ delay: 0.3 }}
             >
               <motion.button
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none"
+                className="inline-flex items-center justify-center p-2 rounded-md text-[#9A8778] hover:text-[#DA8359] focus:outline-none"
                 onClick={toggleMenu}
                 aria-expanded={isOpen}
                 whileTap={{ scale: 0.9 }}
@@ -192,7 +228,7 @@ export default function Navbar() {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="lg:hidden bg-gray-900 overflow-hidden border-t border-gray-800"
+              className="lg:hidden bg-[#FCFAEE] overflow-hidden border-t border-[#ECDFCC]"
               variants={menuVariants}
               initial="closed"
               animate="open"
@@ -203,24 +239,24 @@ export default function Navbar() {
                   <motion.a
                     key={link.title}
                     href={link.url}
-                    className="text-gray-300 hover:text-blue-400 block px-3 py-2 rounded-md text-base font-medium border-l-4 border-transparent hover:border-blue-400 transition-all"
+                    className="text-[#6B5A45] hover:text-[#DA8359] block px-3 py-2 rounded-md text-base font-medium border-l-4 border-transparent hover:border-[#DA8359] transition-all no-underline"
                     variants={itemVariants}
                     onClick={() => setIsOpen(false)}
-                    whileHover={{ x: 5, borderColor: "#60a5fa" }}
+                    whileHover={{ x: 5, borderColor: "#DA8359" }}
                   >
                     {link.title}
                   </motion.a>
                 ))}
               </div>
               <motion.div 
-                className="pt-4 pb-3 border-t border-gray-700 bg-gray-800/50"
+                className="pt-4 pb-3 border-t border-[#ECDFCC] bg-[#ECDFCC]/50"
                 variants={itemVariants}
               >
                 <div className="flex items-center px-5">
                   <div className="ml-3">
-                    <div className="text-base font-medium text-blue-400">Contact Us</div>
-                    <div className="text-sm font-medium text-gray-400">valli@blueminetech.com</div>
-                    <div className="text-sm font-medium text-gray-400">+91 95975 30301</div>
+                    <div className="text-base font-medium text-[#DA8359]">Contact Us</div>
+                    <div className="text-sm font-medium text-[#9A8778]">valli@blueminetech.com</div>
+                    <div className="text-sm font-medium text-[#9A8778]">+91 95975 30301</div>
                   </div>
                 </div>
               </motion.div>
