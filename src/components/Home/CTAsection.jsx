@@ -52,16 +52,31 @@ export default function CtaSection() {
   };
 
   return (
-    <section className="relative py-16 bg-gradient-to-b from-gray-900 to-gray-800 overflow-hidden">
+    <section 
+      className="relative py-16 overflow-hidden" 
+      style={{ background: 'linear-gradient(to bottom, #FCFAEE, #ECDFCC)' }}
+    >
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute right-10 top-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute left-10 bottom-10 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl"></div>
+        <div 
+          className="absolute right-10 top-10 w-80 h-80 rounded-full blur-3xl" 
+          style={{ backgroundColor: '#DA8359', opacity: 0.1 }}
+        ></div>
+        <div 
+          className="absolute left-10 bottom-10 w-80 h-80 rounded-full blur-3xl" 
+          style={{ backgroundColor: '#DA8359', opacity: 0.15 }}
+        ></div>
       </div>
 
       {/* Content container */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-gray-700">
+        <div 
+          className="max-w-4xl mx-auto backdrop-blur-sm rounded-2xl p-8 shadow-xl border"
+          style={{ 
+            backgroundColor: 'rgba(236, 223, 204, 0.7)',
+            borderColor: '#DA8359'
+          }}
+        >
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -71,11 +86,20 @@ export default function CtaSection() {
           >
             {/* Left Column - Text */}
             <motion.div className="flex-1" variants={itemVariants}>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Ready to <span className="text-blue-400">Transform</span> Your Business?
+              <h2 
+                className="text-3xl md:text-4xl font-bold mb-4" 
+                style={{ color: '#8B4513' }}
+              >
+                Ready to <span style={{ color: '#DA8359' }}>Transform</span> Your Business?
               </h2>
-              <div className="h-1 w-20 bg-blue-500 mb-6"></div>
-              <p className="text-gray-300 mb-6">
+              <div 
+                className="h-1 w-20 mb-6" 
+                style={{ backgroundColor: '#DA8359' }}
+              ></div>
+              <p 
+                className="mb-6" 
+                style={{ color: '#6B4423' }}
+              >
                 Let's start your digital journey together. Get expert advice on how our services can help your business grow.
               </p>
               
@@ -95,11 +119,16 @@ export default function CtaSection() {
                     viewport={{ once: true }}
                   >
                     <div className="mt-1">
-                      <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                      <svg 
+                        className="w-5 h-5" 
+                        fill="currentColor" 
+                        viewBox="0 0 20 20" 
+                        style={{ color: '#DA8359' }}
+                      >
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <span className="text-gray-300">{item}</span>
+                    <span style={{ color: '#6B4423' }}>{item}</span>
                   </motion.li>
                 ))}
               </ul>
@@ -111,24 +140,61 @@ export default function CtaSection() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-blue-600/20 border border-blue-500 rounded-lg p-6 text-center h-full flex items-center justify-center"
+                  className="border rounded-lg p-6 text-center h-full flex items-center justify-center"
+                  style={{ 
+                    backgroundColor: 'rgba(218, 131, 89, 0.1)',
+                    borderColor: '#DA8359'
+                  }}
                 >
                   <div>
-                    <div className="mx-auto w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mb-4">
-                      <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div 
+                      className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4"
+                      style={{ backgroundColor: 'rgba(218, 131, 89, 0.2)' }}
+                    >
+                      <svg 
+                        className="w-8 h-8" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24" 
+                        style={{ color: '#DA8359' }}
+                      >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Thank You!</h3>
-                    <p className="text-gray-300">We've received your request and will get back to you soon.</p>
+                    <h3 
+                      className="text-xl font-bold mb-2" 
+                      style={{ color: '#8B4513' }}
+                    >
+                      Thank You!
+                    </h3>
+                    <p style={{ color: '#6B4423' }}>
+                      We've received your request and will get back to you soon.
+                    </p>
                   </div>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="bg-gray-800/80 backdrop-blur-sm rounded-lg p-6 border border-gray-700">
-                  <h3 className="text-xl font-bold text-white mb-4">Get Started Now</h3>
+                <div 
+                  className="backdrop-blur-sm rounded-lg p-6 border"
+                  style={{ 
+                    backgroundColor: 'rgba(252, 250, 238, 0.8)',
+                    borderColor: '#DA8359'
+                  }}
+                >
+                  <h3 
+                    className="text-xl font-bold mb-4" 
+                    style={{ color: '#8B4513' }}
+                  >
+                    Get Started Now
+                  </h3>
                   
                   <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-300 mb-2 text-sm">Email Address</label>
+                    <label 
+                      htmlFor="email" 
+                      className="block mb-2 text-sm" 
+                      style={{ color: '#6B4423' }}
+                    >
+                      Email Address
+                    </label>
                     <input
                       type="email"
                       id="email"
@@ -136,20 +202,36 @@ export default function CtaSection() {
                       value={formState.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2"
+                      style={{ 
+                        backgroundColor: '#FCFAEE',
+                        borderColor: '#ECDFCC',
+                        color: '#8B4513'
+                      }}
                       placeholder="your@email.com"
                     />
                   </div>
                   
                   <div className="mb-4">
-                    <label htmlFor="interest" className="block text-gray-300 mb-2 text-sm">I'm interested in:</label>
+                    <label 
+                      htmlFor="interest" 
+                      className="block mb-2 text-sm" 
+                      style={{ color: '#6B4423' }}
+                    >
+                      I'm interested in:
+                    </label>
                     <select
                       id="interest"
                       name="interest"
                       value={formState.interest}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2"
+                      style={{ 
+                        backgroundColor: '#FCFAEE',
+                        borderColor: '#ECDFCC',
+                        color: '#8B4513'
+                      }}
                     >
                       <option value="">Select a service</option>
                       <option value="digital-marketing">Digital Marketing</option>
@@ -160,24 +242,33 @@ export default function CtaSection() {
                   </div>
                   
                   <motion.button
-                    type="submit"
-                    className="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-blue font-bold rounded-lg transition-colors duration-300 shadow-lg shadow-blue-600/20"
-                    whileHover={{ scale: 1.02 }}
+                    onClick={handleSubmit}
+                    className="w-full py-3 px-6 font-bold rounded-lg transition-colors duration-300 shadow-lg"
+                    style={{ 
+                      backgroundColor: '#DA8359',
+                      color: '#FCFAEE',
+                      boxShadow: '0 10px 25px rgba(218, 131, 89, 0.2)'
+                    }}
+                    whileHover={{ 
+                      scale: 1.02,
+                      backgroundColor: '#C27650'
+                    }}
                     whileTap={{ scale: 0.98 }}
                   >
                     Request Information
                   </motion.button>
                   
-                  <p className="text-gray-400 text-xs mt-3 text-center">
+                  <p 
+                    className="text-xs mt-3 text-center" 
+                    style={{ color: '#8B7355' }}
+                  >
                     We respect your privacy and will never share your information.
                   </p>
-                </form>
+                </div>
               )}
             </motion.div>
           </motion.div>
         </div>
-
-     
       </div>
     </section>
   );

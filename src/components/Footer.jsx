@@ -11,16 +11,26 @@ export default function Footer() {
     { name: 'Home', url: '/' },
     { name: 'About', url: '/about' },
     { name: 'Services', url: '/services' },
-    { name: 'Team', url: '/team' },
     { name: 'Contact', url: '/contact' },
   ];
 
+  // Using the same harmonized color theme as navbar
+  const colors = {
+    primary: '#ECDFCC',    // Light beige - primary background
+    secondary: '#FCFAEE',  // Off-white - secondary background
+    accent: '#DA8359',     // Terracotta - accent color
+    accentDark: '#B5684A', // Darker terracotta for accents
+    accentLight: '#E5A287', // Lighter terracotta for hover states
+    neutral: '#9A8778',    // Neutral brown that complements the palette
+    text: '#6B5A45'        // Brown text that works with the earth tones
+  };
+
   return (
-    <footer className="w-full bg-gray-900 text-white">
+    <footer className="w-full bg-[#ECDFCC] text-[#6B5A45]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Top Section with Logo and Social Media */}
-        <div className="flex flex-col md:flex-row justify-between items-center pb-8 border-b border-gray-800">
-          {/* Logo */}
+        <div className="flex flex-col md:flex-row justify-between items-center pb-8 border-b border-[#9A8778]/30">
+          {/* Logo - matching navbar logo exactly */}
           <motion.div 
             className="mb-6 md:mb-0"
             initial={{ opacity: 0 }}
@@ -28,7 +38,25 @@ export default function Footer() {
             transition={{ duration: 0.5 }}
           >
             <span className="text-2xl font-bold">
-              Blue<span className="text-blue-400">Mine</span>Tech
+              <motion.span 
+                className="text-[#DA8359]"
+              >
+                Blue
+              </motion.span>
+              <motion.span 
+                className="text-[#B5684A]"
+                animate={{ 
+                  color: ["#B5684A", "#DA8359", "#E5A287", "#B5684A"],
+                }}
+                transition={{ 
+                  duration: 4,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+              >
+                Mine
+              </motion.span>
+              <motion.span className="text-[#6B5A45]">Tech</motion.span>
             </span>
           </motion.div>
           
@@ -43,13 +71,18 @@ export default function Footer() {
               <motion.a
                 key={link.name}
                 href={link.url}
-                className="text-gray-300 hover:text-blue-400 transition-colors"
-                whileHover={{ scale: 1.05, color: "#60a5fa" }}
+                className="text-[#6B5A45] hover:text-[#DA8359] transition-colors relative group no-underline"
+                whileHover={{ scale: 1.05, color: "#DA8359" }}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index + 0.2, duration: 0.3 }}
               >
                 {link.name}
+                <motion.span 
+                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#DA8359] group-hover:w-full"
+                  transition={{ duration: 0.3 }}
+                  whileHover={{ width: "100%" }}
+                />
               </motion.a>
             ))}
           </motion.div>
@@ -67,8 +100,9 @@ export default function Footer() {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-400 transition-colors"
-                whileHover={{ scale: 1.2, color: "#60a5fa" }}
+                className="text-[#9A8778] hover:text-[#DA8359] transition-colors"
+                whileHover={{ scale: 1.2, color: "#DA8359" }}
+                whileTap={{ scale: 0.9 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index + 0.4, duration: 0.3 }}
@@ -85,25 +119,54 @@ export default function Footer() {
           </motion.div>
         </div>
         
+        {/* Middle Section with Contact Info */}
+        <motion.div 
+          className="py-8 text-center border-b border-[#9A8778]/30"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-lg font-semibold text-[#DA8359] mb-2">Contact Us</h3>
+              <p className="text-[#9A8778]">valli@blueminetech.com</p>
+              <p className="text-[#9A8778]">+91 95975 30301</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-[#DA8359] mb-2">Connect With Us</h3>
+              <p className="text-[#9A8778]">Follow us on social media for updates</p>
+            </div>
+          </div>
+        </motion.div>
+        
         {/* Bottom Section with Copyright */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-8">
           <motion.p 
-            className="text-gray-400 text-sm mb-4 md:mb-0"
+            className="text-sm mb-4 md:mb-0 text-[#9A8778]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
           >
             © {new Date().getFullYear()} BlueMine Technologies. All rights reserved.
           </motion.p>
+          
+          <motion.div
+            className="text-sm text-[#9A8778]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
+          >
+            Made with ❤️ in India
+          </motion.div>
         </div>
       </div>
       
-      {/* Animated wave footer */}
+      {/* Animated wave footer with harmonized colors */}
       <div className="relative h-16 overflow-hidden">
         <motion.div
-          className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-r from-blue-900 to-blue-700"
+          className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-r from-[#B5684A] to-[#DA8359]"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.6 }}
+          animate={{ opacity: 0.8 }}
           transition={{ duration: 1 }}
         >
           <svg 
@@ -112,8 +175,8 @@ export default function Footer() {
             viewBox="0 0 1440 320"
           >
             <motion.path 
-              fill="#0f172a" 
-              fillOpacity="1" 
+              fill="#9A8778" 
+              fillOpacity="0.7" 
               d="M0,192L48,181.3C96,171,192,149,288,154.7C384,160,480,192,576,202.7C672,213,768,203,864,186.7C960,171,1056,149,1152,154.7C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
               animate={{
                 d: [

@@ -1,11 +1,10 @@
-import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 export default function ServicesSection() {
   const [hoveredService, setHoveredService] = useState(null);
   const [isInView, setIsInView] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   
   // Check if device is mobile
   useEffect(() => {
@@ -19,592 +18,600 @@ export default function ServicesSection() {
       window.removeEventListener('resize', checkMobile);
     };
   }, []);
+
+  // Track mouse position for parallax effects
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
   
-  // Services data with extended info
+  // Services data with warm theme colors
   const services = [
     {
       id: 1,
       title: "Digital Marketing",
       icon: "📱",
       description: "SEO, SMO, Meta & Google Ads, Influencer Marketing",
-      color: "blue",
-      features: ["Search Engine Optimization", "Social Media Campaigns", "PPC Management", "Analytics"]
+      color: "primary",
+      features: ["Search Engine Optimization", "Social Media Campaigns", "PPC Management", "Analytics & Insights"]
     },
     {
       id: 2,
       title: "Social Media Management",
       icon: "💬",
       description: "Facebook, Instagram, WhatsApp, YouTube - complete handling",
-      color: "indigo",
-      features: ["Content Creation", "Community Management", "Growth Strategy", "Engagement"]
+      color: "secondary", 
+      features: ["Content Creation", "Community Management", "Growth Strategy", "Brand Engagement"]
     },
     {
       id: 3,
       title: "Web Development",
       icon: "🌐",
       description: "Custom websites, E-commerce solutions, maintenance",
-      color: "purple",
-      features: ["Responsive Design", "E-commerce Solutions", "CMS Integration", "Performance"]
+      color: "accent",
+      features: ["Responsive Design", "E-commerce Solutions", "CMS Integration", "Performance Optimization"]
     },
     {
       id: 4,
       title: "Business Growth",
       icon: "📈",
       description: "Data analytics, tech support, research & telecaller services",
-      color: "cyan",
+      color: "tertiary",
       features: ["Market Research", "Data Analysis", "Growth Strategy", "Support Services"]
     }
   ];
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.8, ease: "easeOut" }
-    }
-  };
-
-  // Get color class based on service color
+  // Enhanced color system with warm earth tones
   const getColorClasses = (color, isHovered) => {
-    const baseClasses = {
-      blue: {
-        bg: isHovered ? "bg-blue-600" : "bg-blue-600/20",
-        lightBg: "bg-blue-500/10",
-        border: "border-blue-500",
-        shadowColor: "rgba(59, 130, 246, 0.3)",
-        text: "text-blue-400",
-        darkText: "text-blue-600", 
-        glow: "bg-blue-500/20",
-        gradientFrom: "from-blue-600",
-        gradientTo: "to-blue-400"
+    const colors = {
+      primary: {
+        bg: isHovered ? "bg-orange-500" : "bg-orange-400/20",
+        lightBg: "bg-orange-100/10", 
+        border: "border-orange-400",
+        shadowColor: "rgba(218, 131, 89, 0.4)",
+        text: "text-orange-400",
+        darkText: "text-orange-600",
+        glow: "bg-orange-400/30",
+        gradientFrom: "from-orange-500",
+        gradientTo: "to-orange-300"
       },
-      indigo: {
-        bg: isHovered ? "bg-indigo-600" : "bg-indigo-600/20",
-        lightBg: "bg-indigo-500/10",
-        border: "border-indigo-500",
-        shadowColor: "rgba(99, 102, 241, 0.3)",
-        text: "text-indigo-400",
-        darkText: "text-indigo-600",
-        glow: "bg-indigo-500/20",
-        gradientFrom: "from-indigo-600",
-        gradientTo: "to-indigo-400"
+      secondary: {
+        bg: isHovered ? "bg-amber-600" : "bg-amber-500/20",
+        lightBg: "bg-amber-100/10",
+        border: "border-amber-400", 
+        shadowColor: "rgba(245, 158, 11, 0.4)",
+        text: "text-amber-400",
+        darkText: "text-amber-600",
+        glow: "bg-amber-400/30",
+        gradientFrom: "from-amber-500",
+        gradientTo: "to-amber-300"
       },
-      purple: {
-        bg: isHovered ? "bg-purple-600" : "bg-purple-600/20",
-        lightBg: "bg-purple-500/10",
-        border: "border-purple-500",
-        shadowColor: "rgba(168, 85, 247, 0.3)",
-        text: "text-purple-400",
-        darkText: "text-purple-600",
-        glow: "bg-purple-500/20",
-        gradientFrom: "from-purple-600",
-        gradientTo: "to-purple-400"
+      accent: {
+        bg: isHovered ? "bg-yellow-600" : "bg-yellow-500/20",
+        lightBg: "bg-yellow-100/10",
+        border: "border-yellow-400",
+        shadowColor: "rgba(234, 179, 8, 0.4)", 
+        text: "text-yellow-400",
+        darkText: "text-yellow-600",
+        glow: "bg-yellow-400/30",
+        gradientFrom: "from-yellow-500",
+        gradientTo: "to-yellow-300"
       },
-      cyan: {
-        bg: isHovered ? "bg-cyan-600" : "bg-cyan-600/20",
-        lightBg: "bg-cyan-500/10",
-        border: "border-cyan-500",
-        shadowColor: "rgba(34, 211, 238, 0.3)",
-        text: "text-cyan-400",
-        darkText: "text-cyan-600",
-        glow: "bg-cyan-500/20",
-        gradientFrom: "from-cyan-600",
-        gradientTo: "to-cyan-400"
+      tertiary: {
+        bg: isHovered ? "bg-stone-600" : "bg-stone-500/20",
+        lightBg: "bg-stone-100/10",
+        border: "border-stone-400",
+        shadowColor: "rgba(120, 113, 108, 0.4)",
+        text: "text-stone-400", 
+        darkText: "text-stone-600",
+        glow: "bg-stone-400/30",
+        gradientFrom: "from-stone-500",
+        gradientTo: "to-stone-300"
       }
     };
     
-    return baseClasses[color];
+    return colors[color];
   };
 
-  // Function to generate particles for animation
+  // Generate floating particles with organic movement
   const generateParticles = (count, color) => {
     return Array.from({ length: count }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 4 + 1,
-      opacity: Math.random() * 0.5 + 0.2,
-      duration: Math.random() * 15 + 10,
-      delay: Math.random() * 5,
-      color
+      size: Math.random() * 6 + 2,
+      opacity: Math.random() * 0.6 + 0.2,
+      duration: Math.random() * 20 + 15,
+      delay: Math.random() * 8,
+      color,
+      direction: Math.random() * 360
     }));
   };
 
+  // Organic floating animation keyframes
+  const floatingAnimation = {
+    animation: 'float 6s ease-in-out infinite'
+  };
+
   return (
-    <section
-      id="services"
-      className="relative py-20 bg-gradient-to-b from-gray-800 to-gray-900 overflow-hidden"
-      onViewportEnter={() => setIsInView(true)}
-    >
-      {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div 
-          className="absolute right-0 top-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            repeatType: "mirror"
-          }}
-        />
-        <motion.div 
-          className="absolute left-0 bottom-0 w-80 h-80 bg-purple-600/5 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.3, 0.6, 0.3]
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            repeatType: "mirror",
-            delay: 2
-          }}
-        />
-      </div>
+    <>
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          25% { transform: translateY(-10px) rotate(2deg); }
+          50% { transform: translateY(-5px) rotate(0deg); }
+          75% { transform: translateY(-15px) rotate(-2deg); }
+        }
+        
+        @keyframes organic-pulse {
+          0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+          50% { transform: scale(1.2) rotate(180deg); opacity: 0.6; }
+        }
+        
+        @keyframes leaf-dance {
+          0% { transform: translateY(0) rotate(0deg); }
+          25% { transform: translateY(-20px) rotate(10deg); }
+          50% { transform: translateY(-10px) rotate(-5deg); }
+          75% { transform: translateY(-25px) rotate(15deg); }
+          100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        .organic-pulse {
+          animation: organic-pulse 4s ease-in-out infinite;
+        }
+        
+        .leaf-dance {
+          animation: leaf-dance 8s ease-in-out infinite;
+        }
+      `}</style>
 
-      {/* Animated connector from previous section */}
-      <div className="relative">
-        <motion.div 
-          className="absolute left-1/2 -top-20 transform -translate-x-1/2 w-1 h-20 bg-blue-500/50"
-          initial={{ height: 0, opacity: 0 }}
-          whileInView={{ height: 80, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-        />
-        <motion.div 
-          className="absolute left-1/2 -top-5 transform -translate-x-1/2 w-8 h-8 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center"
-          initial={{ scale: 0, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-        >
-          <motion.div 
-            className="w-3 h-3 rounded-full bg-blue-400"
-            animate={{ scale: [1, 1.5, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
+      <section
+        id="services"
+        className="relative py-20 overflow-hidden"
+        style={{ 
+          background: 'linear-gradient(135deg, #FCFAEE 0%, #ECDFCC 50%, #FCFAEE 100%)',
+        }}
+        onMouseEnter={() => setIsInView(true)}
+      >
+        {/* Enhanced organic background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Large organic shapes with parallax */}
+          <div 
+            className="absolute w-96 h-96 rounded-full blur-3xl opacity-30"
+            style={{
+              background: 'radial-gradient(circle, rgba(218, 131, 89, 0.3) 0%, transparent 70%)',
+              right: `${30 - mousePosition.x * 0.1}%`,
+              top: `${20 - mousePosition.y * 0.05}%`,
+              transform: 'translate3d(0,0,0)',
+              transition: 'all 0.3s ease-out'
+            }}
           />
-        </motion.div>
-      </div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Section heading with enhanced animations */}
-        <motion.div 
-          className="text-center mb-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={containerVariants}
-        >
-          <motion.h2 
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
-            variants={itemVariants}
-          >
-            Our <motion.span 
-              className="text-blue-400 inline-block"
-              animate={{ 
-                color: ['#60a5fa', '#818cf8', '#a78bfa', '#22d3ee', '#60a5fa'],
-              }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-            >
-              Services
-            </motion.span>
-          </motion.h2>
           
-          
-          <motion.p 
-            className="text-gray-300 max-w-3xl mx-auto text-lg"
-            variants={itemVariants}
-          >
-            Empowering your business with innovative digital solutions
-          </motion.p>
-        </motion.div>
+          <div 
+            className="absolute w-80 h-80 rounded-full blur-3xl opacity-25"
+            style={{
+              background: 'radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, transparent 70%)',
+              left: `${10 + mousePosition.x * 0.08}%`,
+              bottom: `${15 + mousePosition.y * 0.03}%`,
+              transform: 'translate3d(0,0,0)',
+              transition: 'all 0.2s ease-out'
+            }}
+          />
 
-        {/* Services grid with enhanced cards */}
-        <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={containerVariants}
-        >
-          {services.map((service, index) => {
-            const colorClasses = getColorClasses(service.color, hoveredService === service.id);
-            const particles = generateParticles(8, service.color);
-            
-            return (
-              <motion.div
-                key={service.id}
-                className={`relative rounded-2xl p-6 border border-gray-700/50 backdrop-blur-sm transition-all duration-300 overflow-hidden`}
+          {/* Floating organic elements */}
+          <div className="absolute inset-0">
+            {Array.from({ length: 12 }, (_, i) => (
+              <div
+                key={i}
+                className="absolute w-4 h-4 rounded-full opacity-20 leaf-dance"
                 style={{
-                  boxShadow: hoveredService === service.id ? `0 10px 25px -5px ${colorClasses.shadowColor}` : 'none',
-                  transform: hoveredService === service.id ? 'translateY(-8px)' : 'translateY(0)'
+                  background: i % 3 === 0 ? '#DA8359' : i % 3 === 1 ? '#F59E0B' : '#EAB308',
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 8}s`,
+                  animationDuration: `${8 + Math.random() * 4}s`
                 }}
-                variants={itemVariants}
-                onMouseEnter={() => setHoveredService(service.id)}
-                onMouseLeave={() => setHoveredService(null)}
-                whileHover={{ scale: 1.02 }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Animated connector */}
+        <div className="relative">
+          <div 
+            className="absolute left-1/2 -top-20 transform -translate-x-1/2 w-1 h-20 opacity-50"
+            style={{ 
+              background: 'linear-gradient(to bottom, transparent, #DA8359, transparent)' 
+            }}
+          />
+          <div 
+            className="absolute left-1/2 -top-5 transform -translate-x-1/2 w-8 h-8 rounded-full border-2 flex items-center justify-center organic-pulse"
+            style={{ 
+              borderColor: '#DA8359',
+              backgroundColor: 'rgba(218, 131, 89, 0.1)'
+            }}
+          >
+            <div 
+              className="w-3 h-3 rounded-full"
+              style={{ backgroundColor: '#DA8359' }}
+            />
+          </div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Enhanced section heading */}
+          <div className="text-center mb-16">
+            <h2 
+              className="text-5xl md:text-6xl font-bold mb-4"
+              style={{ 
+                color: '#8B4513',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.1)'
+              }}
+            >
+              Our{' '}
+              <span 
+                className="inline-block"
+                style={{ 
+                  background: 'linear-gradient(135deg, #DA8359, #F59E0B, #EAB308)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  animation: 'float 4s ease-in-out infinite'
+                }}
               >
-                {/* Background glow effect */}
-                <motion.div 
-                  className={`absolute inset-0 ${colorClasses.glow} opacity-0 blur-xl -z-10`}
-                  animate={{ 
-                    opacity: hoveredService === service.id ? 0.4 : 0,
-                    scale: hoveredService === service.id ? [1, 1.1, 1] : 1
+                Services
+              </span>
+            </h2>
+            
+            <p 
+              className="max-w-3xl mx-auto text-lg"
+              style={{ color: '#6B5B47' }}
+            >
+              Empowering your business with innovative digital solutions that grow naturally
+            </p>
+          </div>
+
+          {/* Enhanced services grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {services.map((service, index) => {
+              const colorClasses = getColorClasses(service.color, hoveredService === service.id);
+              const particles = generateParticles(10, service.color);
+              
+              return (
+                <div
+                  key={service.id}
+                  className="relative rounded-3xl p-8 backdrop-blur-sm transition-all duration-500 overflow-hidden cursor-pointer group"
+                  style={{
+                    backgroundColor: hoveredService === service.id ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.6)',
+                    boxShadow: hoveredService === service.id 
+                      ? `0 20px 40px -10px ${colorClasses.shadowColor}, 0 0 0 1px rgba(218, 131, 89, 0.2)` 
+                      : '0 5px 15px rgba(0,0,0,0.1)',
+                    transform: hoveredService === service.id ? 'translateY(-12px) scale(1.02)' : 'translateY(0) scale(1)',
+                    border: `2px solid ${hoveredService === service.id ? colorClasses.border.replace('border-', '') : 'transparent'}`
                   }}
-                  transition={{ duration: 2, repeat: hoveredService === service.id ? Infinity : 0 }}
-                />
-                
-                {/* Animated background particles on hover */}
-                {hoveredService === service.id && particles.map(particle => (
-                  <motion.div
-                    key={`particle-${service.id}-${particle.id}`}
-                    className={`absolute rounded-full ${colorClasses.bg} opacity-0`}
+                  onMouseEnter={() => setHoveredService(service.id)}
+                  onMouseLeave={() => setHoveredService(null)}
+                >
+                  {/* Enhanced background glow */}
+                  <div 
+                    className="absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-500"
                     style={{
-                      width: particle.size,
-                      height: particle.size,
-                      left: `${particle.x}%`,
-                      top: `${particle.y}%`,
-                    }}
-                    animate={{
-                      y: [-20, -100],
-                      x: [0, particle.id % 2 === 0 ? 20 : -20],
-                      opacity: [0, 0.7, 0],
-                      scale: [0, 1, 0.5]
-                    }}
-                    transition={{
-                      duration: particle.duration / 3,
-                      repeat: Infinity,
-                      delay: particle.delay,
-                      ease: "easeOut"
+                      background: `radial-gradient(circle at center, ${colorClasses.shadowColor} 0%, transparent 70%)`,
+                      opacity: hoveredService === service.id ? 0.6 : 0
                     }}
                   />
-                ))}
-                
-                {/* Card content container with inner glow on hover */}
-                <div className="relative z-10">
-                  {/* Icon container with rotating orbital ring */}
-                  <div className="relative w-20 h-20 mx-auto mb-6">
-                    {/* Orbital ring animation */}
-                    <motion.div
-                      className={`absolute inset-0 rounded-full border-2 ${colorClasses.border} opacity-60`}
-                      style={{ borderStyle: 'dashed' }}
-                      animate={{ 
-                        rotate: hoveredService === service.id ? 360 : 0,
-                        scale: hoveredService === service.id ? [1, 1.1, 1] : 1,
-                      }}
-                      transition={{ 
-                        rotate: { duration: 8, repeat: Infinity, ease: "linear" },
-                        scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                  
+                  {/* Enhanced animated particles */}
+                  {hoveredService === service.id && particles.map(particle => (
+                    <div
+                      key={`particle-${service.id}-${particle.id}`}
+                      className="absolute rounded-full opacity-0"
+                      style={{
+                        width: particle.size,
+                        height: particle.size,
+                        left: `${particle.x}%`,
+                        top: `${particle.y}%`,
+                        backgroundColor: colorClasses.shadowColor.match(/rgba\(([^)]+)\)/)[1].split(',').slice(0,3).join(','),
+                        animation: `
+                          ${particle.duration / 4}s ease-in-out infinite,
+                          leafDance 0s ${particle.delay}s forwards,
+                          fadeInOut ${particle.duration / 3}s ${particle.delay}s infinite
+                        `
                       }}
                     />
-                    
-                    {/* Orbital dots */}
-                    {hoveredService === service.id && (
-                      <>
-                        <motion.div
-                          className={`absolute w-2 h-2 rounded-full ${colorClasses.bg}`}
-                          animate={{ 
-                            rotate: 360,
-                          }}
-                          style={{ 
-                            top: '50%', 
-                            left: '50%',
-                            translateX: '-50%', 
-                            translateY: '-50%', 
-                            transformOrigin: 'center center'
-                          }}
-                          transition={{ 
-                            duration: 3, 
-                            repeat: Infinity, 
-                            ease: "linear"
-                          }}
-                        >
-                          <div className={`absolute top-0 left-0 -ml-1 -mt-1 w-4 h-4 rounded-full ${colorClasses.bg} opacity-30`} />
-                        </motion.div>
-                        
-                        <motion.div
-                          className={`absolute w-2 h-2 rounded-full ${colorClasses.bg}`}
-                          animate={{ 
-                            rotate: -360,
-                          }}
-                          style={{ 
-                            top: '50%', 
-                            left: '50%',
-                            translateX: '-50%', 
-                            translateY: '-50%', 
-                            transformOrigin: 'center center'
-                          }}
-                          transition={{ 
-                            duration: 4, 
-                            repeat: Infinity, 
-                            ease: "linear",
-                            delay: 0.5
-                          }}
-                        >
-                          <div className={`absolute top-0 left-0 -ml-1 -mt-1 w-4 h-4 rounded-full ${colorClasses.bg} opacity-30`} />
-                        </motion.div>
-                      </>
-                    )}
-
-                    {/* Icon background with pulse effect */}
-                    <motion.div 
-                      className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 ${colorClasses.bg} rounded-full flex items-center justify-center`}
-                      animate={{ 
-                        boxShadow: hoveredService === service.id 
-                          ? ['0 0 0 0 rgba(0,0,0,0)', `0 0 20px 0px ${colorClasses.shadowColor}`, '0 0 0 0 rgba(0,0,0,0)'] 
-                          : '0 0 0 0 rgba(0,0,0,0)',
-                      }}
-                      transition={{ duration: 2, repeat: hoveredService === service.id ? Infinity : 0 }}
-                    >
-                      <span className="text-3xl relative z-10">{service.icon}</span>
-                    </motion.div>
-                  </div>
+                  ))}
                   
-                  {/* Service title with animated underline */}
-                  <div className="text-center mb-4">
-                    <h3 className={`text-xl font-bold ${colorClasses.text} mb-1`}>
-                      {service.title}
-                    </h3>
-                    
-                    {/* Animated underline on hover */}
-                    <motion.div 
-                      className="h-0.5 bg-gray-700 rounded-full w-0 mx-auto overflow-hidden"
-                      animate={{ 
-                        width: hoveredService === service.id ? '80%' : '0%',
-                      }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      <motion.div 
-                        className={`h-full ${colorClasses.bg}`}
-                        animate={{ x: [-40, 40, -40] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  <div className="relative z-10">
+                    {/* Enhanced icon with organic animations */}
+                    <div className="relative w-24 h-24 mx-auto mb-8">
+                      {/* Multiple orbital rings */}
+                      <div
+                        className="absolute inset-0 rounded-full border-2 opacity-40"
+                        style={{ 
+                          borderColor: colorClasses.border.replace('border-', ''),
+                          borderStyle: 'dashed',
+                          animation: hoveredService === service.id ? 'spin 12s linear infinite' : 'none'
+                        }}
                       />
-                    </motion.div>
+                      
+                      <div
+                        className="absolute inset-2 rounded-full border border-dotted opacity-30"
+                        style={{ 
+                          borderColor: colorClasses.border.replace('border-', ''),
+                          animation: hoveredService === service.id ? 'spin 8s linear infinite reverse' : 'none'
+                        }}
+                      />
+
+                      {/* Floating orbital elements */}
+                      {hoveredService === service.id && (
+                        <>
+                          {Array.from({ length: 4 }, (_, i) => (
+                            <div
+                              key={i}
+                              className="absolute w-3 h-3 rounded-full"
+                              style={{
+                                backgroundColor: colorClasses.shadowColor.match(/rgba\(([^)]+)\)/)[1].split(',').slice(0,3).join(','),
+                                top: '50%',
+                                left: '50%',
+                                transformOrigin: `${20 + i * 5}px 0`,
+                                animation: `spin ${6 + i * 2}s linear infinite`,
+                                animationDelay: `${i * 0.5}s`
+                              }}
+                            />
+                          ))}
+                        </>
+                      )}
+
+                      {/* Enhanced icon background */}
+                      <div 
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full flex items-center justify-center transition-all duration-500"
+                        style={{
+                          backgroundColor: hoveredService === service.id ? colorClasses.bg.replace('bg-', '') : colorClasses.lightBg.replace('bg-', ''),
+                          boxShadow: hoveredService === service.id ? `0 0 30px ${colorClasses.shadowColor}` : 'none',
+                          animation: hoveredService === service.id ? 'float 3s ease-in-out infinite' : 'none'
+                        }}
+                      >
+                        <span className="text-4xl relative z-10 transition-transform duration-300" 
+                              style={{ transform: hoveredService === service.id ? 'scale(1.2)' : 'scale(1)' }}>
+                          {service.icon}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    {/* Enhanced service title */}
+                    <div className="text-center mb-6">
+                      <h3 
+                        className="text-2xl font-bold mb-2 transition-colors duration-300"
+                        style={{ 
+                          color: hoveredService === service.id ? colorClasses.darkText.replace('text-', '') : '#8B4513'
+                        }}
+                      >
+                        {service.title}
+                      </h3>
+                      
+                      {/* Animated organic underline */}
+                      <div 
+                        className="h-1 mx-auto rounded-full transition-all duration-500 overflow-hidden"
+                        style={{ 
+                          width: hoveredService === service.id ? '90%' : '0%',
+                          backgroundColor: colorClasses.border.replace('border-', '')
+                        }}
+                      >
+                        <div 
+                          className="h-full w-full rounded-full"
+                          style={{
+                            background: `linear-gradient(90deg, transparent, ${colorClasses.shadowColor}, transparent)`,
+                            animation: hoveredService === service.id ? 'shimmer 2s ease-in-out infinite' : 'none'
+                          }}
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Enhanced description */}
+                    <p 
+                      className="text-center mb-4 transition-colors duration-300"
+                      style={{ color: '#6B5B47' }}
+                    >
+                      {service.description}
+                    </p>
+                    
+                    {/* Enhanced features list */}
+                    <div
+                      className="overflow-hidden transition-all duration-500"
+                      style={{ 
+                        maxHeight: hoveredService === service.id ? '200px' : '0px',
+                        opacity: hoveredService === service.id ? 1 : 0
+                      }}
+                    >
+                      <ul className="space-y-2 text-sm" style={{ color: '#6B5B47' }}>
+                        {service.features.map((feature, i) => (
+                          <li 
+                            key={i}
+                            className="flex items-center transition-all duration-300"
+                            style={{
+                              transform: hoveredService === service.id ? 'translateX(0)' : 'translateX(-20px)',
+                              transitionDelay: `${i * 100}ms`
+                            }}
+                          >
+                            <div 
+                              className="mr-3 w-2 h-2 rounded-full transition-all duration-300"
+                              style={{
+                                backgroundColor: colorClasses.border.replace('border-', ''),
+                                transform: hoveredService === service.id ? 'scale(1.5)' : 'scale(1)',
+                                animation: hoveredService === service.id ? `pulse 2s ease-in-out infinite ${i * 0.2}s` : 'none'
+                              }}
+                            />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Enhanced corner accents */}
+                  <div className="absolute inset-0 pointer-events-none">
+                    <div 
+                      className="absolute top-0 left-0 w-12 h-12 border-t-3 border-l-3 rounded-tl-2xl transition-all duration-300"
+                      style={{
+                        borderColor: colorClasses.border.replace('border-', ''),
+                        opacity: hoveredService === service.id ? 1 : 0,
+                        transform: hoveredService === service.id ? 'scale(1)' : 'scale(0.5)'
+                      }}
+                    />
+                    <div 
+                      className="absolute bottom-0 right-0 w-12 h-12 border-b-3 border-r-3 rounded-br-2xl transition-all duration-300"
+                      style={{
+                        borderColor: colorClasses.border.replace('border-', ''),
+                        opacity: hoveredService === service.id ? 1 : 0,
+                        transform: hoveredService === service.id ? 'scale(1)' : 'scale(0.5)'
+                      }}
+                    />
                   </div>
                   
-                  {/* Service description */}
-                  <p className="text-gray-300 text-center text-sm">
-                    {service.description}
-                  </p>
-                  
-                  {/* Features list - appears on hover */}
-                  <motion.div
-                    className="mt-4 overflow-hidden"
-                    style={{ 
-                      height: hoveredService === service.id ? 'auto' : 0,
+                  {/* Enhanced "Learn more" button */}
+                  <div 
+                    className="absolute bottom-6 left-0 right-0 flex justify-center transition-all duration-300"
+                    style={{
                       opacity: hoveredService === service.id ? 1 : 0,
+                      transform: hoveredService === service.id ? 'translateY(0)' : 'translateY(20px)'
                     }}
-                    transition={{ duration: 0.3 }}
                   >
-                    <ul className="space-y-1 text-xs text-gray-400">
-                      {service.features.map((feature, i) => (
-                        <motion.li 
-                          key={i}
-                          className="flex items-center"
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ 
-                            opacity: hoveredService === service.id ? 1 : 0,
-                            x: hoveredService === service.id ? 0 : -10
-                          }}
-                          transition={{ duration: 0.3, delay: i * 0.1 }}
-                        >
-                          <motion.div 
-                            className={`mr-2 w-1.5 h-1.5 rounded-full ${colorClasses.bg}`}
-                            animate={{ scale: [1, 1.5, 1] }}
-                            transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
-                          />
-                          {feature}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </motion.div>
+              
+                  </div>
                 </div>
-
-                {/* Animated corner accents that appear on hover */}
-                <div className="absolute inset-0 pointer-events-none">
-                  {/* Top left corner */}
-                  <motion.div 
-                    className={`absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 rounded-tl-lg ${colorClasses.border}`}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: hoveredService === service.id ? 1 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  {/* Bottom right corner */}
-                  <motion.div 
-                    className={`absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 rounded-br-lg ${colorClasses.border}`}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: hoveredService === service.id ? 1 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </div>
-                
-                {/* "Learn more" button with slide-in animation */}
-                <motion.div 
-                  className="absolute bottom-4 left-0 right-0 flex justify-center"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ 
-                    opacity: hoveredService === service.id ? 1 : 0,
-                    y: hoveredService === service.id ? 0 : 10
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.a 
-                    href="#contact"
-                    className={`text-sm ${colorClasses.text} font-medium flex items-center gap-1 px-3 py-1 rounded-full ${colorClasses.lightBg}`}
-                    whileHover={{ x: 3 }}
-                  >
-                    Learn more
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </motion.a>
-                </motion.div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-        
-        {/* Call to action button with gradient and pulse effect */}
-        <motion.div 
-          className="mt-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <motion.a
-            href="#contact"
-            className="relative inline-block px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-bold rounded-lg shadow-lg overflow-hidden group"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {/* Animated gradient overlay */}
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            />
-            
-            {/* Ripple effect on hover */}
-            <motion.div
-              className="absolute top-1/2 left-1/2 w-4 h-4 rounded-full bg-white/30"
-              initial={{ opacity: 0, scale: 0 }}
-              whileHover={{ 
-                opacity: [0, 1, 0],
-                scale: [0, 3],
-              }}
-              transition={{ 
-                duration: 1.5,
-                repeat: Infinity,
-                repeatDelay: 0.3
-              }}
-              style={{ 
-                translateX: '-50%',
-                translateY: '-50%',
-              }}
-            />
-            
-            <Link to="/contact" className="relative inline-block">
-  <span className="relative z-10 text-amber-50">Get Started</span>
-</Link>
-      
-          </motion.a>
+              );
+            })}
+          </div>
           
-          {/* Subtle pulsing shadow under button */}
-          <motion.div
-            className="w-full h-4 mt-1 mx-auto"
-            animate={{
-              boxShadow: ['0 0 0px rgba(59, 130, 246, 0)', '0 0 15px rgba(59, 130, 246, 0.5)', '0 0 0px rgba(59, 130, 246, 0)']
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "loop"
-            }}
-          />
-        </motion.div>
-        
-        {/* Scroll to next section indicator */}
-        <motion.div
-          className="flex justify-center mt-12"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 1 }}
-        >
-          <motion.a
-            href="#portfolio"
-            className="flex flex-col items-center text-blue-400 hover:text-blue-300 transition-colors duration-300"
-            animate={{ y: [0, 6, 0] }}
-            transition={{ 
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "loop"
-            }}
-          >
-            <motion.div
-              className="relative w-8 h-8"
-              whileHover={{ scale: 1.2 }}
+          {/* Enhanced call to action */}
+          <div className="mt-20 text-center">
+            <a
+              href="#contact"  
+              className="relative inline-block px-12 py-4 font-bold text-lg rounded-full shadow-xl overflow-hidden group transition-all duration-500 hover:scale-105"
+              style={{
+                background: 'linear-gradient(135deg, #DA8359, #F59E0B)',
+                color: '#FCFAEE'
+              }}
             >
-              <motion.div
-                className="absolute inset-0 rounded-full border-2 border-blue-500/30"
-                animate={{ scale: [1, 1.5], opacity: [0.7, 0] }}
-                transition={{ 
-                  duration: 1.5,
-                  repeat: Infinity,
-                  repeatType: "loop"
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, #F59E0B, #EAB308)'
                 }}
               />
-              <motion.div
-                className="absolute inset-1 rounded-full border-2 border-blue-400/50"
-                animate={{ scale: [1, 1.3], opacity: [1, 0] }}
-                transition={{ 
-                  duration: 1.5,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  delay: 0.2
+              
+              {/* Ripple effect */}
+              <div
+                className="absolute top-1/2 left-1/2 w-4 h-4 rounded-full opacity-0 group-hover:opacity-30 transition-all duration-1000"
+                style={{
+                  backgroundColor: '#FCFAEE',
+                  transform: 'translate(-50%, -50%) scale(0)',
+                  animation: 'ripple 2s ease-out infinite'
                 }}
               />
-              <svg 
-                className="w-8 h-8 text-blue-400"
-                viewBox="0 0 24 24" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path 
-                  d="M7 13L12 18L17 13" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
+              
+              <span className="relative z-10">Get Started Today</span>
+            </a>
+            
+            {/* Pulsing glow effect */}
+            <div
+              className="w-full h-6 mt-2 mx-auto rounded-full opacity-30"
+              style={{
+                background: 'radial-gradient(ellipse, rgba(218, 131, 89, 0.6) 0%, transparent 70%)',
+                animation: 'pulse 2s ease-in-out infinite'
+              }}
+            />
+          </div>
+          
+          {/* Enhanced scroll indicator */}
+          <div className="flex justify-center mt-16">
+            <a
+              href="#portfolio"
+              className="flex flex-col items-center transition-all duration-300 hover:scale-110"
+              style={{ color: '#DA8359' }}
+            >
+              <div className="relative w-10 h-10">
+                <div
+                  className="absolute inset-0 rounded-full border-2 opacity-30"
+                  style={{ 
+                    borderColor: '#DA8359',
+                    animation: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite'
+                  }}
                 />
-                <path 
-                  d="M7 7L12 12L17 7" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round"
-                  strokeOpacity="0.5"
+                <div
+                  className="absolute inset-1 rounded-full border-2 opacity-60"
+                  style={{ 
+                    borderColor: '#DA8359',
+                    animation: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite 0.5s'
+                  }}
                 />
-              </svg>
-            </motion.div>
-          </motion.a>
-        </motion.div>
-      </div>
-    </section>
+                <svg 
+                  className="w-10 h-10 transition-transform duration-300"
+                  style={{ 
+                    color: '#DA8359',
+                    animation: 'float 3s ease-in-out infinite'
+                  }}
+                  viewBox="0 0 24 24" 
+                  fill="none"
+                >
+                  <path 
+                    d="M7 13L12 18L17 13" 
+                    stroke="currentColor" 
+                    strokeWidth="2" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round"
+                  />
+                  <path 
+                    d="M7 7L12 12L17 7" 
+                    stroke="currentColor" 
+                    strokeWidth="2" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round"
+                    strokeOpacity="0.5"
+                  />
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <style jsx>{`
+          @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+          }
+          
+          @keyframes ripple {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(20); opacity: 0; }
+          }
+          
+          @keyframes fadeInOut {
+            0%, 100% { opacity: 0; transform: translateY(0) rotate(0deg); }
+            50% { opacity: 0.7; transform: translateY(-30px) rotate(180deg); }
+          }
+          
+          @keyframes ping {
+            75%, 100% { transform: scale(2); opacity: 0; }
+          }
+          
+          @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          
+          @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+          }
+        `}</style>
+      </section>
+    </>
   );
 }
