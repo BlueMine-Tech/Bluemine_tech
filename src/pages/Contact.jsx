@@ -16,6 +16,17 @@ export default function ContactSection() {
     subject: '',
     message: ''
   });
+
+  // Color theme matching navbar
+  const colors = {
+    primary: '#ECDFCC',    // Light beige - primary background
+    secondary: '#FCFAEE',  // Off-white - secondary background
+    accent: '#DA8359',     // Terracotta - accent color
+    accentDark: '#B5684A', // Darker terracotta for accents
+    accentLight: '#E5A287', // Lighter terracotta for hover states
+    neutral: '#9A8778',    // Neutral brown that complements the palette
+    text: '#6B5A45'        // Brown text that works with the earth tones
+  };
   
   // Handle mouse movement for glow effect
   useEffect(() => {
@@ -46,15 +57,15 @@ export default function ContactSection() {
   const generateParticles = (count) => {
     return Array.from({ length: count }, (_, i) => ({
       id: i,
-      size: Math.random() * 10 + 3,
+      size: Math.random() * 12 + 4,
       x: Math.random() * 100, // percentage of screen width
       y: Math.random() * 100, // percentage of screen height
-      opacity: Math.random() * 0.3,
-      duration: Math.random() * 15 + 20,
+      opacity: Math.random() * 0.4 + 0.1,
+      duration: Math.random() * 18 + 25,
     }));
   };
 
-  const particles = generateParticles(10);
+  const particles = generateParticles(12);
 
   // Contact information
   const contactInfo = [
@@ -174,8 +185,9 @@ export default function ContactSection() {
   return (
     <section 
       id="contact" 
-      className="relative min-h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 overflow-hidden pt-16 sm:pt-20 md:pt-24 pb-16 w-full"
+      className="relative min-h-screen overflow-hidden pt-16 sm:pt-20 md:pt-24 pb-16 w-full"
       style={{ 
+        background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 50%, ${colors.primary} 100%)`,
         width: '100vw', 
         maxWidth: '100vw',
         marginLeft: '50%',
@@ -186,34 +198,39 @@ export default function ContactSection() {
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="absolute rounded-full bg-blue-500/10"
+          className="absolute rounded-full"
           style={{
             width: particle.size,
             height: particle.size,
             left: `${particle.x}%`,
             top: `${particle.y}%`,
-            opacity: particle.opacity / 2,
+            opacity: particle.opacity,
+            background: `radial-gradient(circle, ${colors.accent}40, ${colors.accentLight}20)`,
           }}
           animate={{
-            y: [0, -300],
-            opacity: [particle.opacity / 2, 0],
+            y: [0, -400],
+            opacity: [particle.opacity, 0],
+            scale: [0.8, 1.2, 0.8],
           }}
           transition={{
-            duration: particle.duration * 1.5,
+            duration: particle.duration,
             repeat: Infinity,
             ease: "linear",
           }}
         />
       ))}
 
-      {/* Animated background gradient */}
+      {/* Animated background gradient overlay */}
       <motion.div 
-        className="absolute inset-0 bg-gradient-radial from-blue-900/20 to-transparent"
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(ellipse at center, ${colors.accent}15 0%, transparent 70%)`
+        }}
         animate={{
-          opacity: [0.4, 0.3, 0.4],
+          opacity: [0.3, 0.5, 0.3],
         }}
         transition={{
-          duration: 10,
+          duration: 8,
           repeat: Infinity,
           repeatType: "reverse"
         }}
@@ -222,7 +239,11 @@ export default function ContactSection() {
       {/* Radial glow following mouse (disabled on mobile) */}
       {!isMobile && (
         <motion.div
-          className="absolute w-96 h-96 rounded-full bg-blue-500/10 blur-3xl pointer-events-none"
+          className="absolute w-96 h-96 rounded-full pointer-events-none"
+          style={{
+            background: `radial-gradient(circle, ${colors.accent}20, transparent 70%)`,
+            filter: 'blur(60px)'
+          }}
           animate={{
             x: mousePosition.x - 192,
             y: mousePosition.y - 192,
@@ -241,16 +262,23 @@ export default function ContactSection() {
             transition={{ duration: 0.8 }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-blue-400 mb-4">Contact Us</h2>
+            <h2 
+              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
+              style={{ color: colors.accent }}
+            >
+              Contact Us
+            </h2>
             <div className="relative flex justify-center mt-4">
               <motion.div
-                className="h-1 bg-blue-500 rounded-full mx-auto"
+                className="h-1 rounded-full mx-auto"
+                style={{ backgroundColor: colors.accent }}
                 initial={{ width: 0 }}
                 animate={{ width: "80px" }}
                 transition={{ delay: 0.4, duration: 0.8 }}
               />
               <motion.div
-                className="absolute h-1 bg-blue-300 rounded-full mx-auto"
+                className="absolute h-1 rounded-full mx-auto"
+                style={{ backgroundColor: colors.accentLight }}
                 initial={{ width: 0 }}
                 animate={{ width: "40px" }}
                 transition={{ 
@@ -274,15 +302,23 @@ export default function ContactSection() {
               viewport={{ once: true, amount: 0.3 }}
             >
               {/* Contact Info Card */}
-              <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 md:p-8 mb-6">
+              <div 
+                className="backdrop-blur-sm border rounded-xl p-6 md:p-8 mb-6 shadow-lg"
+                style={{ 
+                  backgroundColor: `${colors.secondary}90`,
+                  borderColor: `${colors.accent}30`
+                }}
+              >
                 <motion.h3 
-                  className="text-2xl font-bold text-white mb-6 flex items-center"
+                  className="text-2xl font-bold mb-6 flex items-center"
+                  style={{ color: colors.text }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
                 >
                   <motion.div 
-                    className="h-6 w-1 bg-blue-500 mr-3"
+                    className="h-6 w-1 mr-3"
+                    style={{ backgroundColor: colors.accent }}
                     animate={{
                       height: [24, 28, 24],
                     }}
@@ -295,7 +331,7 @@ export default function ContactSection() {
                   Get In Touch
                 </motion.h3>
                 
-                <p className="text-gray-300 mb-6">
+                <p className="mb-6" style={{ color: colors.neutral }}>
                   Have questions or want to discuss your project? Reach out to us using any of the methods below or fill out the form.
                 </p>
                 
@@ -304,23 +340,33 @@ export default function ContactSection() {
                   {contactInfo.map((item, index) => (
                     <motion.div 
                       key={item.title}
-                      className="flex items-start p-3 rounded-lg hover:bg-gray-700/30 transition-all"
+                      className="flex items-start p-3 rounded-lg transition-all"
+                      style={{
+                        ':hover': {
+                          backgroundColor: `${colors.accent}10`
+                        }
+                      }}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 + (index * 0.1), duration: 0.5 }}
-                      whileHover={{ x: 5 }}
+                      whileHover={{ 
+                        x: 5,
+                        backgroundColor: `${colors.accent}10`
+                      }}
                     >
                       <span className="text-2xl mr-4 mt-1">{item.icon}</span>
                       <div>
-                        <h4 className="text-blue-400 font-medium">{item.title}</h4>
-                        <p className="text-gray-300">{item.info}</p>
+                        <h4 className="font-medium" style={{ color: colors.accent }}>
+                          {item.title}
+                        </h4>
+                        <p style={{ color: colors.text }}>
+                          {item.info}
+                        </p>
                       </div>
                     </motion.div>
                   ))}
                 </div>
               </div>
-              
-             
             </motion.div>
             
             {/* Contact Form Column */}
@@ -331,9 +377,16 @@ export default function ContactSection() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
             >
-              <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 md:p-8">
+              <div 
+                className="backdrop-blur-sm border rounded-xl p-6 md:p-8 shadow-lg"
+                style={{ 
+                  backgroundColor: `${colors.secondary}90`,
+                  borderColor: `${colors.accent}30`
+                }}
+              >
                 <motion.h3 
-                  className="text-2xl font-bold text-white mb-6"
+                  className="text-2xl font-bold mb-6"
+                  style={{ color: colors.text }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
@@ -350,14 +403,37 @@ export default function ContactSection() {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.3, duration: 0.5 }}
                     >
-                      <label htmlFor="name" className="text-blue-300 block">Your Name</label>
+                      <label 
+                        htmlFor="name" 
+                        className="block font-medium"
+                        style={{ color: colors.accent }}
+                      >
+                        Your Name
+                      </label>
                       <input
                         type="text"
                         id="name"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full bg-gray-700/50 border border-gray-600 rounded-lg p-3 text-white focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none transition-all"
+                        className="w-full border rounded-lg p-3 outline-none transition-all"
+                        style={{
+                          backgroundColor: `${colors.primary}50`,
+                          borderColor: colors.neutral,
+                          color: colors.text,
+                          ':focus': {
+                            borderColor: colors.accent,
+                            boxShadow: `0 0 0 1px ${colors.accent}`
+                          }
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = colors.accent;
+                          e.target.style.boxShadow = `0 0 0 1px ${colors.accent}`;
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = colors.neutral;
+                          e.target.style.boxShadow = 'none';
+                        }}
                         required
                       />
                     </motion.div>
@@ -368,14 +444,33 @@ export default function ContactSection() {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.4, duration: 0.5 }}
                     >
-                      <label htmlFor="email" className="text-blue-300 block">Email Address</label>
+                      <label 
+                        htmlFor="email" 
+                        className="block font-medium"
+                        style={{ color: colors.accent }}
+                      >
+                        Email Address
+                      </label>
                       <input
                         type="email"
                         id="email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full bg-gray-700/50 border border-gray-600 rounded-lg p-3 text-white focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none transition-all"
+                        className="w-full border rounded-lg p-3 outline-none transition-all"
+                        style={{
+                          backgroundColor: `${colors.primary}50`,
+                          borderColor: colors.neutral,
+                          color: colors.text
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = colors.accent;
+                          e.target.style.boxShadow = `0 0 0 1px ${colors.accent}`;
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = colors.neutral;
+                          e.target.style.boxShadow = 'none';
+                        }}
                         required
                       />
                     </motion.div>
@@ -388,14 +483,33 @@ export default function ContactSection() {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.5, duration: 0.5 }}
                     >
-                      <label htmlFor="phone" className="text-blue-300 block">Phone Number</label>
+                      <label 
+                        htmlFor="phone" 
+                        className="block font-medium"
+                        style={{ color: colors.accent }}
+                      >
+                        Phone Number
+                      </label>
                       <input
                         type="tel"
                         id="phone"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full bg-gray-700/50 border border-gray-600 rounded-lg p-3 text-white focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none transition-all"
+                        className="w-full border rounded-lg p-3 outline-none transition-all"
+                        style={{
+                          backgroundColor: `${colors.primary}50`,
+                          borderColor: colors.neutral,
+                          color: colors.text
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = colors.accent;
+                          e.target.style.boxShadow = `0 0 0 1px ${colors.accent}`;
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = colors.neutral;
+                          e.target.style.boxShadow = 'none';
+                        }}
                       />
                     </motion.div>
                     
@@ -405,14 +519,33 @@ export default function ContactSection() {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.6, duration: 0.5 }}
                     >
-                      <label htmlFor="subject" className="text-blue-300 block">Subject</label>
+                      <label 
+                        htmlFor="subject" 
+                        className="block font-medium"
+                        style={{ color: colors.accent }}
+                      >
+                        Subject
+                      </label>
                       <input
                         type="text"
                         id="subject"
                         name="subject"
                         value={formData.subject}
                         onChange={handleChange}
-                        className="w-full bg-gray-700/50 border border-gray-600 rounded-lg p-3 text-white focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none transition-all"
+                        className="w-full border rounded-lg p-3 outline-none transition-all"
+                        style={{
+                          backgroundColor: `${colors.primary}50`,
+                          borderColor: colors.neutral,
+                          color: colors.text
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = colors.accent;
+                          e.target.style.boxShadow = `0 0 0 1px ${colors.accent}`;
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = colors.neutral;
+                          e.target.style.boxShadow = 'none';
+                        }}
                         required
                       />
                     </motion.div>
@@ -424,14 +557,33 @@ export default function ContactSection() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.7, duration: 0.5 }}
                   >
-                    <label htmlFor="message" className="text-blue-300 block">Your Message</label>
+                    <label 
+                      htmlFor="message" 
+                      className="block font-medium"
+                      style={{ color: colors.accent }}
+                    >
+                      Your Message
+                    </label>
                     <textarea
                       id="message"
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
                       rows="5"
-                      className="w-full bg-gray-700/50 border border-gray-600 rounded-lg p-3 text-white focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none transition-all resize-none"
+                      className="w-full border rounded-lg p-3 outline-none transition-all resize-none"
+                      style={{
+                        backgroundColor: `${colors.primary}50`,
+                        borderColor: colors.neutral,
+                        color: colors.text
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.borderColor = colors.accent;
+                        e.target.style.boxShadow = `0 0 0 1px ${colors.accent}`;
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = colors.neutral;
+                        e.target.style.boxShadow = 'none';
+                      }}
                       required
                     ></textarea>
                   </motion.div>
@@ -441,7 +593,15 @@ export default function ContactSection() {
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className={`p-3 rounded-lg ${formStatus.error ? 'bg-red-900/30 text-red-300 border border-red-700/50' : 'bg-green-900/30 text-green-300 border border-green-700/50'}`}
+                      className={`p-3 rounded-lg border ${
+                        formStatus.error 
+                          ? 'bg-red-50 border-red-200' 
+                          : 'bg-green-50 border-green-200'
+                      }`}
+                      style={{
+                        color: formStatus.error ? '#dc2626' : '#16a34a',
+                        backgroundColor: formStatus.error ? '#fef2f2' : '#f0fdf4'
+                      }}
                     >
                       {formStatus.message}
                     </motion.div>
@@ -455,10 +615,16 @@ export default function ContactSection() {
                   >
                     <motion.button
                       type="submit"
-                      className="px-6 py-3 bg-blue-200 hover:bg-blue-300 text-black font-medium rounded-lg shadow-lg shadow-blue-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-6 py-3 font-medium rounded-lg shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      style={{
+                        backgroundColor: colors.accent,
+                        color: colors.secondary,
+                        boxShadow: `0 4px 14px -4px ${colors.accent}40`
+                      }}
                       whileHover={{
                         scale: 1.02,
-                        boxShadow: "0 8px 20px -4px rgba(59, 130, 246, 0.5)"
+                        backgroundColor: colors.accentDark,
+                        boxShadow: `0 8px 20px -4px ${colors.accent}60`
                       }}
                       whileTap={{ scale: 0.98 }}
                       disabled={formStatus.submitted && !formStatus.error}
@@ -471,9 +637,7 @@ export default function ContactSection() {
             </motion.div>
           </div>
           
-          
-          
-          {/* Business Hours (Optional) */}
+          {/* Business Hours */}
           <motion.div 
             className="mt-12 text-center"
             initial={{ opacity: 0, y: 20 }}
@@ -481,9 +645,15 @@ export default function ContactSection() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true, amount: 0.8 }}
           >
-            <h3 className="text-xl text-white mb-2">Business Hours</h3>
-            <p className="text-gray-300">Monday - Friday: 9:00 AM - 6:00 PM IST</p>
-            <p className="text-gray-300">Saturday & Sunday: Closed</p>
+            <h3 className="text-xl mb-2" style={{ color: colors.text }}>
+              Business Hours
+            </h3>
+            <p style={{ color: colors.neutral }}>
+              Monday - Friday: 9:00 AM - 6:00 PM IST
+            </p>
+            <p style={{ color: colors.neutral }}>
+              Saturday & Sunday: Closed
+            </p>
           </motion.div>
         </div>
       </div>
