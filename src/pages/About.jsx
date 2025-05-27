@@ -99,7 +99,7 @@ export default function AboutUsSection() {
     { 
       id: 3, 
       name: "JAGADISH B RAO", 
-      position: "Regional Representative & Executive President", 
+      position: "Executive Vice President", 
       image: jagadesh,
       description: "A dynamic result-oriented entrepreneur and consultant with a diverse background and cross-industry expertise spanning Events, FMCG, Tourism, Paint, Green Logistics, and Media Networks. Armed with a solid academic foundation, Jagadish has consistently delivered impactful business development and innovative cross-sector consulting. Jagadish is known for driving strategic growth and innovative solutions. With extensive global travel experience, Jagadish brings a rich understanding of diverse cultures, enhancing his ability to navigate complex markets and build meaningful international relationships. In the film industry, Jagadish is highly experienced in location scouting, budgeting, and on-ground coordination, with a strong track record of efficiently managing bureaucratic processes to facilitate smooth film shooting and production. Jagadish also brings valuable experience in handling regional industrial and Tourism associations and is well-versed in travel planning and logistical coordination at both domestic and international levels. As our regional representative, he serves as a key liaison for expanding our presence across diverse markets.",
       hasDescription: true
