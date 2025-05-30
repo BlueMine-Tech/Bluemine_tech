@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import sheik from '../assets/sheik.jpeg'; // Adjust the path as necessary
 
 export default function ContactSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -336,36 +337,84 @@ export default function ContactSection() {
                 </p>
                 
                 {/* Contact Information Cards */}
-                <div className="space-y-4">
-                  {contactInfo.map((item, index) => (
-                    <motion.div 
-                      key={item.title}
-                      className="flex items-start p-3 rounded-lg transition-all"
-                      style={{
-                        ':hover': {
-                          backgroundColor: `${colors.accent}10`
-                        }
-                      }}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 + (index * 0.1), duration: 0.5 }}
-                      whileHover={{ 
-                        x: 5,
-                        backgroundColor: `${colors.accent}10`
-                      }}
-                    >
-                      <span className="text-2xl mr-4 mt-1">{item.icon}</span>
-                      <div>
-                        <h4 className="font-medium" style={{ color: colors.accent }}>
-                          {item.title}
-                        </h4>
-                        <p style={{ color: colors.text }}>
-                          {item.info}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+              <div className="space-y-4">
+  {contactInfo.map((item, index) => (
+    <motion.div 
+      key={item.title}
+      className="flex items-start p-3 rounded-lg transition-all"
+      style={{
+        ':hover': {
+          backgroundColor: `${colors.accent}10`
+        }
+      }}
+      initial={{ opacity: 0, x: -10 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.3 + (index * 0.1), duration: 0.5 }}
+      whileHover={{ 
+        x: 5,
+        backgroundColor: `${colors.accent}10`
+      }}
+    >
+      <span className="text-2xl mr-4 mt-1">{item.icon}</span>
+      <div>
+        <h4 className="font-medium" style={{ color: colors.accent }}>
+          {item.title}
+        </h4>
+        <p style={{ color: colors.text }}>
+          {item.info}
+        </p>
+      </div>
+    </motion.div>
+  ))}
+</div>
+
+{/* Person Image with Designation */}
+<motion.div 
+  className="mt-6 text-center"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.6, duration: 0.8 }}
+>
+  <div className="relative inline-block">
+    <motion.div
+      className="w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden border-4 shadow-lg"
+      style={{ borderColor: colors.accent }}
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.3 }}
+    >
+      <img
+        src={sheik} // Replace with your image path
+        alt="Contact Person"
+        className="w-full h-full object-cover"
+      />
+    </motion.div>
+    {/* Online status indicator */}
+    <motion.div
+      className="absolute bottom-3 right-0 w-6 h-6 rounded-full border-2"
+      style={{ 
+        backgroundColor: '#10B981', // Green for online
+        borderColor: colors.secondary 
+      }}
+      animate={{
+        scale: [1, 1.2, 1],
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+        repeatType: "reverse"
+      }}
+    />
+  </div>
+  <h4 className="font-semibold text-lg" style={{ color: colors.accent }}>
+    SHIEK MOHAMMAD KASIM
+  </h4>
+  <p className="text-sm" style={{ color: colors.neutral }}>
+    Business Development Manager
+  </p>
+  <p className="text-xs mt-1" style={{ color: colors.neutral }}>
+    Available to help you
+  </p>
+</motion.div>
               </div>
             </motion.div>
             
