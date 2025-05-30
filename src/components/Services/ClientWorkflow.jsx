@@ -53,7 +53,7 @@ export default function ClientWorkflowSection() {
     return () => clearInterval(interval);
   }, [isInView, isMobile]);
 
-  // Client workflow steps data
+  // Client workflow steps data with updated colors
   const workflowSteps = [
     {
       id: 'discovery',
@@ -66,7 +66,7 @@ export default function ClientWorkflowSection() {
         'Technology stack evaluation',
         'Project timeline planning'
       ],
-      color: 'from-purple-600 to-indigo-700'
+      color: 'from-[#DA8359] to-[#B5684A]'
     },
     {
       id: 'design',
@@ -79,7 +79,7 @@ export default function ClientWorkflowSection() {
         'Visual design',
         'Usability testing'
       ],
-      color: 'from-indigo-600 to-purple-700'
+      color: 'from-[#E5A287] to-[#DA8359]'
     },
     {
       id: 'development',
@@ -92,7 +92,7 @@ export default function ClientWorkflowSection() {
         'Quality code standards',
         'System integration'
       ],
-      color: 'from-purple-500 to-indigo-600'
+      color: 'from-[#B5684A] to-[#9A8778]'
     },
     {
       id: 'testing',
@@ -105,7 +105,7 @@ export default function ClientWorkflowSection() {
         'Security assessment',
         'Cross-platform compatibility'
       ],
-      color: 'from-indigo-500 to-purple-600'
+      color: 'from-[#9A8778] to-[#B5684A]'
     },
     {
       id: 'deployment',
@@ -118,7 +118,7 @@ export default function ClientWorkflowSection() {
         'Documentation handover',
         'Knowledge transfer'
       ],
-      color: 'from-purple-600 to-indigo-500'
+      color: 'from-[#DA8359] to-[#E5A287]'
     },
     {
       id: 'support',
@@ -131,7 +131,7 @@ export default function ClientWorkflowSection() {
         'Regular updates',
         'Continuous improvement'
       ],
-      color: 'from-indigo-600 to-purple-600'
+      color: 'from-[#E5A287] to-[#DA8359]'
     }
   ];
 
@@ -184,7 +184,7 @@ export default function ClientWorkflowSection() {
     <section 
       id="client-workflow" 
       ref={sectionRef}
-      className="relative py-16 md:py-24 bg-gradient-to-b from-gray-800 to-gray-900 overflow-hidden"
+      className="relative py-16 md:py-24 bg-gradient-to-b from-[#FCFAEE] via-[#ECDFCC] to-[#E5A287]/20 overflow-hidden"
       style={{ 
         width: '100vw', 
         maxWidth: '100%',
@@ -196,7 +196,7 @@ export default function ClientWorkflowSection() {
       {shapes.map((shape) => (
         <motion.div
           key={shape.id}
-          className={`absolute ${shape.shape === 'circle' ? 'rounded-full' : 'rounded-md'} bg-purple-500/10`}
+          className={`absolute ${shape.shape === 'circle' ? 'rounded-full' : 'rounded-md'} bg-[#DA8359]/10`}
           style={{
             width: shape.size,
             height: shape.size,
@@ -240,22 +240,23 @@ export default function ClientWorkflowSection() {
                 rotate: { duration: 20, repeat: Infinity, ease: "linear" },
                 scale: { duration: 3, repeat: Infinity, repeatType: "reverse" }
               }}
-              className="w-12 h-12 flex items-center justify-center rounded-full bg-purple-900/50 text-2xl mr-3"
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-[#DA8359]/20 text-2xl mr-3"
             >
               🤝
             </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Our Client Workflow</h2>
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#6B5A45] via-[#9A8778] to-[#DA8359] bg-clip-text text-transparent">Our Client Workflow</h2>
           </motion.div>
 
-          {/* Animated underline */}
+          {/* Enhanced animated double underline */}
           <motion.div 
             variants={itemVariants}
-            className="relative h-1 w-32 bg-purple-600 rounded-full mx-auto mb-8"
+            className="relative h-1.5 w-32 bg-gradient-to-r from-[#DA8359] to-[#E5A287] rounded-full mx-auto mb-1 shadow-sm"
           >
             <motion.div
-              className="absolute h-1 w-16 bg-purple-400 rounded-full"
+              className="absolute h-1.5 w-16 bg-gradient-to-r from-[#E5A287] to-[#DA8359] rounded-full"
               animate={{
                 x: [0, 16, 0],
+                width: [16, 24, 16]
               }}
               transition={{
                 duration: 2,
@@ -264,10 +265,14 @@ export default function ClientWorkflowSection() {
               }}
             />
           </motion.div>
+          <motion.div 
+            variants={itemVariants}
+            className="h-1 w-20 bg-gradient-to-r from-[#B5684A] to-[#DA8359] rounded-full mx-auto mb-8 shadow-sm"
+          />
           
           <motion.p 
             variants={itemVariants}
-            className="text-lg text-gray-300 text-center max-w-2xl mb-12"
+            className="text-lg text-[#9A8778] text-center max-w-2xl mb-12"
           >
             Our step-by-step approach ensures transparent communication and successful project delivery
           </motion.p>
@@ -279,9 +284,9 @@ export default function ClientWorkflowSection() {
               className="relative"
             >
               {/* Timeline line */}
-              <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-700 transform -translate-y-1/2">
+              <div className="absolute top-1/2 left-0 right-0 h-1 bg-[#ECDFCC] transform -translate-y-1/2">
                 <motion.div 
-                  className="absolute h-full bg-gradient-to-r from-purple-500 to-indigo-500"
+                  className="absolute h-full bg-gradient-to-r from-[#DA8359] to-[#E5A287]"
                   initial={{ width: '0%' }}
                   animate={isInView ? { width: '100%' } : { width: '0%' }}
                   transition={{ duration: 1.5, ease: "easeInOut" }}
@@ -302,11 +307,11 @@ export default function ClientWorkflowSection() {
                   >
                     {/* Step bubble */}
                     <motion.div
-                      className={`w-16 h-16 rounded-full bg-gradient-to-br ${step.color} flex items-center justify-center text-2xl relative z-10 mb-3 cursor-pointer border-2 ${idx === activeStep ? 'border-white' : 'border-transparent'}`}
+                      className={`w-16 h-16 rounded-full bg-gradient-to-br ${step.color} flex items-center justify-center text-2xl relative z-10 mb-3 cursor-pointer border-2 ${idx === activeStep ? 'border-[#6B5A45]' : 'border-transparent'}`}
                       whileHover={{ scale: 1.1 }}
                       animate={idx === activeStep ? 
-                        { scale: [1, 1.1, 1], boxShadow: '0 0 20px rgba(147, 51, 234, 0.5)' } : 
-                        { scale: 1, boxShadow: '0 0 0px rgba(147, 51, 234, 0)' }
+                        { scale: [1, 1.1, 1], boxShadow: '0 0 20px rgba(218, 131, 89, 0.5)' } : 
+                        { scale: 1, boxShadow: '0 0 0px rgba(218, 131, 89, 0)' }
                       }
                       transition={{ duration: 0.5 }}
                       onClick={() => setActiveStep(idx)}
@@ -316,22 +321,22 @@ export default function ClientWorkflowSection() {
                       {/* Progress indicator */}
                       {idx < activeStep && (
                         <motion.div 
-                          className="absolute inset-0 bg-white rounded-full flex items-center justify-center"
+                          className="absolute inset-0 bg-[#FCFAEE] rounded-full flex items-center justify-center"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <span className="text-purple-600 text-2xl">✓</span>
+                          <span className="text-[#DA8359] text-2xl">✓</span>
                         </motion.div>
                       )}
                     </motion.div>
                     
                     {/* Step label */}
                     <motion.div 
-                      className={`text-sm font-medium text-center ${idx === activeStep ? 'text-white' : 'text-gray-400'}`}
+                      className={`text-sm font-medium text-center ${idx === activeStep ? 'text-[#6B5A45]' : 'text-[#9A8778]'}`}
                       animate={idx === activeStep ? 
-                        { scale: 1.05, color: '#ffffff' } : 
-                        { scale: 1, color: '#9ca3af' }
+                        { scale: 1.05, color: '#6B5A45' } : 
+                        { scale: 1, color: '#9A8778' }
                       }
                     >
                       {idx + 1}. {step.title.split(' ')[0]}
@@ -347,18 +352,18 @@ export default function ClientWorkflowSection() {
               variants={cardVariants}
               initial="hidden"
               animate="visible"
-              className={`mt-12 p-6 rounded-2xl bg-gradient-to-br ${workflowSteps[activeStep].color} border border-white/10`}
+              className={`mt-12 p-6 rounded-2xl bg-gradient-to-br ${workflowSteps[activeStep].color} border border-[#ECDFCC]/20`}
             >
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div className="md:col-span-1 flex justify-center">
                   <motion.div
-                    className="w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-5xl relative"
+                    className="w-24 h-24 rounded-2xl bg-[#FCFAEE]/20 backdrop-blur-sm flex items-center justify-center text-5xl relative"
                     animate={{
                       y: [0, -10, 0],
                       boxShadow: [
-                        '0 0 0 rgba(147, 51, 234, 0.3)',
-                        '0 0 20px rgba(147, 51, 234, 0.5)',
-                        '0 0 0 rgba(147, 51, 234, 0.3)'
+                        '0 0 0 rgba(218, 131, 89, 0.3)',
+                        '0 0 20px rgba(218, 131, 89, 0.5)',
+                        '0 0 0 rgba(218, 131, 89, 0.3)'
                       ]
                     }}
                     transition={{
@@ -370,9 +375,9 @@ export default function ClientWorkflowSection() {
                   </motion.div>
                 </div>
                 
-                <div className="md:col-span-3 text-white">
+                <div className="md:col-span-3 text-[#FCFAEE]">
                   <h3 className="text-2xl font-bold mb-2">{workflowSteps[activeStep].title}</h3>
-                  <p className="text-lg text-white/90 mb-4">{workflowSteps[activeStep].description}</p>
+                  <p className="text-lg text-[#FCFAEE]/90 mb-4">{workflowSteps[activeStep].description}</p>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {workflowSteps[activeStep].features.map((feature, idx) => (
@@ -384,7 +389,7 @@ export default function ClientWorkflowSection() {
                         transition={{ duration: 0.3, delay: 0.3 + idx * 0.1 }}
                       >
                         <motion.div 
-                          className="w-2 h-2 bg-white rounded-full mr-2"
+                          className="w-2 h-2 bg-[#FCFAEE] rounded-full mr-2"
                           animate={{
                             scale: [1, 1.5, 1],
                           }}
@@ -420,9 +425,9 @@ export default function ClientWorkflowSection() {
                   <div className="mr-4 relative">
                     {/* Vertical line */}
                     {idx < workflowSteps.length - 1 && (
-                      <div className="absolute top-16 bottom-0 left-1/2 w-1 bg-gray-700 transform -translate-x-1/2">
+                      <div className="absolute top-16 bottom-0 left-1/2 w-1 bg-[#ECDFCC] transform -translate-x-1/2">
                         <motion.div 
-                          className="absolute top-0 w-full bg-gradient-to-b from-purple-500 to-indigo-500"
+                          className="absolute top-0 w-full bg-gradient-to-b from-[#DA8359] to-[#E5A287]"
                           initial={{ height: '0%' }}
                           animate={isInView ? { height: '100%' } : { height: '0%' }}
                           transition={{ duration: 0.5, delay: 0.3 + idx * 0.2 }}
@@ -437,9 +442,9 @@ export default function ClientWorkflowSection() {
                       animate={{
                         scale: [1, 1.05, 1],
                         boxShadow: [
-                          '0 0 0px rgba(147, 51, 234, 0.3)',
-                          '0 0 15px rgba(147, 51, 234, 0.5)',
-                          '0 0 0px rgba(147, 51, 234, 0.3)'
+                          '0 0 0px rgba(218, 131, 89, 0.3)',
+                          '0 0 15px rgba(218, 131, 89, 0.5)',
+                          '0 0 0px rgba(218, 131, 89, 0.3)'
                         ]
                       }}
                       transition={{ duration: 3, repeat: Infinity }}
@@ -449,22 +454,22 @@ export default function ClientWorkflowSection() {
                   </div>
                   
                   {/* Right side: step info */}
-                  <div className="flex-1 p-4 bg-gray-800/50 backdrop-blur-sm rounded-lg border border-purple-500/20">
-                    <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
-                    <p className="text-sm text-gray-300 mb-3">{step.description}</p>
+                  <div className="flex-1 p-4 bg-[#FCFAEE]/80 backdrop-blur-sm rounded-lg border border-[#ECDFCC]/30">
+                    <h3 className="text-xl font-bold text-[#6B5A45] mb-2">{step.title}</h3>
+                    <p className="text-sm text-[#9A8778] mb-3">{step.description}</p>
                     
                     <div className="grid grid-cols-1 gap-1">
                       {step.features.slice(0, 2).map((feature, i) => (
                         <motion.div
                           key={feature}
-                          className="flex items-center text-sm text-gray-200"
+                          className="flex items-center text-sm text-[#6B5A45]"
                           initial={{ opacity: 0, x: 5 }}
                           animate={isInView ? 
                             { opacity: 1, x: 0, transition: { delay: 0.4 + idx * 0.1 + i * 0.05 } } : 
                             { opacity: 0, x: 5 }
                           }
                         >
-                          <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mr-2 flex-shrink-0" />
+                          <div className="w-1.5 h-1.5 bg-[#DA8359] rounded-full mr-2 flex-shrink-0" />
                           <span>{feature}</span>
                         </motion.div>
                       ))}
@@ -480,22 +485,20 @@ export default function ClientWorkflowSection() {
             variants={itemVariants}
             className="mt-16 flex flex-col items-center"
           >
-            <h3 className="text-xl md:text-2xl font-bold text-white text-center mb-6">Ready to Start Your Project?</h3>
+            <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#6B5A45] to-[#DA8359] bg-clip-text text-transparent text-center mb-6">Ready to Start Your Project?</h3>
             
             <motion.a
-  href="#contact"
-  className="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold rounded-lg shadow-lg shadow-purple-900/20"
-  style={{ textShadow: "0px 2px 4px rgba(0,0,0,0.6)" }}
-  whileHover={{
-    scale: 1.05,
-    boxShadow: "0 10px 25px -5px rgba(147, 51, 234, 0.5)"
-  }}
-  whileTap={{ scale: 0.98 }}
->
-  Schedule a Consultation
-</motion.a>
-
-
+              href="#contact"
+              className="px-8 py-3 bg-gradient-to-r from-[#DA8359] to-[#B5684A] text-[#FCFAEE] font-bold rounded-lg shadow-lg shadow-[#DA8359]/20"
+              style={{ textShadow: "0px 2px 4px rgba(0,0,0,0.6)" }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 10px 25px -5px rgba(218, 131, 89, 0.5)"
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Schedule a Consultation
+            </motion.a>
           </motion.div>
           
           {/* Bottom decoration */}
@@ -503,7 +506,7 @@ export default function ClientWorkflowSection() {
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 rounded-full bg-purple-500"
+                className="w-2 h-2 rounded-full bg-[#DA8359]"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.5, 1, 0.5]
@@ -518,9 +521,6 @@ export default function ClientWorkflowSection() {
           </div>
         </motion.div>
       </div>
-      
-
-        
     </section>
   );
 }

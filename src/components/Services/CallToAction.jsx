@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 
 export default function CallToActionSection() {
   const [isInView, setIsInView] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef(null);
   const [formState, setFormState] = useState({
     name: '',
@@ -13,6 +14,32 @@ export default function CallToActionSection() {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
+  // Handle mouse movement for interactive elements
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   // Check if section is in viewport
   useEffect(() => {
@@ -85,21 +112,19 @@ export default function CallToActionSection() {
     visible: { opacity: 1, y: 0 }
   };
 
-  // Generate floating shapes for background
-  const generateShapes = (count) => {
+  // Generate floating particles (matching services banner)
+  const generateParticles = (count) => {
     return Array.from({ length: count }, (_, i) => ({
       id: i,
-      shape: Math.random() > 0.5 ? 'circle' : 'square',
-      size: Math.random() * 10 + 5,
+      size: Math.random() * 12 + 3,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      opacity: Math.random() * 0.15 + 0.05,
-      duration: Math.random() * 20 + 20,
-      delay: Math.random() * 10
+      opacity: Math.random() * 0.3 + 0.1,
+      duration: Math.random() * 15 + 10,
     }));
   };
 
-  const shapes = generateShapes(12);
+  const particles = generateParticles(15);
 
   // Services offered
   const services = [
@@ -118,7 +143,7 @@ export default function CallToActionSection() {
     <section 
       id="contact" 
       ref={sectionRef}
-      className="relative py-16 md:py-24 bg-gradient-to-b from-gray-900 to-gray-800 overflow-hidden"
+      className="relative py-16 md:py-24 bg-gradient-to-br from-[#FCFAEE] via-[#ECDFCC] to-[#E5A287]/20 overflow-hidden"
       style={{ 
         width: '100vw', 
         maxWidth: '100%',
@@ -126,32 +151,78 @@ export default function CallToActionSection() {
         transform: 'translateX(-50%)'
       }}
     >
-      {/* Floating background shapes */}
-      {shapes.map((shape) => (
+      {/* Background particles (matching services banner) */}
+      {particles.map((particle) => (
         <motion.div
-          key={shape.id}
-          className={`absolute ${shape.shape === 'circle' ? 'rounded-full' : 'rounded-md'} bg-purple-500/10`}
+          key={particle.id}
+          className="absolute rounded-full bg-[#DA8359]/20"
           style={{
-            width: shape.size,
-            height: shape.size,
-            left: `${shape.x}%`,
-            top: `${shape.y}%`,
-            opacity: shape.opacity,
+            width: particle.size,
+            height: particle.size,
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            opacity: particle.opacity,
           }}
           animate={{
-            x: [0, shape.x > 50 ? 100 : -100],
-            y: [0, shape.y > 50 ? 50 : -50],
-            rotate: [0, 180],
-            opacity: [shape.opacity, 0],
+            x: [0, particle.x > 50 ? 100 : -100],
+            opacity: [particle.opacity, 0],
           }}
           transition={{
-            duration: shape.duration,
-            delay: shape.delay,
+            duration: particle.duration,
             repeat: Infinity,
             ease: "linear",
           }}
         />
       ))}
+
+      {/* Animated background gradient overlay */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-radial from-[#DA8359]/15 via-transparent to-[#B5684A]/10"
+        animate={{
+          opacity: [0.4, 0.7, 0.4],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      />
+
+      {/* Secondary gradient overlay for depth */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-t from-[#ECDFCC]/30 via-transparent to-[#FCFAEE]/20"
+        animate={{
+          opacity: [0.2, 0.4, 0.2],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      />
+
+      {/* Dynamic glow effect */}
+      {!isMobile && (
+        <>
+          <motion.div
+            className="absolute w-96 h-96 rounded-full bg-[#DA8359]/8 blur-3xl pointer-events-none"
+            animate={{
+              x: mousePosition.x - 192,
+              y: mousePosition.y - 192,
+            }}
+            transition={{ type: "spring", damping: 30, stiffness: 100 }}
+          />
+          <motion.div
+            className="absolute w-64 h-64 rounded-full bg-[#E5A287]/12 blur-2xl pointer-events-none"
+            animate={{
+              x: mousePosition.x - 128,
+              y: mousePosition.y - 128,
+            }}
+            transition={{ type: "spring", damping: 20, stiffness: 120 }}
+          />
+        </>
+      )}
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
@@ -174,36 +245,56 @@ export default function CallToActionSection() {
                 rotate: { duration: 20, repeat: Infinity, ease: "linear" },
                 scale: { duration: 3, repeat: Infinity, repeatType: "reverse" }
               }}
-              className="w-12 h-12 flex items-center justify-center rounded-full bg-purple-900/50 text-2xl mr-3"
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-[#ECDFCC] to-[#FCFAEE] text-2xl mr-3 border-2 border-[#DA8359]/20 shadow-lg"
             >
               📞
             </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Get In Touch</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-[#6B5A45] via-[#9A8778] to-[#DA8359] bg-clip-text text-transparent">Get In Touch</h2>
           </motion.div>
 
-          {/* Animated underline */}
+          {/* Enhanced animated double underline (matching services banner) */}
           <motion.div 
             variants={itemVariants}
-            className="relative h-1 w-32 bg-purple-600 rounded-full mx-auto mb-8"
+            className="relative h-1.5 w-28 bg-gradient-to-r from-[#DA8359] to-[#E5A287] rounded-full mx-auto mb-1 shadow-sm"
           >
             <motion.div
-              className="absolute h-1 w-16 bg-purple-400 rounded-full"
+              className="absolute h-1.5 w-14 bg-gradient-to-r from-[#E5A287] to-[#DA8359] rounded-full"
               animate={{
-                x: [0, 16, 0],
+                x: [0, 14, 0],
+                width: [14, 20, 14]
               }}
               transition={{
-                duration: 2,
+                duration: 3,
                 repeat: Infinity,
                 repeatType: "reverse"
               }}
             />
           </motion.div>
+          <motion.div 
+            variants={itemVariants}
+            className="h-1 w-16 bg-gradient-to-r from-[#B5684A] to-[#DA8359] rounded-full mx-auto mb-8 shadow-sm"
+          />
           
           <motion.p 
             variants={itemVariants}
-            className="text-lg text-gray-300 text-center max-w-2xl mb-12"
+            className="text-lg md:text-xl text-[#9A8778] text-center max-w-2xl mb-12 leading-relaxed"
           >
-            Ready to take your business to the next level? Reach out to BlueMine Technologies today and discover how our digital marketing expertise and innovative software solutions can drive your success.
+            Ready to take your business to the next level? Reach out to BlueMine Technologies today and discover how our 
+            <motion.span 
+              className="bg-gradient-to-r from-[#DA8359] via-[#E5A287] to-[#B5684A] bg-clip-text text-transparent px-2 font-semibold"
+              animate={{ 
+                backgroundPosition: ['0% center', '100% center', '0% center'],
+                backgroundSize: ['100% 100%', '150% 100%', '100% 100%']
+              }}
+              transition={{ 
+                duration: 6,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+            >
+              digital expertise
+            </motion.span> 
+            and innovative software solutions can drive your success.
           </motion.p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 w-full max-w-6xl">
@@ -215,18 +306,18 @@ export default function CallToActionSection() {
               {/* Contact Info Card */}
               <motion.div
                 variants={itemVariants}
-                className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/20"
+                className="bg-gradient-to-br from-[#FCFAEE]/95 via-[#ECDFCC]/80 to-[#E5A287]/10 backdrop-blur-md p-6 rounded-2xl border border-[#ECDFCC]/60 shadow-2xl shadow-[#DA8359]/10"
                 whileHover={{ 
                   y: -5,
-                  boxShadow: "0 10px 25px -5px rgba(147, 51, 234, 0.2)"
+                  boxShadow: "0 10px 25px rgba(218,131,89,0.2)"
                 }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-2xl font-bold text-white mb-4">Contact Information</h3>
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-[#6B5A45] to-[#DA8359] bg-clip-text text-transparent mb-4">Contact Information</h3>
                 
                 <div className="space-y-4">
                   <div className="flex items-start">
-                    <div className="bg-purple-700/30 rounded-lg p-2 mr-4">
+                    <div className="bg-gradient-to-br from-[#ECDFCC] to-[#FCFAEE] rounded-lg p-2 mr-4 border border-[#DA8359]/20">
                       <motion.div
                         animate={{
                           rotate: [0, 10, 0, -10, 0],
@@ -242,13 +333,13 @@ export default function CallToActionSection() {
                       </motion.div>
                     </div>
                     <div>
-                      <h4 className="text-purple-300 font-medium">Email Us</h4>
-                      <a href="mailto:valli@blueminetech.com" className="text-white hover:text-purple-300 transition-colors">valli@blueminetech.com</a>
+                      <h4 className="text-[#DA8359] font-medium">Email Us</h4>
+                      <a href="mailto:valli@blueminetech.com" className="text-[#6B5A45] hover:text-[#DA8359] transition-colors">valli@blueminetech.com</a>
                     </div>
                   </div>
                   
                   <div className="flex items-start">
-                    <div className="bg-purple-700/30 rounded-lg p-2 mr-4">
+                    <div className="bg-gradient-to-br from-[#ECDFCC] to-[#FCFAEE] rounded-lg p-2 mr-4 border border-[#DA8359]/20">
                       <motion.div
                         animate={{
                           scale: [1, 1.2, 1],
@@ -264,13 +355,13 @@ export default function CallToActionSection() {
                       </motion.div>
                     </div>
                     <div>
-                      <h4 className="text-purple-300 font-medium">Call Us</h4>
-                      <a href="tel:+919597530301" className="text-white hover:text-purple-300 transition-colors">+91 95975 30301</a>
+                      <h4 className="text-[#DA8359] font-medium">Call Us</h4>
+                      <a href="tel:+919597530301" className="text-[#6B5A45] hover:text-[#DA8359] transition-colors">+91 95975 30301</a>
                     </div>
                   </div>
                   
                   <div className="flex items-start">
-                    <div className="bg-purple-700/30 rounded-lg p-2 mr-4">
+                    <div className="bg-gradient-to-br from-[#ECDFCC] to-[#FCFAEE] rounded-lg p-2 mr-4 border border-[#DA8359]/20">
                       <motion.div
                         animate={{
                           y: [0, -5, 0],
@@ -286,8 +377,8 @@ export default function CallToActionSection() {
                       </motion.div>
                     </div>
                     <div>
-                      <h4 className="text-purple-300 font-medium">Visit Us</h4>
-                      <p className="text-white">Trichy, Tamil Nadu, India</p>
+                      <h4 className="text-[#DA8359] font-medium">Visit Us</h4>
+                      <p className="text-[#6B5A45]">Trichy, Tamil Nadu, India</p>
                     </div>
                   </div>
                 </div>
@@ -296,21 +387,26 @@ export default function CallToActionSection() {
               {/* Why Choose Us Card */}
               <motion.div
                 variants={itemVariants}
-                className="bg-gradient-to-br from-purple-900/50 to-indigo-900/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/20"
+                className="bg-gradient-to-br from-[#E5A287]/20 via-[#ECDFCC]/60 to-[#FCFAEE]/80 backdrop-blur-md p-6 rounded-2xl border border-[#DA8359]/30 shadow-2xl shadow-[#DA8359]/10"
                 whileHover={{ 
                   y: -5,
-                  boxShadow: "0 10px 25px -5px rgba(147, 51, 234, 0.2)"
+                  boxShadow: "0 10px 25px rgba(218,131,89,0.3)"
                 }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-2xl font-bold text-white mb-4">Why Choose BlueMine Tech?</h3>
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-[#6B5A45] to-[#DA8359] bg-clip-text text-transparent mb-4">Why Choose BlueMine Tech?</h3>
                 
                 <div className="space-y-3">
                   <div className="flex items-center">
                     <motion.div 
-                      className="w-2 h-2 bg-purple-400 rounded-full mr-3"
+                      className="w-3 h-3 bg-gradient-to-r from-[#DA8359] to-[#E5A287] rounded-full mr-3"
                       animate={{
-                        scale: [1, 1.5, 1],
+                        scale: [1, 1.3, 1],
+                        boxShadow: [
+                          '0 0 0 rgba(218,131,89,0.3)',
+                          '0 0 10px rgba(218,131,89,0.6)',
+                          '0 0 0 rgba(218,131,89,0.3)'
+                        ]
                       }}
                       transition={{
                         duration: 2,
@@ -318,14 +414,19 @@ export default function CallToActionSection() {
                         delay: 0
                       }}
                     />
-                    <p className="text-gray-200">End-to-end digital solutions under one roof</p>
+                    <p className="text-[#6B5A45]">End-to-end digital solutions under one roof</p>
                   </div>
                   
                   <div className="flex items-center">
                     <motion.div 
-                      className="w-2 h-2 bg-purple-400 rounded-full mr-3"
+                      className="w-3 h-3 bg-gradient-to-r from-[#DA8359] to-[#E5A287] rounded-full mr-3"
                       animate={{
-                        scale: [1, 1.5, 1],
+                        scale: [1, 1.3, 1],
+                        boxShadow: [
+                          '0 0 0 rgba(218,131,89,0.3)',
+                          '0 0 10px rgba(218,131,89,0.6)',
+                          '0 0 0 rgba(218,131,89,0.3)'
+                        ]
                       }}
                       transition={{
                         duration: 2,
@@ -333,14 +434,19 @@ export default function CallToActionSection() {
                         delay: 0.5
                       }}
                     />
-                    <p className="text-gray-200">Tailored strategies for your specific industry</p>
+                    <p className="text-[#6B5A45]">Tailored strategies for your specific industry</p>
                   </div>
                   
                   <div className="flex items-center">
                     <motion.div 
-                      className="w-2 h-2 bg-purple-400 rounded-full mr-3"
+                      className="w-3 h-3 bg-gradient-to-r from-[#DA8359] to-[#E5A287] rounded-full mr-3"
                       animate={{
-                        scale: [1, 1.5, 1],
+                        scale: [1, 1.3, 1],
+                        boxShadow: [
+                          '0 0 0 rgba(218,131,89,0.3)',
+                          '0 0 10px rgba(218,131,89,0.6)',
+                          '0 0 0 rgba(218,131,89,0.3)'
+                        ]
                       }}
                       transition={{
                         duration: 2,
@@ -348,14 +454,19 @@ export default function CallToActionSection() {
                         delay: 1
                       }}
                     />
-                    <p className="text-gray-200">Expert team with proven track record</p>
+                    <p className="text-[#6B5A45]">Expert team with proven track record</p>
                   </div>
                   
                   <div className="flex items-center">
                     <motion.div 
-                      className="w-2 h-2 bg-purple-400 rounded-full mr-3"
+                      className="w-3 h-3 bg-gradient-to-r from-[#DA8359] to-[#E5A287] rounded-full mr-3"
                       animate={{
-                        scale: [1, 1.5, 1],
+                        scale: [1, 1.3, 1],
+                        boxShadow: [
+                          '0 0 0 rgba(218,131,89,0.3)',
+                          '0 0 10px rgba(218,131,89,0.6)',
+                          '0 0 0 rgba(218,131,89,0.3)'
+                        ]
                       }}
                       transition={{
                         duration: 2,
@@ -363,17 +474,17 @@ export default function CallToActionSection() {
                         delay: 1.5
                       }}
                     />
-                    <p className="text-gray-200">24/7 technical support & assistance</p>
+                    <p className="text-[#6B5A45]">24/7 technical support & assistance</p>
                   </div>
                 </div>
                 
                 <div className="mt-6">
                   <motion.div 
-                    className="flex items-center justify-center bg-white/10 rounded-lg p-4"
+                    className="flex items-center justify-center bg-gradient-to-br from-[#FCFAEE]/50 to-[#ECDFCC]/30 rounded-lg p-4 border border-[#DA8359]/20"
                     whileHover={{ scale: 1.02 }}
                   >
                     <div className="text-3xl mr-3">🚀</div>
-                    <p className="text-white text-sm md:text-base">Schedule a free 30-minute consultation to discuss your business needs!</p>
+                    <p className="text-[#6B5A45] text-sm md:text-base">Schedule a free 30-minute consultation to discuss your business needs!</p>
                   </motion.div>
                 </div>
               </motion.div>
@@ -385,7 +496,7 @@ export default function CallToActionSection() {
               >
                 <motion.a 
                   href="#" 
-                  className="w-10 h-10 bg-gradient-to-br from-purple-200 to-indigo-200 rounded-full flex items-center justify-center text-white"
+                  className="w-10 h-10 bg-gradient-to-br from-[#DA8359] to-[#B5684A] rounded-full flex items-center justify-center text-[#FCFAEE] shadow-lg"
                   whileHover={{ scale: 1.2, rotate: 10 }}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -395,7 +506,7 @@ export default function CallToActionSection() {
                 
                 <motion.a 
                   href="#" 
-                  className="w-10 h-10 bg-gradient-to-br from-purple-200 to-indigo-200 rounded-full flex items-center justify-center text-white"
+                  className="w-10 h-10 bg-gradient-to-br from-[#DA8359] to-[#B5684A] rounded-full flex items-center justify-center text-[#FCFAEE] shadow-lg"
                   whileHover={{ scale: 1.2, rotate: -10 }}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -405,7 +516,7 @@ export default function CallToActionSection() {
                 
                 <motion.a 
                   href="#" 
-                  className="w-10 h-10 bg-gradient-to-br from-purple-200 to-indigo-200 rounded-full flex items-center justify-center text-white"
+                  className="w-10 h-10 bg-gradient-to-br from-[#DA8359] to-[#B5684A] rounded-full flex items-center justify-center text-[#FCFAEE] shadow-lg"
                   whileHover={{ scale: 1.2, rotate: 10 }}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -413,11 +524,9 @@ export default function CallToActionSection() {
                   </svg>
                 </motion.a>
                 
-               
-                
                 <motion.a 
                   href="#" 
-                  className="w-10 h-10 bg-gradient-to-br from-purple-200 to-indigo-200 rounded-full flex items-center justify-center text-white"
+                  className="w-10 h-10 bg-gradient-to-br from-[#DA8359] to-[#B5684A] rounded-full flex items-center justify-center text-[#FCFAEE] shadow-lg"
                   whileHover={{ scale: 1.2, rotate: 10 }}
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -430,38 +539,25 @@ export default function CallToActionSection() {
             {/* Right side: Contact Form */}
             <motion.div
               variants={itemVariants}
-              className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm p-6 md:p-8 rounded-xl border border-purple-500/20"
+              className="bg-gradient-to-br from-[#FCFAEE]/95 via-[#ECDFCC]/80 to-[#E5A287]/10 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-[#ECDFCC]/60 shadow-2xl shadow-[#DA8359]/10"
             >
-              <h3 className="text-2xl font-bold text-white mb-6">Request More Information</h3>
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-[#6B5A45] to-[#DA8359] bg-clip-text text-transparent mb-6">Request More Information</h3>
               
               {formSubmitted ? (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-lg p-6 text-center"
+                  className="text-center py-8"
                 >
-                  <motion.div 
-                    className="w-16 h-16 mx-auto bg-green-500/20 rounded-full flex items-center justify-center mb-4"
-                    animate={{
-                      scale: [1, 1.2, 1],
-                      backgroundColor: [
-                        'rgba(34, 197, 94, 0.2)',
-                        'rgba(34, 197, 94, 0.4)',
-                        'rgba(34, 197, 94, 0.2)'
-                      ]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <span className="text-3xl">✓</span>
-                  </motion.div>
-                  <h4 className="text-xl font-bold text-white mb-2">Thank You!</h4>
-                  <p className="text-gray-300">Your message has been sent successfully. Our team will get back to you shortly.</p>
+                  <div className="text-6xl mb-4">✅</div>
+                  <h4 className="text-xl font-bold text-[#DA8359] mb-2">Thank You!</h4>
+                  <p className="text-[#6B5A45]">Your message has been sent successfully. We'll get back to you soon!</p>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">Full Name <span className="text-purple-400">*</span></label>
+                      <label htmlFor="name" className="block text-[#6B5A45] font-medium mb-2">Full Name *</label>
                       <input
                         type="text"
                         id="name"
@@ -469,13 +565,13 @@ export default function CallToActionSection() {
                         value={formState.name}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white"
-                        placeholder="John Doe"
+                        className="w-full px-4 py-3 bg-[#FCFAEE]/70 border border-[#ECDFCC] rounded-lg focus:ring-2 focus:ring-[#DA8359] focus:border-transparent transition-all duration-300 text-[#6B5A45] placeholder-[#9A8778]"
+                        placeholder="Enter your full name"
                       />
                     </div>
                     
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">Email Address <span className="text-purple-400">*</span></label>
+                      <label htmlFor="email" className="block text-[#6B5A45] font-medium mb-2">Email Address *</label>
                       <input
                         type="email"
                         id="email"
@@ -483,109 +579,178 @@ export default function CallToActionSection() {
                         value={formState.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white"
-                        placeholder="john@example.com"
+                        className="w-full px-4 py-3 bg-[#FCFAEE]/70 border border-[#ECDFCC] rounded-lg focus:ring-2 focus:ring-[#DA8359] focus:border-transparent transition-all duration-300 text-[#6B5A45] placeholder-[#9A8778]"
+                        placeholder="Enter your email"
                       />
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">Phone Number</label>
+                      <label htmlFor="phone" className="block text-[#6B5A45] font-medium mb-2">Phone Number</label>
                       <input
                         type="tel"
                         id="phone"
                         name="phone"
                         value={formState.phone}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white"
-                        placeholder="+1 (123) 456-7890"
+                        className="w-full px-4 py-3 bg-[#FCFAEE]/70 border border-[#ECDFCC] rounded-lg focus:ring-2 focus:ring-[#DA8359] focus:border-transparent transition-all duration-300 text-[#6B5A45] placeholder-[#9A8778]"
+                        placeholder="Your phone number"
                       />
                     </div>
                     
                     <div>
-                      <label htmlFor="service" className="block text-sm font-medium text-gray-300 mb-1">Interested In <span className="text-purple-400">*</span></label>
+                      <label htmlFor="service" className="block text-[#6B5A45] font-medium mb-2">Service Interested In</label>
                       <select
                         id="service"
                         name="service"
                         value={formState.service}
                         onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white"
+                        className="w-full px-4 py-3 bg-[#FCFAEE]/70 border border-[#ECDFCC] rounded-lg focus:ring-2 focus:ring-[#DA8359] focus:border-transparent transition-all duration-300 text-[#6B5A45]"
                       >
-                        {services.map(service => (
-                          <option key={service.value} value={service.value}>{service.label}</option>
+                        {services.map((service) => (
+                          <option key={service.value} value={service.value}>
+                            {service.label}
+                          </option>
                         ))}
                       </select>
                     </div>
                   </div>
                   
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">Your Message <span className="text-purple400">*</span></label>
+                    <label htmlFor="message" className="block text-[#6B5A45] font-medium mb-2">Message *</label>
                     <textarea
                       id="message"
                       name="message"
                       value={formState.message}
                       onChange={handleInputChange}
                       required
-                      rows="4"
-                      className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white"
+                      rows="5"
+                      className="w-full px-4 py-3 bg-[#FCFAEE]/70 border border-[#ECDFCC] rounded-lg focus:ring-2 focus:ring-[#DA8359] focus:border-transparent transition-all duration-300 text-[#6B5A45] placeholder-[#9A8778] resize-none"
                       placeholder="Tell us about your project requirements..."
                     ></textarea>
                   </div>
                   
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id="privacy"
-                      className="w-4 h-4 text-purple-600 border-gray-500 rounded focus:ring-purple-500"
-                      required
-                    />
-                    <label htmlFor="privacy" className="ml-2 text-sm text-gray-300">
-                      I agree to the <a href="#" className="text-purple-400 hover:text-purple-300">Privacy Policy</a> and consent to being contacted.
-                    </label>
-                  </div>
-                  
                   <motion.button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-medium py-3 px-4 rounded-lg shadow-lg shadow-purple-600/20 flex items-center justify-center space-x-2"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
                     disabled={formLoading}
+                    className="w-full bg-gradient-to-r from-[#DA8359] to-[#B5684A] text-[#FCFAEE] font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+                    whileHover={{ scale: formLoading ? 1 : 1.02 }}
+                    whileTap={{ scale: formLoading ? 1 : 0.98 }}
                   >
                     {formLoading ? (
-                      <>
+                      <div className="flex items-center justify-center">
                         <motion.div
-                          className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                           animate={{ rotate: 360 }}
                           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          className="w-5 h-5 border-2 border-[#FCFAEE] border-t-transparent rounded-full mr-2"
                         />
-                        <span>Sending...</span>
-                      </>
+                        Sending Message...
+                      </div>
                     ) : (
                       <>
-                        <span>Send Message</span>
+                        Send Message
                         <motion.span
                           animate={{ x: [0, 5, 0] }}
                           transition={{ duration: 1.5, repeat: Infinity }}
+                          className="ml-2"
                         >
                           →
                         </motion.span>
                       </>
                     )}
                   </motion.button>
+                  
+                  <p className="text-sm text-[#9A8778] text-center">
+                    By submitting this form, you agree to our privacy policy and terms of service.
+                  </p>
                 </form>
               )}
             </motion.div>
           </div>
+          
+          {/* Bottom CTA Banner */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-16 w-full max-w-4xl mx-auto"
+          >
+            <motion.div
+              className="bg-gradient-to-r from-[#DA8359] via-[#E5A287] to-[#DA8359] p-8 rounded-2xl text-center shadow-2xl border border-[#B5684A]/30"
+              whileHover={{ scale: 1.02 }}
+              animate={{
+                backgroundPosition: ['0% center', '100% center', '0% center'],
+              }}
+              transition={{
+                backgroundPosition: {
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "linear"
+                }
+              }}
+            >
+              <motion.div
+                animate={{
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 5, 0, -5, 0]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+                className="text-4xl md:text-5xl mb-4"
+              >
+                🎯
+              </motion.div>
+              
+              <h3 className="text-2xl md:text-3xl font-bold text-[#FCFAEE] mb-4">
+                Ready to Transform Your Business?
+              </h3>
+              
+              <p className="text-lg text-[#FCFAEE]/90 mb-6 max-w-2xl mx-auto">
+                Join hundreds of satisfied clients who have revolutionized their digital presence with BlueMine Technologies. 
+                Let's discuss how we can accelerate your growth!
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <motion.a
+                  href="tel:+919597530301"
+                  className="bg-[#FCFAEE] text-[#DA8359] font-bold py-3 px-8 rounded-lg hover:bg-[#ECDFCC] transition-all duration-300 shadow-lg"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  📞 Call Now: +91 95975 30301
+                </motion.a>
+                
+                <motion.a
+                  href="mailto:valli@blueminetech.com"
+                  className="bg-transparent border-2 border-[#FCFAEE] text-[#FCFAEE] font-bold py-3 px-8 rounded-lg hover:bg-[#FCFAEE] hover:text-[#DA8359] transition-all duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  ✉️ Email Us
+                </motion.a>
+              </div>
+              
+              <div className="mt-6 flex items-center justify-center text-[#FCFAEE]/80">
+                <motion.div
+                  animate={{
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "reverse"
+                  }}
+                  className="mr-2"
+                >
+                  ⚡
+                </motion.div>
+                <span className="text-sm">Free consultation • No commitment required • Quick response guaranteed</span>
+              </div>
+            </motion.div>
+          </motion.div>
         </motion.div>
-      </div>
-      
-      {/* Bottom decorative element */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" className="fill-purple-900/10">
-          <path d="M0,0 C280,180 720,180 1440,0 L1440,100 L0,100 Z"></path>
-        </svg>
       </div>
     </section>
   );

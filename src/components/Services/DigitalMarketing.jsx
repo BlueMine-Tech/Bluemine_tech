@@ -62,7 +62,7 @@ export default function DigitalMarketingServices() {
       icon: '🔍',
       description: 'Boost your website visibility in search results with data-driven SEO strategies that increase organic traffic and improve rankings.',
       features: ['Keyword Research', 'On-Page SEO', 'Technical SEO', 'Link Building'],
-      color: 'from-blue-600 to-blue-700'
+      color: 'from-[#DA8359] to-[#B5684A]'
     },
     {
       id: 'smo',
@@ -71,7 +71,7 @@ export default function DigitalMarketingServices() {
       icon: '📱',
       description: 'Enhance your brand presence across social platforms with engaging content strategies that connect with your target audience.',
       features: ['Profile Optimization', 'Content Calendar', 'Community Management', 'Growth Strategies'],
-      color: 'from-blue-500 to-cyan-500'
+      color: 'from-[#B5684A] to-[#DA8359]'
     },
     {
       id: 'google-business',
@@ -80,7 +80,7 @@ export default function DigitalMarketingServices() {
       icon: '🌐',
       description: 'Maximize your local search visibility with optimized Google Business Profiles that attract nearby customers and improve conversions.',
       features: ['Profile Setup', 'Location Management', 'Review Management', 'Local SEO'],
-      color: 'from-blue-400 to-blue-600'
+      color: 'from-[#E5A287] to-[#DA8359]'
     },
     {
       id: 'paid-ads',
@@ -89,7 +89,7 @@ export default function DigitalMarketingServices() {
       icon: '📊',
       description: 'Drive targeted traffic and conversions with strategic paid advertising campaigns across Google, Facebook, Instagram, and more.',
       features: ['Campaign Strategy', 'Ad Creation', 'Performance Tracking', 'ROI Optimization'],
-      color: 'from-indigo-500 to-blue-600'
+      color: 'from-[#DA8359] to-[#E5A287]'
     },
     {
       id: 'influencer',
@@ -98,7 +98,7 @@ export default function DigitalMarketingServices() {
       icon: '👥',
       description: 'Leverage influential voices in your industry to amplify your brand message and reach new relevant audiences effectively.',
       features: ['Influencer Research', 'Campaign Planning', 'Content Collaboration', 'Performance Analytics'],
-      color: 'from-blue-500 to-indigo-600'
+      color: 'from-[#B5684A] to-[#DA8359]'
     },
     {
       id: 'content',
@@ -107,7 +107,7 @@ export default function DigitalMarketingServices() {
       icon: '✏️',
       description: 'Engage your audience with compelling posts, reels, and multimedia content specifically designed for high engagement and conversions.',
       features: ['Content Strategy', 'Multimedia Production', 'Copywriting', 'Seasonal Campaigns'],
-      color: 'from-cyan-500 to-blue-600'
+      color: 'from-[#DA8359] to-[#B5684A]'
     }
   ];
 
@@ -173,7 +173,7 @@ export default function DigitalMarketingServices() {
     <section 
       id="digital-marketing" 
       ref={sectionRef}
-      className="relative py-16 md:py-24 bg-gradient-to-b from-gray-800 to-gray-900 overflow-hidden"
+      className="relative py-16 md:py-24 bg-gradient-to-b from-[#FCFAEE] via-[#ECDFCC] to-[#E5A287]/30 overflow-hidden"
       style={{ 
         width: '100vw', 
         maxWidth: '100%',
@@ -185,7 +185,7 @@ export default function DigitalMarketingServices() {
       {shapes.map((shape) => (
         <motion.div
           key={shape.id}
-          className={`absolute ${shape.shape === 'circle' ? 'rounded-full' : 'rounded-md'} bg-blue-500/10`}
+          className={`absolute ${shape.shape === 'circle' ? 'rounded-full' : 'rounded-md'} bg-[#DA8359]/10`}
           style={{
             width: shape.size,
             height: shape.size,
@@ -211,7 +211,7 @@ export default function DigitalMarketingServices() {
       {/* Interactive background glow */}
       {!isMobile && (
         <motion.div
-          className="absolute w-64 h-64 rounded-full bg-blue-500/5 blur-3xl pointer-events-none"
+          className="absolute w-64 h-64 rounded-full bg-[#DA8359]/10 blur-3xl pointer-events-none"
           animate={{
             x: mousePosition.x - 128,
             y: mousePosition.y - 128,
@@ -241,20 +241,20 @@ export default function DigitalMarketingServices() {
                 rotate: { duration: 20, repeat: Infinity, ease: "linear" },
                 scale: { duration: 3, repeat: Infinity, repeatType: "reverse" }
               }}
-              className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-900/50 text-2xl mr-3"
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-[#DA8359]/20 backdrop-blur-sm text-2xl mr-3 border-2 border-[#DA8359]/30"
             >
-              💼
+              📱
             </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">Digital Marketing Services</h2>
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#6B5A45] to-[#DA8359] bg-clip-text text-transparent">Digital Marketing Services</h2>
           </motion.div>
 
           {/* Animated underline */}
           <motion.div 
             variants={itemVariants}
-            className="relative h-1 w-32 bg-blue-600 rounded-full mx-auto mb-8"
+            className="relative h-1.5 w-32 bg-gradient-to-r from-[#DA8359] to-[#E5A287] rounded-full mx-auto mb-2 shadow-sm"
           >
             <motion.div
-              className="absolute h-1 w-16 bg-blue-400 rounded-full"
+              className="absolute h-1.5 w-16 bg-gradient-to-r from-[#E5A287] to-[#DA8359] rounded-full"
               animate={{
                 x: [0, 16, 0],
               }}
@@ -265,6 +265,10 @@ export default function DigitalMarketingServices() {
               }}
             />
           </motion.div>
+          <motion.div 
+            variants={itemVariants}
+            className="h-1 w-20 bg-gradient-to-r from-[#B5684A] to-[#DA8359] rounded-full mx-auto mb-8 shadow-sm"
+          />
 
           {/* Service selection tabs */}
           <motion.div 
@@ -274,12 +278,12 @@ export default function DigitalMarketingServices() {
             {services.map((service, idx) => (
               <motion.button
                 key={service.id}
-                className={`px-3 py-2 md:px-4 md:py-2 rounded-full text-sm md:text-base font-medium transition-all flex items-center gap-2 ${
+                className={`px-3 py-2 md:px-4 md:py-2 rounded-full text-sm md:text-base font-medium transition-all flex items-center gap-2 shadow-md ${
                   activeService === idx 
-                    ? "bg-blue-600 text-black shadow-lg shadow-blue-600/30" 
-                    : "bg-gray-800/80 text-blue-500 hover:bg-gray-700/80"
+                    ? "bg-gradient-to-r from-[#DA8359] to-[#B5684A] text-[#FCFAEE] shadow-[#DA8359]/30 transform scale-105" 
+                    : "bg-[#FCFAEE]/90 backdrop-blur-sm text-[#B5684A] hover:bg-[#ECDFCC] border border-[#ECDFCC]/50 hover:border-[#DA8359]/30"
                 }`}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: activeService === idx ? 1.05 : 1.08 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveService(idx)}
               >
@@ -295,19 +299,19 @@ export default function DigitalMarketingServices() {
             variants={cardVariants}
             initial="hidden"
             animate="visible"
-            className={`w-full max-w-5xl p-6 md:p-8 rounded-2xl bg-gradient-to-br ${services[activeService].color} border border-white/10`}
+            className={`w-full max-w-5xl p-6 md:p-8 rounded-2xl bg-gradient-to-br ${services[activeService].color} border border-[#ECDFCC]/30 shadow-2xl shadow-[#DA8359]/10`}
           >
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-8 items-center">
               {/* Service icon with floating animation */}
               <div className="lg:col-span-1 flex justify-center">
                 <motion.div
-                  className="w-24 h-24 md:w-32 md:h-32 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-5xl md:text-6xl relative"
+                  className="w-24 h-24 md:w-32 md:h-32 rounded-2xl bg-[#FCFAEE]/20 backdrop-blur-sm flex items-center justify-center text-5xl md:text-6xl relative border border-[#FCFAEE]/30"
                   animate={{
                     y: [0, -10, 0],
                     boxShadow: [
-                      '0 0 0 rgba(59, 130, 246, 0.3)',
-                      '0 0 20px rgba(59, 130, 246, 0.5)',
-                      '0 0 0 rgba(59, 130, 246, 0.3)'
+                      '0 0 0 rgba(218,131,89,0.3)',
+                      '0 0 20px rgba(218,131,89,0.5)',
+                      '0 0 0 rgba(218,131,89,0.3)'
                     ]
                   }}
                   transition={{
@@ -321,7 +325,7 @@ export default function DigitalMarketingServices() {
                   {[1, 2, 3].map((num) => (
                     <motion.div
                       key={num}
-                      className="absolute w-3 h-3 rounded-full bg-blue-300/80"
+                      className="absolute w-3 h-3 rounded-full bg-[#FCFAEE]/80"
                       style={{
                         top: `${30 * num}%`,
                         left: `${80 - 20 * num}%`,
@@ -343,7 +347,7 @@ export default function DigitalMarketingServices() {
               </div>
 
               {/* Service information */}
-              <div className="lg:col-span-4 text-white">
+              <div className="lg:col-span-4 text-[#FCFAEE]">
                 <motion.h3 
                   className="text-2xl md:text-3xl font-bold mb-3"
                   initial={{ opacity: 0, x: 20 }}
@@ -354,7 +358,7 @@ export default function DigitalMarketingServices() {
                 </motion.h3>
 
                 <motion.p 
-                  className="text-base md:text-lg text-blue-50/90 mb-6"
+                  className="text-base md:text-lg text-[#FCFAEE]/90 mb-6"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
@@ -378,7 +382,7 @@ export default function DigitalMarketingServices() {
                       transition={{ duration: 0.3, delay: 0.3 + idx * 0.1 }}
                     >
                       <motion.div 
-                        className="w-2 h-2 bg-white rounded-full mr-2"
+                        className="w-2 h-2 bg-[#FCFAEE] rounded-full mr-2"
                         animate={{
                           scale: [1, 1.5, 1],
                         }}
@@ -396,10 +400,10 @@ export default function DigitalMarketingServices() {
                 {/* CTA button with hover animation */}
                 <motion.a
                   href={`#contact`}
-                  className="inline-block px-6 py-3 bg-white text-blue-700 font-bold rounded-lg shadow-lg shadow-blue-900/20"
+                  className="inline-block px-6 py-3 bg-[#FCFAEE] text-[#B5684A] font-bold rounded-lg shadow-lg shadow-[#6B5A45]/20 hover:shadow-xl hover:shadow-[#6B5A45]/30 transition-all"
                   whileHover={{ 
                     scale: 1.05,
-                    boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.5)"
+                    boxShadow: "0 10px 25px -5px rgba(107, 90, 69, 0.5)"
                   }}
                   whileTap={{ scale: 0.98 }}
                   initial={{ opacity: 0, y: 10 }}
@@ -412,101 +416,102 @@ export default function DigitalMarketingServices() {
             </div>
           </motion.div>
           
-          {/* Process steps */}
+          {/* Marketing process steps */}
           <motion.div
-  variants={itemVariants}
-  className="mt-20 w-full"
->
-  <h3 className="text-2xl md:text-3xl font-bold text-white text-center mb-6 md:mb-12">Our Digital Marketing Process</h3>
-  
-  {/* Mobile version - vertical layout */}
-  <div className="flex md:hidden flex-col max-w-xs mx-auto">
-    {['Research', 'Strategy', 'Execute', 'Analyze', 'Optimize'].map((step, idx) => (
-      <motion.div
-        key={step}
-        className="relative flex items-center mb-3"
-        initial={{ opacity: 0, x: -20 }}
-        animate={isInView ? {
-          opacity: 1,
-          x: 0,
-          transition: { delay: 0.3 + idx * 0.1 }
-        } : {}}
-      >
-        {/* Step number with smaller pulsing animation */}
-        <motion.div
-          className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-bold z-10 flex-shrink-0"
-          animate={{
-            boxShadow: [
-              '0 0 0 0 rgba(59, 130, 246, 0.7)',
-              '0 0 0 5px rgba(59, 130, 246, 0)',
-              '0 0 0 0 rgba(59, 130, 246, 0)'
-            ]
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            delay: idx * 0.2
-          }}
-        >
-          {idx + 1}
-        </motion.div>
-        
-        {/* Step name */}
-        <h4 className="text-lg font-medium text-white ml-4">{step}</h4>
-      </motion.div>
-    ))}
-  </div>
-  
-  {/* Desktop version - horizontal layout */}
-  <div className="hidden md:flex flex-row justify-between max-w-4xl mx-auto">
-    {['Research', 'Strategy', 'Execute', 'Analyze', 'Optimize'].map((step, idx) => (
-      <motion.div
-        key={step}
-        className="relative mb-8 md:mb-0"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? {
-          opacity: 1,
-          y: 0,
-          transition: { delay: 0.5 + idx * 0.2 }
-        } : {}}
-      >
-        {/* Step number with pulsing animation */}
-        <motion.div
-          className="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl font-bold mx-auto mb-3 relative z-10"
-          animate={{
-            boxShadow: [
-              '0 0 0 0 rgba(59, 130, 246, 0.7)',
-              '0 0 0 10px rgba(59, 130, 246, 0)',
-              '0 0 0 0 rgba(59, 130, 246, 0)'
-            ]
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            delay: idx * 0.5
-          }}
-        >
-          {idx + 1}
-        </motion.div>
-        
-        {/* Step name */}
-        <h4 className="text-lg font-medium text-white text-center">{step}</h4>
-        
-        {/* Connecting line (except for last item) */}
-        {idx < 4 && (
-          <div className="hidden md:block absolute top-7 left-full w-full h-0.5 bg-blue-900">
-            <motion.div
-              className="absolute top-0 left-0 h-full bg-blue-500"
-              initial={{ width: 0 }}
-              animate={isInView ? { width: '100%' } : {}}
-              transition={{ duration: 0.5, delay: 1 + idx * 0.2 }}
-            />
-          </div>
-        )}
-      </motion.div>
-    ))}
-  </div>
-</motion.div>
+            variants={itemVariants}
+            className="mt-20 w-full"
+          >
+            <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#6B5A45] to-[#DA8359] bg-clip-text text-transparent text-center mb-6 md:mb-12">Our Digital Marketing Process</h3>
+            
+            {/* Mobile version - vertical layout */}
+            <div className="flex md:hidden flex-col max-w-xs mx-auto">
+              {['Research', 'Strategy', 'Execute', 'Analyze', 'Optimize'].map((step, idx) => (
+                <motion.div
+                  key={step}
+                  className="relative flex items-center mb-3"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? {
+                    opacity: 1,
+                    x: 0,
+                    transition: { delay: 0.3 + idx * 0.1 }
+                  } : {}}
+                >
+                  {/* Step number with smaller pulsing animation */}
+                  <motion.div
+                    className="w-10 h-10 rounded-full bg-gradient-to-r from-[#DA8359] to-[#B5684A] flex items-center justify-center text-[#FCFAEE] text-sm font-bold z-10 flex-shrink-0 shadow-lg"
+                    animate={{
+                      boxShadow: [
+                        '0 0 0 0 rgba(218,131,89,0.7)',
+                        '0 0 0 5px rgba(218,131,89,0)',
+                        '0 0 0 0 rgba(218,131,89,0)'
+                      ]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: idx * 0.2
+                    }}
+                  >
+                    {idx + 1}
+                  </motion.div>
+                  
+                  {/* Step name */}
+                  <h4 className="text-lg font-medium text-[#6B5A45] ml-4">{step}</h4>
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Desktop version - horizontal layout */}
+            <div className="hidden md:flex flex-row justify-between max-w-4xl mx-auto">
+              {['Research', 'Strategy', 'Execute', 'Analyze', 'Optimize'].map((step, idx) => (
+                <motion.div
+                  key={step}
+                  className="relative mb-8 md:mb-0"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? {
+                    opacity: 1,
+                    y: 0,
+                    transition: { delay: 0.5 + idx * 0.2 }
+                  } : {}}
+                >
+                  {/* Step number with pulsing animation */}
+                  <motion.div
+                    className="w-14 h-14 rounded-full bg-gradient-to-r from-[#DA8359] to-[#B5684A] flex items-center justify-center text-[#FCFAEE] text-xl font-bold mx-auto mb-3 relative z-10 shadow-lg"
+                    animate={{
+                      boxShadow: [
+                        '0 0 0 0 rgba(218,131,89,0.7)',
+                        '0 0 0 10px rgba(218,131,89,0)',
+                        '0 0 0 0 rgba(218,131,89,0)'
+                      ]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: idx * 0.5
+                    }}
+                  >
+                    {idx + 1}
+                  </motion.div>
+                  
+                  {/* Step name */}
+                  <h4 className="text-lg font-medium text-[#6B5A45] text-center">{step}</h4>
+                  
+                  {/* Connecting line (except for last item) */}
+                  {idx < 4 && (
+                    <div className="hidden md:block absolute top-7 left-full w-full h-0.5 bg-[#ECDFCC]">
+                      <motion.div
+                        className="absolute top-0 left-0 h-full bg-[#DA8359]"
+                        initial={{ width: 0 }}
+                        animate={isInView ? { width: '100%' } : {}}
+                        transition={{ duration: 0.5, delay: 1 + idx * 0.2 }}
+                      />
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+          
        
           
           {/* Bottom decoration */}
@@ -514,7 +519,7 @@ export default function DigitalMarketingServices() {
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 rounded-full bg-blue-500"
+                className="w-2 h-2 rounded-full bg-[#DA8359]"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.5, 1, 0.5]
@@ -529,9 +534,6 @@ export default function DigitalMarketingServices() {
           </div>
         </motion.div>
       </div>
-      
-    
-      
     </section>
   );
 }

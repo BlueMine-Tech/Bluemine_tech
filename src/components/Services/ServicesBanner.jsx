@@ -43,31 +43,31 @@ export default function ServicesBanner() {
     return () => clearInterval(interval);
   }, [isHovered]);
 
-  // Service categories with animated icons
+  // Service categories with animated icons - reordered with Software Solutions first
   const serviceCategories = [
-    {
-      title: "Digital Marketing",
-      icon: "📱",
-      services: ["SEO", "Social Media", "PPC", "Content"],
-      color: "from-blue-500 to-blue-600"
-    },
     {
       title: "Software Solutions",
       icon: "💻",
       services: ["Custom Apps", "ERP", "CRM", "Automation"],
-      color: "from-blue-400 to-cyan-600"
+      color: "from-[#E5A287] to-[#DA8359]"
+    },
+    {
+      title: "Digital Marketing",
+      icon: "📱",
+      services: ["SEO", "Social Media", "PPC", "Content"],
+      color: "from-[#DA8359] to-[#B5684A]"
     },
     {
       title: "IT Support",
       icon: "🛠️",
       services: ["24/7 Support", "Maintenance", "Consulting", "Training"],
-      color: "from-indigo-500 to-blue-700"
+      color: "from-[#B5684A] to-[#9A8778]"
     },
     {
       title: "Data Analytics",
       icon: "📊",
       services: ["Reporting", "Visualization", "Research", "Insights"],
-      color: "from-cyan-500 to-blue-500"
+      color: "from-[#DA8359] to-[#E5A287]"
     }
   ];
 
@@ -116,7 +116,7 @@ export default function ServicesBanner() {
 
   return (
     <section
-      className="relative min-h-[70vh] bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 overflow-hidden w-full py-16"
+      className="relative min-h-[70vh] bg-gradient-to-br from-[#FCFAEE] via-[#ECDFCC] to-[#E5A287]/20 overflow-hidden w-full py-16"
       style={{ 
         width: '100vw', 
         maxWidth: '100%',
@@ -128,7 +128,7 @@ export default function ServicesBanner() {
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="absolute rounded-full bg-blue-500/10"
+          className="absolute rounded-full bg-[#DA8359]/20"
           style={{
             width: particle.size,
             height: particle.size,
@@ -148,29 +148,53 @@ export default function ServicesBanner() {
         />
       ))}
 
-      {/* Animated background gradient */}
+      {/* Animated background gradient overlay */}
       <motion.div 
-        className="absolute inset-0 bg-gradient-radial from-blue-900/10 to-transparent"
+        className="absolute inset-0 bg-gradient-radial from-[#DA8359]/15 via-transparent to-[#B5684A]/10"
         animate={{
-          opacity: [0.3, 0.5, 0.3],
+          opacity: [0.4, 0.7, 0.4],
+          scale: [1, 1.1, 1],
         }}
         transition={{
-          duration: 10,
+          duration: 12,
           repeat: Infinity,
           repeatType: "reverse"
         }}
       />
 
-      {/* Dynamic glow effect */}
+      {/* Secondary gradient overlay for depth */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-t from-[#ECDFCC]/30 via-transparent to-[#FCFAEE]/20"
+        animate={{
+          opacity: [0.2, 0.4, 0.2],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      />
+
+      {/* Dynamic glow effect - enhanced */}
       {!isMobile && (
-        <motion.div
-          className="absolute w-80 h-80 rounded-full bg-blue-500/5 blur-3xl pointer-events-none"
-          animate={{
-            x: mousePosition.x - 160,
-            y: mousePosition.y - 160,
-          }}
-          transition={{ type: "spring", damping: 25, stiffness: 150 }}
-        />
+        <>
+          <motion.div
+            className="absolute w-96 h-96 rounded-full bg-[#DA8359]/8 blur-3xl pointer-events-none"
+            animate={{
+              x: mousePosition.x - 192,
+              y: mousePosition.y - 192,
+            }}
+            transition={{ type: "spring", damping: 30, stiffness: 100 }}
+          />
+          <motion.div
+            className="absolute w-64 h-64 rounded-full bg-[#E5A287]/12 blur-2xl pointer-events-none"
+            animate={{
+              x: mousePosition.x - 128,
+              y: mousePosition.y - 128,
+            }}
+            transition={{ type: "spring", damping: 20, stiffness: 120 }}
+          />
+        </>
       )}
 
       {/* Main content container */}
@@ -181,24 +205,24 @@ export default function ServicesBanner() {
           animate="visible"
           className="flex flex-col items-center"
         >
-          {/* Main heading with animated underline */}
+          {/* Main heading with enhanced styling */}
           <motion.h1 
             variants={itemVariants}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center mb-2"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-[#6B5A45] via-[#9A8778] to-[#DA8359] bg-clip-text text-transparent text-center mb-2"
           >
             Our Services
           </motion.h1>
           
-          {/* Animated double underline */}
+          {/* Enhanced animated double underline */}
           <motion.div 
             variants={itemVariants}
-            className="relative h-1 w-24 bg-blue-500 rounded-full mx-auto mb-1"
+            className="relative h-1.5 w-28 bg-gradient-to-r from-[#DA8359] to-[#E5A287] rounded-full mx-auto mb-1 shadow-sm"
           >
             <motion.div
-              className="absolute h-1 w-12 bg-blue-300 rounded-full"
+              className="absolute h-1.5 w-14 bg-gradient-to-r from-[#E5A287] to-[#DA8359] rounded-full"
               animate={{
-                x: [0, 12, 0],
-                width: [12, 18, 12]
+                x: [0, 14, 0],
+                width: [14, 20, 14]
               }}
               transition={{
                 duration: 3,
@@ -209,74 +233,75 @@ export default function ServicesBanner() {
           </motion.div>
           <motion.div 
             variants={itemVariants}
-            className="h-1 w-12 bg-blue-600 rounded-full mx-auto mb-6"
+            className="h-1 w-16 bg-gradient-to-r from-[#B5684A] to-[#DA8359] rounded-full mx-auto mb-8 shadow-sm"
           />
 
-          {/* Subheading with gradient text */}
+          {/* Enhanced subheading with better styling */}
           <motion.p 
             variants={itemVariants}
-            className="text-lg md:text-xl text-gray-300 max-w-2xl text-center mb-12"
+            className="text-lg md:text-xl text-[#9A8778] max-w-3xl text-center mb-12 leading-relaxed"
           >
             Comprehensive 
             <motion.span 
-              className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400 px-2 font-medium"
+              className="bg-gradient-to-r from-[#DA8359] via-[#E5A287] to-[#B5684A] bg-clip-text text-transparent px-2 font-semibold"
               animate={{ 
-                backgroundPosition: ['0% center', '100% center', '0% center'] 
+                backgroundPosition: ['0% center', '100% center', '0% center'],
+                backgroundSize: ['100% 100%', '150% 100%', '100% 100%']
               }}
               transition={{ 
-                duration: 5,
+                duration: 6,
                 repeat: Infinity,
                 repeatType: "reverse"
               }}
             >
-              Digital & Software
+              Software & Digital
             </motion.span> 
             Solutions Tailored to Your Business Needs
           </motion.p>
 
-          {/* Service category tabs */}
+          {/* Enhanced service category tabs */}
           <motion.div 
             variants={itemVariants}
-            className="flex flex-wrap justify-center gap-2 md:gap-4 mb-8"
+            className="flex flex-wrap justify-center gap-3 md:gap-4 mb-10"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
             {serviceCategories.map((category, idx) => (
               <motion.button
                 key={category.title}
-                className={`px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-base font-medium transition-all flex items-center ${
+                className={`px-5 py-3 md:px-7 md:py-4 rounded-2xl text-sm md:text-base font-semibold transition-all flex items-center shadow-md hover:shadow-lg ${
                   activeCategory === idx 
-                    ? "bg-blue-700 text-blue shadow-lg shadow-blue-700/30" 
-                    : "bg-gray-800/70 text-blue-500 hover:bg-gray-800"
+                    ? "bg-gradient-to-r from-[#DA8359] to-[#B5684A] text-[#FCFAEE] shadow-[#DA8359]/30 transform scale-105" 
+                    : "bg-[#FCFAEE]/90 backdrop-blur-sm text-[#B5684A] hover:bg-[#ECDFCC] border-2 border-[#ECDFCC]/50 hover:border-[#DA8359]/30"
                 }`}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: activeCategory === idx ? 1.05 : 1.08, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveCategory(idx)}
               >
-                <span className="mr-2">{category.icon}</span>
+                <span className="mr-2 text-lg">{category.icon}</span>
                 {category.title}
               </motion.button>
             ))}
           </motion.div>
 
-          {/* Active service category display */}
+          {/* Enhanced active service category display */}
           <motion.div
             key={activeCategory}
             variants={serviceCardVariants}
             initial="hidden"
             animate="visible"
-            className={`w-full max-w-4xl p-6 md:p-8 rounded-xl bg-gradient-to-br ${serviceCategories[activeCategory].color} bg-opacity-10 backdrop-blur-sm border border-white/10`}
+            className={`w-full max-w-5xl p-8 md:p-10 rounded-2xl bg-gradient-to-br from-[#FCFAEE]/95 via-[#ECDFCC]/80 to-[#E5A287]/10 backdrop-blur-md border border-[#ECDFCC]/60 shadow-2xl shadow-[#DA8359]/10`}
           >
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-              {/* Category icon with animation */}
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+              {/* Enhanced category icon with animation */}
               <motion.div
-                className="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-full bg-white/15 text-3xl md:text-4xl"
+                className="flex-shrink-0 w-24 h-24 md:w-28 md:h-28 flex items-center justify-center rounded-2xl bg-gradient-to-br from-[#ECDFCC] to-[#FCFAEE] text-4xl md:text-5xl border-2 border-[#DA8359]/20 shadow-lg"
                 animate={{
                   rotateY: [0, 360],
                   boxShadow: [
-                    '0 0 0 rgba(255,255,255,0.1)',
-                    '0 0 20px rgba(255,255,255,0.3)',
-                    '0 0 0 rgba(255,255,255,0.1)'
+                    '0 4px 20px rgba(218,131,89,0.1)',
+                    '0 8px 30px rgba(218,131,89,0.3)',
+                    '0 4px 20px rgba(218,131,89,0.1)'
                   ]
                 }}
                 transition={{
@@ -295,25 +320,35 @@ export default function ServicesBanner() {
                 {serviceCategories[activeCategory].icon}
               </motion.div>
 
-              {/* Category content */}
+              {/* Enhanced category content */}
               <div className="flex-grow text-center md:text-left">
-                <h2 className="text-white text-2xl md:text-3xl font-bold mb-4">
+                <motion.h2 
+                  className="bg-gradient-to-r from-[#6B5A45] to-[#DA8359] bg-clip-text text-transparent text-3xl md:text-4xl font-bold mb-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
                   {serviceCategories[activeCategory].title} Solutions
-                </h2>
+                </motion.h2>
                 
-                <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-8">
                   {serviceCategories[activeCategory].services.map((service, idx) => (
                     <motion.div
                       key={service}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="flex items-center"
+                      transition={{ delay: idx * 0.1 + 0.3 }}
+                      className="flex items-center p-3 rounded-lg bg-[#FCFAEE]/50 backdrop-blur-sm border border-[#ECDFCC]/30"
                     >
                       <motion.div
-                        className="w-2 h-2 bg-white rounded-full mr-2"
+                        className="w-3 h-3 bg-gradient-to-r from-[#DA8359] to-[#E5A287] rounded-full mr-3 flex-shrink-0"
                         animate={{
-                          scale: [1, 1.5, 1],
+                          scale: [1, 1.3, 1],
+                          boxShadow: [
+                            '0 0 0 rgba(218,131,89,0.3)',
+                            '0 0 10px rgba(218,131,89,0.6)',
+                            '0 0 0 rgba(218,131,89,0.3)'
+                          ]
                         }}
                         transition={{
                           duration: 2,
@@ -321,22 +356,32 @@ export default function ServicesBanner() {
                           delay: idx * 0.5
                         }}
                       />
-                      <span className="text-white">{service}</span>
+                      <span className="text-[#6B5A45] font-medium">{service}</span>
                     </motion.div>
                   ))}
                 </div>
 
-                {/* CTA button with hover effect */}
+                {/* Enhanced CTA button */}
                 <motion.a
                   href={`#${serviceCategories[activeCategory].title.toLowerCase().replace(/\s+/g, '-')}`}
-                  className="inline-block mt-6 px-6 py-2 bg-white/15 hover:bg-white/25 text-white rounded-lg font-medium transition-all"
+                  className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-[#DA8359] to-[#B5684A] hover:from-[#B5684A] hover:to-[#9A8778]  rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl text-amber-50"
                   whileHover={{ 
                     scale: 1.05,
-                    boxShadow: "0 0 15px rgba(255,255,255,0.3)"
+                    boxShadow: "0 10px 25px rgba(218,131,89,0.4)"
                   }}
                   whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
                 >
                   Learn More
+                  <motion.span
+                    className="ml-2"
+                    animate={{ x: [0, 3, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    →
+                  </motion.span>
                 </motion.a>
               </div>
             </div>
@@ -347,7 +392,7 @@ export default function ServicesBanner() {
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="w-2 h-2 rounded-full bg-blue-500"
+                className="w-2 h-2 rounded-full bg-[#DA8359]"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.5, 1, 0.5]
@@ -372,7 +417,7 @@ export default function ServicesBanner() {
         >
           <motion.path 
             d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
-            fill="rgba(30, 41, 59, 0.8)"
+            fill="rgba(236, 223, 204, 0.8)"
             animate={{
               d: [
                 "M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z",
