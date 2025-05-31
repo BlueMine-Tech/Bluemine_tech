@@ -409,7 +409,7 @@ export default function ContactSection() {
     SHIEK MOHAMMAD KASIM
   </h4>
   <p className="text-sm" style={{ color: colors.neutral }}>
-    Business Development Manager
+    Regional Representative
   </p>
   <p className="text-xs mt-1" style={{ color: colors.neutral }}>
     Available to help you
