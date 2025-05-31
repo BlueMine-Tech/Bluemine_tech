@@ -99,7 +99,17 @@ export default function SoftwareSolutionsSection() {
       description: 'Streamline operations by automating repetitive tasks and workflows, increasing efficiency and reducing human error.',
       features: ['Workflow Analysis', 'Custom Automation', 'Integration Services', 'Performance Metrics'],
       color: 'from-[#B5684A] to-[#DA8359]'
-    }
+    },
+    {
+      id: 'event ',
+      title: 'Event Management Solutions',
+      shortName: 'Event Management',
+      icon: '🎉',
+      description: 'Comprehensive software solutions for managing events, from planning and registration to execution and feedback collection.',
+      features: ['Event Planning Tools', "Day to Day booking", 'Online Booking and secure payment', 'Post-Event Analytics',"Digital control & Insant confirmation"],
+      color: 'from-[#DA8359] to-[#E5A287]'
+    },
+    
   ];
 
   // Auto-rotate solution display (stop on mobile)
