@@ -374,37 +374,8 @@ export default function HeroSection() {
               </motion.svg>
             </div>
           </motion.div>
-          
-          {/* Floating tech icons in background */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {['⚡', '🚀', '✨', '🔍', '🔥'].map((icon, i) => (
-              <motion.div
-                key={i}
-                className="absolute text-lg"
-                style={{ 
-                  opacity: 0.15,
-                  color: '#DA8359'
-                }}
-                initial={{ 
-                  x: Math.random() * 100 + '%', 
-                  y: Math.random() * 100 + '%' 
-                }}
-                animate={{
-                  y: [0, -100],
-                  opacity: [0.15, 0],
-                  rotate: [0, 360]
-                }}
-                transition={{
-                  duration: Math.random() * 10 + 15,
-                  repeat: Infinity,
-                  delay: Math.random() * 20,
-                  ease: "easeInOut"
-                }}
-              >
-                {icon}
-              </motion.div>
-            ))}
-          </div>
+         
+       
         </div>
       </div>
       
