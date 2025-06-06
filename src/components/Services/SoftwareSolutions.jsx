@@ -54,63 +54,71 @@ export default function SoftwareSolutionsSection() {
   }, []);
 
   // Software solutions data
-  const solutions = [
-    {
-      id: 'custom-software',
-      title: 'Custom Software Development',
-      shortName: 'Custom Software',
-      icon: '💻',
-      description: 'Develop tailored offline & online applications designed specifically for your business needs and operational requirements.',
-      features: ['Requirement Analysis', 'UI/UX Design', 'Development & Testing', 'Deployment & Support'],
-      color: 'from-[#DA8359] to-[#B5684A]'
-    },
-    {
-      id: 'it-services',
-      title: 'End-to-End IT Services',
-      shortName: 'IT Services',
-      icon: '🛠️',
-      description: 'Comprehensive IT solutions covering everything from initial development to final deployment and ongoing maintenance.',
-      features: ['Project Planning', 'Implementation', 'Training', 'Technical Support'],
-      color: 'from-[#B5684A] to-[#DA8359]'
-    },
-    {
-      id: 'scalable-design',
-      title: 'Scalable & Intuitive Design',
-      shortName: 'UI/UX Design',
-      icon: '✨',
-      description: 'Create future-proof software solutions with intuitive interfaces that grow with your business and enhance user experience.',
-      features: ['Responsive Design', 'User Research', 'Prototype Testing', 'Visual Identity'],
-      color: 'from-[#E5A287] to-[#DA8359]'
-    },
-    {
-      id: 'erp-crm',
-      title: 'ERP & CRM Solutions',
-      shortName: 'ERP & CRM',
-      icon: '📊',
-      description: 'Implement industry-specific Enterprise Resource Planning and Customer Relationship Management systems tailored to your workflow.',
-      features: ['Industry Customization', 'Process Integration', 'Data Management', 'Reporting Tools'],
-      color: 'from-[#DA8359] to-[#E5A287]'
-    },
-    {
-      id: 'automation',
-      title: 'Business Process Automation',
-      shortName: 'Automation',
-      icon: '⚙️',
-      description: 'Streamline operations by automating repetitive tasks and workflows, increasing efficiency and reducing human error.',
-      features: ['Workflow Analysis', 'Custom Automation', 'Integration Services', 'Performance Metrics'],
-      color: 'from-[#B5684A] to-[#DA8359]'
-    },
-    {
-      id: 'event ',
-      title: 'Event Management Solutions',
-      shortName: 'Event Management',
-      icon: '🎉',
-      description: 'Comprehensive software solutions for managing events, from planning and registration to execution and feedback collection.',
-      features: ['Event Planning Tools', "Day to Day booking", 'Online Booking and secure payment', 'Post-Event Analytics',"Digital control & Insant confirmation"],
-      color: 'from-[#DA8359] to-[#E5A287]'
-    },
-    
-  ];
+const solutions = [
+  {
+    id: 'custom-software',
+    title: 'Custom Software Development',
+    shortName: 'Custom Software',
+    icon: '💻',
+    description: 'Develop tailored offline & online applications designed specifically for your business needs and operational requirements.',
+    features: ['Requirement Analysis', 'UI/UX Design', 'Development & Testing', 'Deployment & Support'],
+    color: 'from-[#DA8359] to-[#B5684A]'
+  },
+  {
+    id: 'it-services',
+    title: 'End-to-End IT Services',
+    shortName: 'IT Services',
+    icon: '🛠️',
+    description: 'Comprehensive IT solutions covering everything from initial development to final deployment and ongoing maintenance.',
+    features: ['Project Planning', 'Implementation', 'Training', 'Technical Support'],
+    color: 'from-[#B5684A] to-[#DA8359]'
+  },
+  {
+    id: 'scalable-design',
+    title: 'Scalable & Intuitive Design',
+    shortName: 'UI/UX Design',
+    icon: '✨',
+    description: 'Create future-proof software solutions with intuitive interfaces that grow with your business and enhance user experience.',
+    features: ['Responsive Design', 'User Research', 'Prototype Testing', 'Visual Identity'],
+    color: 'from-[#E5A287] to-[#DA8359]'
+  },
+  {
+    id: 'erp-crm',
+    title: 'ERP & CRM Solutions',
+    shortName: 'ERP & CRM',
+    icon: '📊',
+    description: 'Implement industry-specific Enterprise Resource Planning and Customer Relationship Management systems tailored to your workflow.',
+    features: ['Industry Customization', 'Process Integration', 'Data Management', 'Reporting Tools'],
+    color: 'from-[#DA8359] to-[#E5A287]'
+  },
+  {
+    id: 'automation',
+    title: 'Business Process Automation',
+    shortName: 'Automation',
+    icon: '⚙️',
+    description: 'Streamline operations by automating repetitive tasks and workflows, increasing efficiency and reducing human error.',
+    features: ['Workflow Analysis', 'Custom Automation', 'Integration Services', 'Performance Metrics'],
+    color: 'from-[#B5684A] to-[#DA8359]'
+  },
+  {
+    id: 'event-management',
+    title: 'Event Management Solutions',
+    shortName: 'Event Management',
+    icon: '🎉',
+    description: 'Comprehensive software solutions for managing events, from planning and registration to execution and feedback collection.',
+    features: ['Event Planning Tools', 'Day-to-Day Booking', 'Online Booking & Secure Payment', 'Post-Event Analytics', 'Digital Control & Instant Confirmation', 'TCS & GST Calculation'],
+    color: 'from-[#DA8359] to-[#E5A287]'
+  },
+  {
+    id: 'booking-management',
+    title: 'Booking Management System',
+    shortName: 'Booking System',
+    icon: '📅',
+    description: 'Universal booking platform for appointments, services, rentals, and reservations with automated scheduling and customer management.',
+    features: ['Multi-Service Booking', 'Appointment Scheduling', 'Resource Management', 'Customer Portal', 'Automated Notifications', 'TCS & GST Calculation'],
+    color: 'from-[#E5A287] to-[#B5684A]'
+  }
+];
 
   // Auto-rotate solution display (stop on mobile)
   useEffect(() => {
