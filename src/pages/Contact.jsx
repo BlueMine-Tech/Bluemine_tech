@@ -18,6 +18,9 @@ export default function ContactSection() {
     message: ''
   });
 
+  // WhatsApp number (Indian format)
+  const whatsappNumber = "919597530301"; // Added country code for India
+
   // Color theme matching navbar
   const colors = {
     primary: '#ECDFCC',    // Light beige - primary background
@@ -83,47 +86,72 @@ export default function ContactSection() {
     });
   };
 
-  // Handle form submission - WordPress integration
+  // Create WhatsApp message from form data
+  const createWhatsAppMessage = (data) => {
+    let message = `*New Contact Form Submission*\n\n`;
+    message += `*Name:* ${data.name}\n`;
+    message += `*Email:* ${data.email}\n`;
+    if (data.phone) {
+      message += `*Phone:* ${data.phone}\n`;
+    }
+    message += `*Subject:* ${data.subject}\n\n`;
+    message += `*Message:*\n${data.message}\n\n`;
+    message += `---\nSent from website contact form`;
+    
+    return encodeURIComponent(message);
+  };
+
+  // Handle form submission - WhatsApp integration
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Validate required fields
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      setFormStatus({
+        submitted: true,
+        error: true,
+        message: 'Please fill in all required fields.'
+      });
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setFormStatus({
+        submitted: true,
+        error: true,
+        message: 'Please enter a valid email address.'
+      });
+      return;
+    }
+    
     try {
-      // Initialize loading state
+      // Show loading state
       setFormStatus({
         submitted: true,
         error: false,
-        message: 'Sending your message...'
+        message: 'Preparing your message...'
       });
       
-      // WordPress REST API endpoint for Contact Form 7
-      // You'll need to replace with your actual endpoint URL and form ID
-      const endpoint = 'https://yourwordpresssite.com/wp-json/contact-form-7/v1/contact-forms/123/feedback';
+      // Create WhatsApp message
+      const whatsappMessage = createWhatsAppMessage(formData);
       
-      // Create form data for submission
-      const submitData = new FormData();
-      submitData.append('your-name', formData.name);
-      submitData.append('your-email', formData.email);
-      submitData.append('your-phone', formData.phone);
-      submitData.append('your-subject', formData.subject);
-      submitData.append('your-message', formData.message);
+      // Create WhatsApp URL
+      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
       
-      // Send data to WordPress
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        body: submitData
+      // Open WhatsApp in new tab/window
+      window.open(whatsappURL, '_blank');
+      
+      // Show success message
+      setFormStatus({
+        submitted: true,
+        error: false,
+        message: 'WhatsApp opened! Please send the message to complete your inquiry.'
       });
       
-      const result = await response.json();
-      
-      if (result.status === 'mail_sent') {
-        // Success case
-        setFormStatus({
-          submitted: true,
-          error: false,
-          message: 'Thank you! Your message has been sent successfully.'
-        });
-        
-        // Clear form
+      // Clear form after successful submission
+      setTimeout(() => {
         setFormData({
           name: '',
           email: '',
@@ -133,27 +161,19 @@ export default function ContactSection() {
         });
         
         // Reset form status after delay
-        setTimeout(() => {
-          setFormStatus({
-            submitted: false,
-            error: false,
-            message: ''
-          });
-        }, 5000);
-      } else {
-        // Error case
         setFormStatus({
-          submitted: true,
-          error: true,
-          message: 'There was an error sending your message. Please try again.'
+          submitted: false,
+          error: false,
+          message: ''
         });
-      }
+      }, 3000);
+      
     } catch (error) {
-      console.error('Form submission error:', error);
+      console.error('WhatsApp submission error:', error);
       setFormStatus({
         submitted: true,
         error: true,
-        message: 'There was an error connecting to the server. Please try again later.'
+        message: 'Unable to open WhatsApp. Please try again or contact us directly.'
       });
     }
   };
@@ -333,92 +353,101 @@ export default function ContactSection() {
                 </motion.h3>
                 
                 <p className="mb-6" style={{ color: colors.neutral }}>
-                  Have questions or want to discuss your project? Reach out to us using any of the methods below or fill out the form.
+                  Have questions or want to discuss your project? Fill out the form and we'll connect via WhatsApp instantly!
                 </p>
                 
                 {/* Contact Information Cards */}
-              <div className="space-y-4">
-  {contactInfo.map((item, index) => (
-    <motion.div 
-      key={item.title}
-      className="flex items-start p-3 rounded-lg transition-all"
-      style={{
-        ':hover': {
-          backgroundColor: `${colors.accent}10`
-        }
-      }}
-      initial={{ opacity: 0, x: -10 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: 0.3 + (index * 0.1), duration: 0.5 }}
-      whileHover={{ 
-        x: 5,
-        backgroundColor: `${colors.accent}10`
-      }}
-    >
-      <span className="text-2xl mr-4 mt-1">{item.icon}</span>
-      <div>
-        <h4 className="font-medium" style={{ color: colors.accent }}>
-          {item.title}
-        </h4>
-        <p style={{ color: colors.text }}>
-          {item.info}
-        </p>
-      </div>
-    </motion.div>
-  ))}
-</div>
+                <div className="space-y-4">
+                  {contactInfo.map((item, index) => (
+                    <motion.div 
+                      key={item.title}
+                      className="flex items-start p-3 rounded-lg transition-all"
+                      style={{
+                        ':hover': {
+                          backgroundColor: `${colors.accent}10`
+                        }
+                      }}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 + (index * 0.1), duration: 0.5 }}
+                      whileHover={{ 
+                        x: 5,
+                        backgroundColor: `${colors.accent}10`
+                      }}
+                    >
+                      <span className="text-2xl mr-4 mt-1">{item.icon}</span>
+                      <div>
+                        <h4 className="font-medium" style={{ color: colors.accent }}>
+                          {item.title}
+                        </h4>
+                        <p style={{ color: colors.text }}>
+                          {item.info}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
 
-{/* Person Image with Designation */}
-<motion.div 
-  className="mt-6 text-center"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.6, duration: 0.8 }}
->
-  <div className="relative inline-block">
-    <motion.div
-      className="w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden border-4 shadow-lg"
-      style={{ borderColor: colors.accent }}
-      whileHover={{ scale: 1.05 }}
-      transition={{ duration: 0.3 }}
-    >
-      <img
-        src={sheik} // Replace with your image path
-        alt="Contact Person"
-        className="w-full h-full object-cover"
-      />
-    </motion.div>
-    {/* Online status indicator */}
-    <motion.div
-      className="absolute bottom-3 right-0 w-6 h-6 rounded-full border-2"
-      style={{ 
-        backgroundColor: '#10B981', // Green for online
-        borderColor: colors.secondary 
-      }}
-      animate={{
-        scale: [1, 1.2, 1],
-      }}
-      transition={{
-        duration: 2,
-        repeat: Infinity,
-        repeatType: "reverse"
-      }}
-    />
-  </div>
-  <h4 className="font-semibold text-lg" style={{ color: colors.accent }}>
-    SHIEK MOHAMMAD KASIM
-  </h4>
-  <p className="text-sm" style={{ color: colors.neutral }}>
-    
-    Regional Representative
-  </p>
-   <p className="text-sm" style={{ color: colors.neutral }}>
-    Saudi Arabia (KSA), Dubai (UAE)
-  </p>
-  <p className="text-xs mt-1" style={{ color: colors.neutral }}>
-    Available to help you
-  </p>
-</motion.div>
+                {/* WhatsApp Direct Contact Button */}
+                <motion.div 
+                  className="mt-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                >
+
+                </motion.div>
+
+                {/* Person Image with Designation */}
+                <motion.div 
+                  className="mt-6 text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                >
+                  <div className="relative inline-block">
+                    <motion.div
+                      className="w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden border-4 shadow-lg"
+                      style={{ borderColor: colors.accent }}
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <img
+                        src={sheik}
+                        alt="Contact Person"
+                        className="w-full h-full object-cover"
+                      />
+                    </motion.div>
+                    {/* Online status indicator */}
+                    <motion.div
+                      className="absolute bottom-3 right-0 w-6 h-6 rounded-full border-2"
+                      style={{ 
+                        backgroundColor: '#10B981', // Green for online
+                        borderColor: colors.secondary 
+                      }}
+                      animate={{
+                        scale: [1, 1.2, 1],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatType: "reverse"
+                      }}
+                    />
+                  </div>
+                  <h4 className="font-semibold text-lg" style={{ color: colors.accent }}>
+                    SHIEK MOHAMMAD KASIM
+                  </h4>
+                  <p className="text-sm" style={{ color: colors.neutral }}>
+                    Regional Representative
+                  </p>
+                  <p className="text-sm" style={{ color: colors.neutral }}>
+                    Saudi Arabia (KSA), Dubai (UAE)
+                  </p>
+                  <p className="text-xs mt-1" style={{ color: colors.neutral }}>
+                    Available to help you
+                  </p>
+                </motion.div>
               </div>
             </motion.div>
             
@@ -438,16 +467,26 @@ export default function ContactSection() {
                 }}
               >
                 <motion.h3 
-                  className="text-2xl font-bold mb-6"
+                  className="text-2xl font-bold mb-2"
                   style={{ color: colors.text }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
                 >
-                  Send Us a Message
+                  Send Message via WhatsApp
                 </motion.h3>
                 
-                {/* WordPress Contact Form */}
+                <motion.p 
+                  className="text-sm mb-6"
+                  style={{ color: colors.neutral }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.8 }}
+                >
+                  Fill out the form below and we'll prepare your message for WhatsApp
+                </motion.p>
+                
+                {/* WhatsApp Contact Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
                     <motion.div 
@@ -461,7 +500,7 @@ export default function ContactSection() {
                         className="block font-medium"
                         style={{ color: colors.accent }}
                       >
-                        Your Name
+                        Your Name *
                       </label>
                       <input
                         type="text"
@@ -474,10 +513,6 @@ export default function ContactSection() {
                           backgroundColor: `${colors.primary}50`,
                           borderColor: colors.neutral,
                           color: colors.text,
-                          ':focus': {
-                            borderColor: colors.accent,
-                            boxShadow: `0 0 0 1px ${colors.accent}`
-                          }
                         }}
                         onFocus={(e) => {
                           e.target.style.borderColor = colors.accent;
@@ -502,7 +537,7 @@ export default function ContactSection() {
                         className="block font-medium"
                         style={{ color: colors.accent }}
                       >
-                        Email Address
+                        Email Address *
                       </label>
                       <input
                         type="email"
@@ -577,7 +612,7 @@ export default function ContactSection() {
                         className="block font-medium"
                         style={{ color: colors.accent }}
                       >
-                        Subject
+                        Subject *
                       </label>
                       <input
                         type="text"
@@ -615,7 +650,7 @@ export default function ContactSection() {
                       className="block font-medium"
                       style={{ color: colors.accent }}
                     >
-                      Your Message
+                      Your Message *
                     </label>
                     <textarea
                       id="message"
@@ -668,21 +703,22 @@ export default function ContactSection() {
                   >
                     <motion.button
                       type="submit"
-                      className="px-6 py-3 font-medium rounded-lg shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-6 py-3 font-medium rounded-lg shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center ml-auto"
                       style={{
-                        backgroundColor: colors.accent,
-                        color: colors.secondary,
-                        boxShadow: `0 4px 14px -4px ${colors.accent}40`
+                        backgroundColor: '#25D366',
+                        color: 'white',
+                        boxShadow: `0 4px 14px -4px #25D36640`
                       }}
                       whileHover={{
                         scale: 1.02,
-                        backgroundColor: colors.accentDark,
-                        boxShadow: `0 8px 20px -4px ${colors.accent}60`
+                        backgroundColor: '#22C55E',
+                        boxShadow: `0 8px 20px -4px #25D36660`
                       }}
                       whileTap={{ scale: 0.98 }}
                       disabled={formStatus.submitted && !formStatus.error}
                     >
-                      Send Message
+                      <span className="mr-2">💬</span>
+                      Send via WhatsApp
                     </motion.button>
                   </motion.div>
                 </form>
