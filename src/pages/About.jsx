@@ -7,7 +7,7 @@ import jagadesh from '../assets/jagadish.jpg'
 import jafar from '../assets/jafar.jpeg'
 import asiq from '../assets/asiq.png'
 import praveen from '../assets/praveen.png'
-import founder from '../assets/founder.png'
+import founder from '../assets/founder.jpeg'
 import divya from '../assets/divya.jpeg'
 import profile from "../assets/profile.jpg"
 
