@@ -19,8 +19,8 @@ export default function Home() {
     <>
       <Helmet>
         <title>Home | My Brand</title>
-        <meta name="description" content="Welcome to my home page, we do web design, marketing and more.">
-        <link rel="canonical" href="https://yourdomain.com/" />
+        <meta name="description" content="We are the Best Performance Marketing Agency In India helping Businesses to grow 3X to 4X with proven Performance Marketing Strategies. Book An Appointment. .">
+        <link rel="canonical" href="https://blueminetech.com/" />
       </Helmet>
 
       <h1>Welcome Home</h1>
