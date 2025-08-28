@@ -1,7 +1,7 @@
 <Helmet>
   <title>About Us | My Brand</title>
   <meta name="description" content="Learn more about our story, our mission and what we do.">
-  <link rel="canonical" href="https://yourdomain.com/about" />
+  <link rel="canonical" href="https://blueminetech.com.com/about" />
 </Helmet>
 
 import { motion } from 'framer-motion';
