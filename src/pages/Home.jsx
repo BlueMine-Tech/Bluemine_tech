@@ -12,6 +12,22 @@ const Home = () => {
         <ServicesSection/>
         <CtaSection/>
     </div>
+    import { Helmet } from 'react-helmet-async'
+
+export default function Home() {
+  return (
+    <>
+      <Helmet>
+        <title>Home | My Brand</title>
+        <meta name="description" content="Welcome to my home page, we do web design, marketing and more.">
+        <link rel="canonical" href="https://yourdomain.com/" />
+      </Helmet>
+
+      <h1>Welcome Home</h1>
+    </>
+  )
+}
+
   );
 };
 
