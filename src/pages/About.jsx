@@ -1,9 +1,3 @@
-<Helmet>
-  <title>About Us | My Brand</title>
-  <meta name="description" content="Learn more about our story, our mission and what we do.">
-  <link rel="canonical" href="https://blueminetech.com.com/about" />
-</Helmet>
-
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { X } from "lucide-react";
@@ -16,6 +10,7 @@ import praveen from '../assets/praveen.png'
 import founder from '../assets/founder.jpeg'
 import divya from '../assets/divya.jpeg'
 import profile from "../assets/profile.jpg"
+import natrajan from '../assets/Natrajan.png'
 
 
 
@@ -128,6 +123,14 @@ Australia: Melbourne, Sydney, Adelaide, Perth, Gold Coast
 Europe (Schengen Region): Greece
 Other Regions: Israel, Egypt (Cairo)
 His deep understanding of cross-cultural markets and software-driven business growth makes him a key asset to Bluemine Technologies' global outreach`,
+      hasDescription: true
+    },
+        { 
+      id: 4, 
+      name: "Mr. S. S. Natarajan", 
+      position: "Marketing Manager", 
+      image: natrajan,
+      description: "Mr. S. S. Natarajan, based in Karur, is a dynamic and result-oriented Marketing Manager known for his strategic approach, strong communication skills, and deep understanding of the Karur business landscape. He blends creativity with analytics to craft marketing solutions that help brands grow faster and reach the right customers.With extensive experience across digital marketing, field marketing, customer engagement, branding, and sales conversion, he consistently delivers impactful results for businesses across Karur and nearby regions.",
       hasDescription: true
     },
     // Second row (without descriptions)
